@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://src/player/first_person_hands.gd" id="2_hands"]
+[ext_resource type="Script" path="res://src/player/interactor.gd" id="3_interactor"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.34
+height = 1.8
+
+[sub_resource type="Environment" id="Environment_cam"]
+background_mode = 0
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 21
+floor_max_angle = 0.959931
+floor_snap_length = 0.35
+script = ExtResource("1_player")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="CeilingProbe" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+target_position = Vector3(0, 1.75, 0)
+collision_mask = 1
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 74.0
+near = 0.05
+far = 240.0
+current = true
+
+[node name="Hands" type="Node3D" parent="Head/Camera3D"]
+script = ExtResource("2_hands")
+
+[node name="Interactor" type="Node3D" parent="Head/Camera3D"]
+script = ExtResource("3_interactor")
