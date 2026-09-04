@@ -32,10 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Note: this cannot switch Pages on by itself. The Actions token is not
+      # permitted to create a Pages site ("Resource not accessible by
+      # integration"), so the repository owner has to enable Pages once, after
+      # which every push publishes automatically.
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3

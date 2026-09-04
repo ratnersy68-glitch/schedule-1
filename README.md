@@ -27,10 +27,16 @@ on a phone browser. First load pulls a 35 MB WebAssembly binary, so give it a
 moment on mobile data. Tap the screen once at the title to start, then
 **New game**.
 
-If the link 404s, Pages has not been switched on for the repository yet:
-*Settings > Pages > Source: GitHub Actions* (then re-run the "Deploy web build"
-workflow), or *Deploy from a branch > `claude/mobile-business-empire-game-9pm0j3`
-> `/docs`*.
+**The link only works once Pages is switched on**, which only the repository
+owner can do — the Actions token is refused when it tries ("Resource not
+accessible by integration"). It is a one-time toggle:
+
+> **Settings > Pages > Build and deployment > Source: Deploy from a branch**
+> branch `claude/mobile-business-empire-game-9pm0j3`, folder `/docs`, **Save**
+
+The site goes live a minute or so later. Choosing *Source: GitHub Actions*
+instead also works and republishes on every push, via
+`.github/workflows/pages.yml`.
 
 Rebuild it with:
 
