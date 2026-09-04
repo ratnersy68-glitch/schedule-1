@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1788547847|6346205';
+const CACHE_VERSION = '1788548102|6239677';
 /** @type {string} */
 const CACHE_PREFIX = 'Underlight: Coba-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
