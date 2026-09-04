@@ -88,7 +88,7 @@ func _fill(container: VBoxContainer, source: Inventory, target: Inventory,
 				sub += " · " + GameData.item_name(pack)
 		var row := UIKit.list_row(GameData.item_icon(item_id), GameData.item_color(item_id),
 			"%s x%d" % [GameData.item_name(item_id), qty], sub,
-			"→" if is_player else "←", UIKit.ACCENT)
+			">>" if is_player else "<<", UIKit.ACCENT)
 		var btn := Button.new()
 		btn.flat = true
 		btn.set_anchors_preset(Control.PRESET_FULL_RECT)

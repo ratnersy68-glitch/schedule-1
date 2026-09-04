@@ -27,7 +27,7 @@ func refresh() -> void:
 	content.add_child(picker)
 	for p in props:
 		var free := BusinessService.free_employee_slots(p.id)
-		var row := UIKit.list_row("⌂", UIKit.ACCENT, p.display_name(),
+		var row := UIKit.list_row("PR", UIKit.ACCENT, p.display_name(),
 			GameData.district_name(p.district_id()),
 			"%d free" % free, UIKit.GOOD if free > 0 else UIKit.TEXT_FAINT)
 		if p.id == _selected_property:

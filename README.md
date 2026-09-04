@@ -16,6 +16,29 @@ manufacturing process.*
 
 ---
 
+## Play it
+
+A WebGL build is published from `docs/play` to GitHub Pages:
+
+**https://ratnersy68-glitch.github.io/schedule-1/**
+
+It is a single-threaded build, so it needs no special server headers and runs
+on a phone browser. First load pulls a 35 MB WebAssembly binary, so give it a
+moment on mobile data. Tap the screen once at the title to start, then
+**New game**.
+
+If the link 404s, Pages has not been switched on for the repository yet:
+*Settings > Pages > Source: GitHub Actions* (then re-run the "Deploy web build"
+workflow), or *Deploy from a branch > `claude/mobile-business-empire-game-9pm0j3`
+> `/docs`*.
+
+Rebuild it with:
+
+```bash
+godot --headless --path . --export-release "Web" build/web/index.html
+cp build/web/* docs/play/
+```
+
 ## Running it
 
 ```bash

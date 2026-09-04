@@ -29,7 +29,7 @@ func subtitle() -> String:
 
 
 func icon() -> String:
-	return "⌂"
+	return "PR"
 
 
 func _on_use(_player: Node3D) -> void:

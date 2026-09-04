@@ -47,7 +47,7 @@ func prompt() -> String:
 
 
 func icon() -> String:
-	return "⌸"
+	return "DR"
 
 
 func _on_use(_player: Node3D) -> void:

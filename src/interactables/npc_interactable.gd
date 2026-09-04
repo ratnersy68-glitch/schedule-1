@@ -25,7 +25,7 @@ func subtitle() -> String:
 
 
 func icon() -> String:
-	return "☻"
+	return "NP"
 
 
 func can_use(player: Node3D) -> bool:

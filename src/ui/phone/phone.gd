@@ -25,7 +25,7 @@ var _tick := 0.0
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	UIKit.fill_viewport(self)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_register_apps()
 	_build()
@@ -65,8 +65,8 @@ func _build() -> void:
 	style.shadow_color = Color(0, 0, 0, 0.5)
 	_frame.add_theme_stylebox_override("panel", style)
 	_frame.custom_minimum_size = Vector2(348, 560)
-	_frame.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-	_frame.position = Vector2(-372, -584)
+	UIKit.anchor_to(_frame, "right", "bottom", Vector2(22, 20), Vector2(348, 560))
+	_frame.pivot_offset = Vector2(174, 560)
 	_frame.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_frame)
 
@@ -80,20 +80,20 @@ func _build() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status.add_child(spacer)
-	_status_signal = UIKit.label("▮▮▮  ▰", 12, UIKit.TEXT_DIM)
+	_status_signal = UIKit.label("LTE  D1", 12, UIKit.TEXT_DIM)
 	status.add_child(_status_signal)
 	column.add_child(status)
 
 	# Title row with back button.
 	var head := UIKit.hbox(8)
-	_back = UIKit.icon_button("‹", 38.0)
+	_back = UIKit.icon_button("<", 38.0)
 	_back.pressed.connect(go_home)
 	_back.visible = false
 	head.add_child(_back)
 	_title = UIKit.title("Underlight OS", 19)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(_title)
-	var close_btn := UIKit.icon_button("✕", 38.0)
+	var close_btn := UIKit.icon_button("X", 38.0)
 	close_btn.pressed.connect(close)
 	head.add_child(close_btn)
 	column.add_child(head)
@@ -126,7 +126,7 @@ func _populate_home() -> void:
 
 
 func _app_icon(app_id: String) -> Control:
-	var glyph := "▣"
+	var glyph := "AP"
 	var title := app_id.capitalize()
 	var accent := UIKit.ACCENT
 	var badge := 0
@@ -137,11 +137,11 @@ func _app_icon(app_id: String) -> Control:
 		accent = app.accent
 		badge = app.badge_count()
 	elif app_id == "inventory":
-		glyph = "▤"
+		glyph = "BAG"
 		title = "Pockets"
 		accent = UIKit.GOOD
 	elif app_id == "settings":
-		glyph = "⚙"
+		glyph = "SET"
 		title = "Settings"
 		accent = UIKit.TEXT_DIM
 
@@ -149,7 +149,7 @@ func _app_icon(app_id: String) -> Control:
 	var btn := Button.new()
 	btn.custom_minimum_size = Vector2(66, 66)
 	btn.text = glyph
-	btn.add_theme_font_size_override("font_size", 26)
+	btn.add_theme_font_size_override("font_size", 19)
 	btn.add_theme_color_override("font_color", accent)
 	btn.add_theme_stylebox_override("normal", UIKit.flat_style(accent.darkened(0.62), 16))
 	btn.add_theme_stylebox_override("hover", UIKit.flat_style(accent.darkened(0.5), 16))
@@ -186,10 +186,10 @@ func open() -> void:
 	EventBus.phone_toggled.emit(true)
 	AudioDirector.play_ui("ui_tap")
 	_frame.modulate.a = 0.0
-	_frame.position.y = -520
+	_frame.scale = Vector2(0.94, 0.88)
 	var t := create_tween().set_parallel(true)
 	t.tween_property(_frame, "modulate:a", 1.0, 0.14)
-	t.tween_property(_frame, "position:y", -584.0, 0.22).set_trans(Tween.TRANS_CUBIC)
+	t.tween_property(_frame, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK)
 
 
 func close() -> void:
@@ -200,7 +200,7 @@ func close() -> void:
 	EventBus.phone_toggled.emit(false)
 	AudioDirector.play_ui("ui_cancel")
 	var t := create_tween()
-	t.tween_property(_frame, "position:y", -500.0, 0.16)
+	t.tween_property(_frame, "scale", Vector2(0.94, 0.88), 0.16)
 	t.parallel().tween_property(_frame, "modulate:a", 0.0, 0.16)
 	t.tween_callback(func(): visible = false)
 
@@ -284,9 +284,9 @@ func _process(delta: float) -> void:
 		return
 	_tick = 0.0
 	_status_time.text = GameConfig.format_clock(GameState.hour)
-	var bars := "▮▮▮"
+	var bars := "LTE"
 	if EnforcementService.wanted_level > 0:
-		bars = "▮▯▯"
+		bars = "SOS"
 	_status_signal.text = "%s  D%d" % [bars, GameState.day]
 
 

@@ -7,7 +7,7 @@ const MAX_MESSAGES := 60
 
 
 func _init() -> void:
-	super._init("messages", "Messages", "✉", UIKit.GOOD)
+	super._init("messages", "Messages", "MSG", UIKit.GOOD)
 
 
 static func push(app_id: String, title: String, body: String) -> void:

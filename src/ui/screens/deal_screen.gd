@@ -103,7 +103,7 @@ func _offer_row(offer: Dictionary, exposure: float) -> Control:
 	v.add_child(UIKit.stat_line("Offer", GameConfig.format_money(unit) + " each", UIKit.MONEY))
 
 	var qty_row := UIKit.hbox(8)
-	var minus := UIKit.button("−")
+	var minus := UIKit.button("-")
 	minus.custom_minimum_size = Vector2(52, 44)
 	minus.pressed.connect(func():
 		_quantity[slot] = maxi(1, qty - 1)

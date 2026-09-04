@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("contacts", "Contacts", "☏", UIKit.VIOLET)
+	super._init("contacts", "Contacts", "TEL", UIKit.VIOLET)
 
 
 func build(container: VBoxContainer) -> void:

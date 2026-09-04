@@ -287,6 +287,74 @@ static func toggle(text: String, pressed: bool) -> CheckButton:
 	return c
 
 
+## Makes a root Control genuinely fill the screen, and keeps it filling it.
+##
+## A Control added to a CanvasLayer from code does not inherit the viewport
+## rect: it stays 0x0, and every anchored child then resolves against zero and
+## lands off-screen. Anchors cannot fix that, because the anchor maths
+## multiplies by a parent size that is still zero. Setting explicit offsets
+## with top-left anchors gives the control a real rect that later layout passes
+## will not recompute away.
+static func fill_viewport(c: Control) -> void:
+	c.anchor_left = 0.0
+	c.anchor_top = 0.0
+	c.anchor_right = 0.0
+	c.anchor_bottom = 0.0
+	_resize_to_viewport(c)
+	var viewport := c.get_viewport()
+	if viewport != null and not viewport.size_changed.is_connected(_resize_to_viewport.bind(c)):
+		viewport.size_changed.connect(_resize_to_viewport.bind(c))
+
+
+static func _resize_to_viewport(c: Control) -> void:
+	if not is_instance_valid(c) or not c.is_inside_tree():
+		return
+	var vp := c.get_viewport_rect().size
+	c.offset_left = 0.0
+	c.offset_top = 0.0
+	c.offset_right = vp.x
+	c.offset_bottom = vp.y
+
+
+## Anchors a control to an edge or corner using explicit offsets.
+##
+## Setting `position` on a control that has anchors is absolute in parent
+## space, not relative to the anchor, which silently puts right- and
+## bottom-anchored elements off-screen. This does the offset arithmetic once so
+## no caller has to remember that.
+##
+## h: "left" | "center" | "right"   v: "top" | "bottom"
+## A height of 0 lets the control size itself to its content and grow down.
+static func anchor_to(c: Control, h: String, v: String, margin: Vector2,
+		box: Vector2) -> void:
+	match h:
+		"right":
+			c.anchor_left = 1.0
+			c.anchor_right = 1.0
+			c.offset_left = -(margin.x + box.x)
+			c.offset_right = -margin.x
+		"center":
+			c.anchor_left = 0.5
+			c.anchor_right = 0.5
+			c.offset_left = -box.x * 0.5
+			c.offset_right = box.x * 0.5
+		_:
+			c.anchor_left = 0.0
+			c.anchor_right = 0.0
+			c.offset_left = margin.x
+			c.offset_right = margin.x + box.x
+	if v == "bottom":
+		c.anchor_top = 1.0
+		c.anchor_bottom = 1.0
+		c.offset_top = -(margin.y + box.y)
+		c.offset_bottom = -margin.y
+	else:
+		c.anchor_top = 0.0
+		c.anchor_bottom = 0.0
+		c.offset_top = margin.y
+		c.offset_bottom = margin.y + box.y
+
+
 ## Full-bleed dim backdrop for modal screens.
 static func backdrop(alpha: float = 0.72) -> ColorRect:
 	var c := ColorRect.new()

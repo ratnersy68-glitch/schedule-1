@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("jobs", "Jobs", "✓", UIKit.WARN)
+	super._init("jobs", "Jobs", "JOB", UIKit.WARN)
 
 
 func badge_count() -> int:
@@ -22,7 +22,7 @@ func build(container: VBoxContainer) -> void:
 		container.add_child(UIKit.label("DONE", 11, UIKit.TEXT_FAINT))
 		for mid in MissionService.completed:
 			var m: Dictionary = GameData.mission(String(mid))
-			container.add_child(UIKit.list_row("✓", UIKit.GOOD,
+			container.add_child(UIKit.list_row("OK", UIKit.GOOD,
 				String(m.get("title", mid)),
 				String(m.get("kind", "")).capitalize(), "", UIKit.TEXT_FAINT))
 
@@ -49,7 +49,7 @@ func _mission_card(mid: String) -> Control:
 		var target := MissionService.objective_target(o)
 		var progress := MissionService.objective_progress(mid, i)
 		var done := progress >= target
-		var mark := "✓" if done else ("▸" if i == current else "·")
+		var mark := "[x]" if done else ("->" if i == current else "-")
 		var text := String(o.get("label", "Objective"))
 		if target > 1:
 			text += "  %d/%d" % [progress, target]

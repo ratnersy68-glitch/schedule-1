@@ -21,7 +21,7 @@ var _left_handed := false
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	UIKit.fill_viewport(self)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build()
 	_apply_layout()
@@ -44,12 +44,12 @@ func _build() -> void:
 	joystick.name = "Joystick"
 	_joystick_holder.add_child(joystick)
 
-	_make_button("interact", "✋", UIKit.ACCENT, "Use", 42.0)
-	_make_button("sprint", "»", UIKit.GOOD, "Run", 32.0)
-	_make_button("crouch", "⌄", UIKit.WARN, "Crouch", 32.0)
-	_make_button("jump", "⌃", UIKit.VIOLET, "Jump", 32.0)
-	_make_button("inventory", "▤", UIKit.TEXT_DIM, "Bag", 28.0)
-	_make_button("phone", "▮", UIKit.TEXT_DIM, "Phone", 28.0)
+	_make_button("interact", "use", UIKit.ACCENT, "Use", 42.0)
+	_make_button("sprint", "run", UIKit.GOOD, "Run", 32.0)
+	_make_button("crouch", "crouch", UIKit.WARN, "Crouch", 32.0)
+	_make_button("jump", "jump", UIKit.VIOLET, "Jump", 32.0)
+	_make_button("inventory", "bag", UIKit.TEXT_DIM, "Bag", 28.0)
+	_make_button("phone", "phone", UIKit.TEXT_DIM, "Phone", 28.0)
 
 	buttons["interact"].pressed_down.connect(_on_primary_action)
 	buttons["jump"].pressed_down.connect(func(): PlayerInput.press("jump"))
@@ -60,11 +60,11 @@ func _build() -> void:
 	buttons["phone"].pressed_down.connect(func(): PlayerInput.press("toggle_phone"))
 
 
-func _make_button(id: String, glyph: String, color: Color, caption: String,
+func _make_button(id: String, kind: String, color: Color, caption: String,
 		radius: float) -> TouchButton:
 	var b := TouchButton.new()
 	b.name = "Btn_" + id
-	b.setup(id, glyph, color, caption, radius)
+	b.setup(id, kind, color, caption, radius)
 	add_child(b)
 	buttons[id] = b
 	return b
@@ -156,9 +156,8 @@ func _default_positions(vp: Vector2) -> Dictionary:
 		bottom - interact.size.y - sprint.size.y - 26.0), sprint.size.x)
 	out["crouch"] = mirror.call(Vector2(right - sprint.size.x - crouch.size.x - 14.0,
 		bottom - interact.size.y - crouch.size.y - 8.0), crouch.size.x)
-	out["inventory"] = mirror.call(Vector2(right - inv.size.x, m + 62.0), inv.size.x)
-	out["phone"] = mirror.call(Vector2(right - phone.size.x, m + 62.0 + phone.size.y + 12.0),
-		phone.size.x)
+	out["inventory"] = Vector2(m, m + 58.0)
+	out["phone"] = Vector2(m, m + 58.0 + phone.size.y + 14.0)
 	return out
 
 
@@ -173,10 +172,11 @@ func _notification(what: int) -> void:
 
 func set_driving(driving: bool) -> void:
 	_driving = driving
-	buttons["interact"].setup("interact", "⎋", UIKit.BAD, "Exit", 42.0)
-	if not driving:
-		buttons["interact"].setup("interact", "✋", UIKit.ACCENT, "Use", 42.0)
-	buttons["sprint"].set_glyph("⊘" if driving else "»", "Brake" if driving else "Run")
+	if driving:
+		buttons["interact"].setup("interact", "exit", UIKit.BAD, "Exit", 42.0)
+	else:
+		buttons["interact"].setup("interact", "use", UIKit.ACCENT, "Use", 42.0)
+	buttons["sprint"].set_icon("brake" if driving else "run", "Brake" if driving else "Run")
 	buttons["crouch"].visible = not driving
 	buttons["jump"].visible = not driving
 	if driving:
@@ -201,9 +201,7 @@ func set_edit_mode(enabled: bool) -> void:
 
 func _build_edit_bar() -> void:
 	_edit_bar = UIKit.panel(UIKit.BG_RAISED)
-	_edit_bar.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	_edit_bar.position = Vector2(size.x * 0.5 - 190.0, 20.0)
-	_edit_bar.custom_minimum_size = Vector2(380, 0)
+	UIKit.anchor_to(_edit_bar, "center", "top", Vector2(0, 20), Vector2(380, 0))
 	var v := UIKit.vbox(8)
 	_edit_bar.add_child(v)
 	v.add_child(UIKit.label("Drag the buttons where you want them", 14,

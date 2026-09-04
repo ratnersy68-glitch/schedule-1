@@ -1,0 +1,47 @@
+# Publishes the exported web build to GitHub Pages.
+#
+# The build itself is committed under docs/play, so this workflow only has to
+# upload it. That also means Pages can be served straight from the branch
+# (Settings > Pages > Deploy from a branch > /docs) if this workflow cannot
+# enable Pages on its own.
+name: Deploy web build
+
+on:
+  push:
+    branches: [claude/mobile-business-empire-game-9pm0j3]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

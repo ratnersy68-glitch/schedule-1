@@ -26,13 +26,13 @@ var _prompt_sub: Label
 var _toast_box: VBoxContainer
 var _fps_label: Label
 var _weather_label: Label
-var _stars: Array[Label] = []
+var _pips: Array[PanelContainer] = []
 var _player: Node3D = null
 var _clock_accum := 0.0
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	UIKit.fill_viewport(self)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build()
 	_connect()
@@ -55,10 +55,12 @@ func _build() -> void:
 
 func _build_top_bar() -> void:
 	var bar := UIKit.panel(Color(UIKit.BG.r, UIKit.BG.g, UIKit.BG.b, 0.72))
-	bar.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	bar.anchor_left = 0.0
+	bar.anchor_right = 1.0
 	bar.offset_left = 14
 	bar.offset_right = -14
 	bar.offset_top = 12
+	bar.offset_bottom = 12
 	bar.custom_minimum_size = Vector2(0, 44)
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bar)
@@ -84,13 +86,17 @@ func _build_top_bar() -> void:
 	_district_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(_district_label)
 
-	_wanted_row = UIKit.hbox(3)
+	_wanted_row = UIKit.hbox(4)
 	h.add_child(_wanted_row)
+	_wanted_row.add_child(UIKit.label("HEAT", 11, UIKit.TEXT_FAINT))
 	for i in 4:
-		var star := UIKit.label("★", 18, Color(UIKit.TEXT_FAINT.r, UIKit.TEXT_FAINT.g,
-			UIKit.TEXT_FAINT.b, 0.25))
-		_wanted_row.add_child(star)
-		_stars.append(star)
+		var pip := PanelContainer.new()
+		pip.custom_minimum_size = Vector2(14, 14)
+		pip.add_theme_stylebox_override("panel",
+			UIKit.flat_style(Color(UIKit.TEXT_FAINT.r, UIKit.TEXT_FAINT.g,
+				UIKit.TEXT_FAINT.b, 0.22), 4))
+		_wanted_row.add_child(pip)
+		_pips.append(pip)
 
 	_fps_label = UIKit.label("", 12, UIKit.TEXT_FAINT)
 	h.add_child(_fps_label)
@@ -105,10 +111,7 @@ func _vsep() -> Control:
 
 func _build_minimap() -> void:
 	var holder := Control.new()
-	holder.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	holder.position = Vector2(-160, 66)
-	holder.custom_minimum_size = Vector2(132, 132)
-	holder.size = Vector2(132, 132)
+	UIKit.anchor_to(holder, "right", "top", Vector2(18, 66), Vector2(132, 132))
 	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(holder)
 
@@ -119,10 +122,7 @@ func _build_minimap() -> void:
 
 func _build_vitals() -> void:
 	var box := UIKit.vbox(6)
-	box.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-	box.position = Vector2(24, -230)
-	box.custom_minimum_size = Vector2(190, 0)
-	box.size = Vector2(190, 70)
+	UIKit.anchor_to(box, "left", "bottom", Vector2(26, 210), Vector2(190, 74))
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(box)
 
@@ -145,9 +145,8 @@ func _build_vitals() -> void:
 
 func _build_objective() -> void:
 	_objective_panel = UIKit.panel(Color(UIKit.BG.r, UIKit.BG.g, UIKit.BG.b, 0.72))
-	_objective_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_objective_panel.position = Vector2(-268, 206)
-	_objective_panel.custom_minimum_size = Vector2(244, 0)
+	# Height 0 lets the card size itself to the objective text and grow down.
+	UIKit.anchor_to(_objective_panel, "right", "top", Vector2(18, 210), Vector2(244, 0))
 	_objective_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_objective_panel)
 
@@ -164,16 +163,14 @@ func _build_objective() -> void:
 
 func _build_prompt() -> void:
 	_prompt_panel = UIKit.panel(Color(UIKit.BG_PANEL.r, UIKit.BG_PANEL.g, UIKit.BG_PANEL.b, 0.9))
-	_prompt_panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	_prompt_panel.position = Vector2(-150, -170)
-	_prompt_panel.custom_minimum_size = Vector2(300, 0)
+	UIKit.anchor_to(_prompt_panel, "center", "bottom", Vector2(0, 168), Vector2(320, 66))
 	_prompt_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_prompt_panel)
 
 	var h := UIKit.hbox(10)
 	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_prompt_panel.add_child(h)
-	_prompt_icon = UIKit.label("●", 22, UIKit.ACCENT)
+	_prompt_icon = UIKit.label("..", 16, UIKit.ACCENT)
 	_prompt_icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	h.add_child(_prompt_icon)
 	var v := UIKit.vbox(1)
@@ -188,9 +185,7 @@ func _build_prompt() -> void:
 
 func _build_toasts() -> void:
 	_toast_box = UIKit.vbox(6)
-	_toast_box.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	_toast_box.position = Vector2(-190, 72)
-	_toast_box.custom_minimum_size = Vector2(380, 0)
+	UIKit.anchor_to(_toast_box, "center", "top", Vector2(0, 74), Vector2(380, 0))
 	_toast_box.alignment = BoxContainer.ALIGNMENT_BEGIN
 	_toast_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_toast_box)
@@ -251,8 +246,9 @@ func _refresh_money() -> void:
 
 
 func _on_weather_changed(weather_id: String) -> void:
-	var glyphs := {"clear": "☀", "overcast": "☁", "rain": "☂", "fog": "≈", "storm": "⚡"}
-	_weather_label.text = String(glyphs.get(weather_id, ""))
+	var names := {"clear": "Clear", "overcast": "Overcast", "rain": "Rain",
+		"fog": "Fog", "storm": "Storm"}
+	_weather_label.text = String(names.get(weather_id, ""))
 
 
 func _on_suspicion_changed(value: float) -> void:
@@ -263,11 +259,11 @@ func _on_suspicion_changed(value: float) -> void:
 
 
 func _on_wanted_changed(level: int) -> void:
-	for i in _stars.size():
+	for i in _pips.size():
 		var lit := i < level
-		_stars[i].add_theme_color_override("font_color",
+		_pips[i].add_theme_stylebox_override("panel", UIKit.flat_style(
 			UIKit.BAD if lit else Color(UIKit.TEXT_FAINT.r, UIKit.TEXT_FAINT.g,
-				UIKit.TEXT_FAINT.b, 0.25))
+				UIKit.TEXT_FAINT.b, 0.22), 4))
 	if level > 0:
 		_pulse(_wanted_row)
 
@@ -328,7 +324,7 @@ func _on_interaction_target(payload: Dictionary) -> void:
 		_prompt_panel.visible = false
 		return
 	_prompt_panel.visible = true
-	_prompt_icon.text = String(payload.get("icon", "●"))
+	_prompt_icon.text = String(payload.get("icon", ".."))
 	_prompt_label.text = String(payload.get("prompt", ""))
 	var sub := String(payload.get("subtitle", ""))
 	if not bool(payload.get("enabled", true)):

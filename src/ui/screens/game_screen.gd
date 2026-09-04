@@ -21,7 +21,7 @@ var _max_width: float = 720.0
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	UIKit.fill_viewport(self)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build_chrome()
 	build_content()
@@ -75,7 +75,7 @@ func _build_chrome() -> void:
 	header_extra = UIKit.hbox(8)
 	header.add_child(header_extra)
 
-	var close_btn := UIKit.icon_button("✕", 44.0)
+	var close_btn := UIKit.icon_button("X", 44.0)
 	close_btn.pressed.connect(close)
 	header.add_child(close_btn)
 

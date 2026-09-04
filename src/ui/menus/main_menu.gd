@@ -106,7 +106,7 @@ func _slot_row(slot: int) -> Control:
 	load_btn.add_theme_font_size_override("font_size", 13)
 	load_btn.pressed.connect(func(): SceneRouter.load_game(slot))
 	h.add_child(load_btn)
-	var del := UIKit.button("✕", "ghost")
+	var del := UIKit.button("x", "ghost")
 	del.disabled = meta.is_empty()
 	del.custom_minimum_size = Vector2(44, 44)
 	del.pressed.connect(func():

@@ -12,6 +12,9 @@ build/
 *.pck
 *.zip
 
+# ...but the published web build needs its data pack committed.
+!docs/play/*.pck
+
 # Editor / OS
 *.translation
 .DS_Store
