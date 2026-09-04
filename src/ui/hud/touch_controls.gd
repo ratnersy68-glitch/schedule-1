@@ -22,6 +22,7 @@ var _left_handed := false
 
 func _ready() -> void:
 	UIKit.fill_viewport(self)
+	theme = UITheme.get_theme()
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build()
 	_apply_layout()
@@ -156,8 +157,9 @@ func _default_positions(vp: Vector2) -> Dictionary:
 		bottom - interact.size.y - sprint.size.y - 26.0), sprint.size.x)
 	out["crouch"] = mirror.call(Vector2(right - sprint.size.x - crouch.size.x - 14.0,
 		bottom - interact.size.y - crouch.size.y - 8.0), crouch.size.x)
-	out["inventory"] = Vector2(m, m + 58.0)
-	out["phone"] = Vector2(m, m + 58.0 + phone.size.y + 14.0)
+	# Below the money and place cards, which occupy the top-left corner.
+	out["inventory"] = Vector2(m - 4.0, 78.0)
+	out["phone"] = Vector2(m - 4.0, 78.0 + phone.size.y + 12.0)
 	return out
 
 

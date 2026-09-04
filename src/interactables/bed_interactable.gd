@@ -20,7 +20,7 @@ func subtitle() -> String:
 
 
 func icon() -> String:
-	return "ZZ"
+	return "bed"
 
 
 func can_use(_player: Node3D) -> bool:

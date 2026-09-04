@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("business", "Empire", "BIZ", UIKit.WARN)
+	super._init("business", "Empire", "business", UIKit.WARN)
 
 
 func badge_count() -> int:

@@ -23,7 +23,7 @@ func subtitle() -> String:
 
 
 func icon() -> String:
-	return "ST"
+	return "storage"
 
 
 func can_use(_player: Node3D) -> bool:

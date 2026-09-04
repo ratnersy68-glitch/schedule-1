@@ -6,7 +6,7 @@ static var _amount: int = 100
 
 
 func _init() -> void:
-	super._init("bank", "Bank", "BNK", UIKit.MONEY)
+	super._init("bank", "Bank", "bank", UIKit.MONEY)
 
 
 func build(container: VBoxContainer) -> void:

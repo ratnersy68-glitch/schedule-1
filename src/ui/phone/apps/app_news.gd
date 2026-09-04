@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("news", "Ledger", "LDG", UIKit.TEXT_DIM)
+	super._init("news", "Ledger", "news", UIKit.TEXT_DIM)
 
 
 func build(container: VBoxContainer) -> void:
@@ -28,7 +28,7 @@ func build(container: VBoxContainer) -> void:
 			var power := float(mod["power"])
 			var text := "%s %s%d%%" % [kind.capitalize(),
 				"+" if power >= 1.0 else "", int((power - 1.0) * 100.0)]
-			container.add_child(UIKit.list_row("EV",
+			container.add_child(UIKit.list_row("warning",
 				UIKit.GOOD if power >= 1.0 else UIKit.BAD,
 				text, where, "%.1fh left" % maxf(0.0, hours), UIKit.TEXT_DIM))
 

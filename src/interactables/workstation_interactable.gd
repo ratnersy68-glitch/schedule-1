@@ -69,7 +69,7 @@ func subtitle() -> String:
 
 
 func icon() -> String:
-	return "WK"
+	return "workstation"
 
 
 func can_use(player: Node3D) -> bool:

@@ -6,6 +6,7 @@ var _content: VBoxContainer
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	theme = UITheme.get_theme()
 	_build()
 	AudioDirector.set_music("music_calm", 1.5)
 
@@ -20,6 +21,14 @@ func _build() -> void:
 	var skyline := MenuSkyline.new()
 	skyline.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(skyline)
+
+	# The skyline is atmosphere, not content: hold it back so type stays
+	# readable over it wherever the buildings happen to fall.
+	var scrim := ColorRect.new()
+	scrim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	scrim.color = Color(UIKit.BG.r, UIKit.BG.g, UIKit.BG.b, 0.55)
+	scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(scrim)
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -36,8 +45,8 @@ func _build() -> void:
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	left.alignment = BoxContainer.ALIGNMENT_CENTER
 	columns.add_child(left)
-	left.add_child(UIKit.label(GameConfig.GAME_TITLE, 54, UIKit.ACCENT))
-	left.add_child(UIKit.label(GameConfig.GAME_SUBTITLE.to_upper(), 17, UIKit.TEXT_DIM))
+	left.add_child(UIKit.display(GameConfig.GAME_TITLE, 54, UIKit.ACCENT))
+	left.add_child(UIKit.eyebrow(GameConfig.GAME_SUBTITLE, UIKit.TEXT_DIM))
 	left.add_child(UIKit.spacer(14))
 	var pitch := UIKit.body(
 		"You have a hundred and forty in your pocket and a container on Pier 3 with your " +
@@ -49,11 +58,16 @@ func _build() -> void:
 	left.add_child(UIKit.label("v" + str(ProjectSettings.get_setting("application/config/version", "0.1")),
 		12, UIKit.TEXT_FAINT))
 
+	var right_wrap := CenterContainer.new()
+	right_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	columns.add_child(right_wrap)
+
+	var card := UIKit.panel(Color(UIKit.SURFACE.r, UIKit.SURFACE.g, UIKit.SURFACE.b, 0.94))
+	card.custom_minimum_size = Vector2(340, 0)
+	right_wrap.add_child(card)
+
 	var right := UIKit.vbox(10)
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right.alignment = BoxContainer.ALIGNMENT_CENTER
-	right.custom_minimum_size = Vector2(320, 0)
-	columns.add_child(right)
+	card.add_child(right)
 	_content = right
 	_rebuild_buttons()
 

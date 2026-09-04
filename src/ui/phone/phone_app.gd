@@ -8,7 +8,7 @@ extends RefCounted
 
 var id: String = "app"
 var title: String = "App"
-var glyph: String = "AP"
+var glyph: String = "use"
 var accent: Color = UIKit.ACCENT
 var badge: int = 0
 

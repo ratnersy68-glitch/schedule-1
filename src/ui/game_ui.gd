@@ -40,6 +40,28 @@ func _ready() -> void:
 	EventBus.ui_input_blocked.connect(_on_ui_blocked)
 	EventBus.player_busted.connect(func(_p): AudioDirector.play("bust", -6.0))
 	set_process(true)
+	_maybe_start_ui_tour()
+
+
+## Development hook: "--uidemo" walks the interface through its screens on a
+## timer so they can be captured and reviewed without driving touch input.
+## Inert unless the flag is passed.
+func _maybe_start_ui_tour() -> void:
+	var args := OS.get_cmdline_user_args() + OS.get_cmdline_args()
+	if not args.has("--uidemo"):
+		return
+	await get_tree().create_timer(2.0).timeout
+	var tour := ["inventory", "property", "production", "skills", "settings"]
+	for screen_id in tour:
+		if screens != null:
+			screens.close_all()
+			screens.open(screen_id, {"property": "dockside_lockup", "station": 0})
+		await get_tree().create_timer(6.0).timeout
+	if screens != null:
+		screens.close_all()
+	phone.open()
+	await get_tree().create_timer(6.0).timeout
+	phone.open_app("business")
 
 
 func _process(_delta: float) -> void:

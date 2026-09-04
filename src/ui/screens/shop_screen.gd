@@ -66,7 +66,7 @@ func _stock_row(entry: Dictionary) -> Control:
 	row.add_child(v)
 
 	var head := UIKit.hbox(8)
-	head.add_child(UIKit.label(GameData.item_icon(item_id), 20, GameData.item_color(item_id)))
+	head.add_child(UIKit.icon_tile(GameData.item_icon(item_id), GameData.item_color(item_id), 32.0))
 	var n := UIKit.label(GameData.item_name(item_id), 16)
 	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(n)

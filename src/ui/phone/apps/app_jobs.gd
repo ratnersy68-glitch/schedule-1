@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("jobs", "Jobs", "JOB", UIKit.WARN)
+	super._init("jobs", "Jobs", "jobs", UIKit.WARN)
 
 
 func badge_count() -> int:
@@ -22,7 +22,7 @@ func build(container: VBoxContainer) -> void:
 		container.add_child(UIKit.label("DONE", 11, UIKit.TEXT_FAINT))
 		for mid in MissionService.completed:
 			var m: Dictionary = GameData.mission(String(mid))
-			container.add_child(UIKit.list_row("OK", UIKit.GOOD,
+			container.add_child(UIKit.list_row("check", UIKit.GOOD,
 				String(m.get("title", mid)),
 				String(m.get("kind", "")).capitalize(), "", UIKit.TEXT_FAINT))
 

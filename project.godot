@@ -32,8 +32,9 @@ SceneRouter="*res://src/autoload/scene_router.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+; 2D reference size. Smaller base = physically larger UI once stretched.
+window/size/viewport_width=960
+window/size/viewport_height=540
 window/size/window_width_override=1280
 window/size/window_height_override=720
 ; 4 = sensor landscape: landscape either way up. This is a landscape game.

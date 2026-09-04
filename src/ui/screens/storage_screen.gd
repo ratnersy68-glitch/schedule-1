@@ -110,12 +110,12 @@ func _packaging_row(inv: Inventory, index: int) -> Control:
 	h.add_child(UIKit.label("Wrap:", 12, UIKit.TEXT_FAINT))
 	for pack_id in GameData.packaging_ids:
 		var have := GameState.inventory.count(pack_id) + _property().storage.count(pack_id)
-		var b := UIKit.button(GameData.item_icon(pack_id))
+		var b := UIKit.icon_button(GameData.item_icon(pack_id), 42.0,
+			GameData.item_color(pack_id))
 		b.tooltip_text = "%s (+%d%% value, -%d%% heat) - have %d" % [
 			GameData.item_name(pack_id),
 			int(float(GameData.item(pack_id).get("value_bonus", 0.0)) * 100.0),
 			int(float(GameData.item(pack_id).get("heat_reduction", 0.0)) * 100.0), have]
-		b.custom_minimum_size = Vector2(44, 40)
 		b.disabled = have <= 0
 		b.pressed.connect(func():
 			var moved := inv.package_slot(index, pack_id, _property().storage)

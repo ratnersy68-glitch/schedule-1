@@ -26,6 +26,7 @@ var _tick := 0.0
 
 func _ready() -> void:
 	UIKit.fill_viewport(self)
+	theme = UITheme.get_theme()
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_register_apps()
 	_build()
@@ -86,14 +87,14 @@ func _build() -> void:
 
 	# Title row with back button.
 	var head := UIKit.hbox(8)
-	_back = UIKit.icon_button("<", 38.0)
+	_back = UIKit.icon_button("back", 38.0, UIKit.TEXT_DIM)
 	_back.pressed.connect(go_home)
 	_back.visible = false
 	head.add_child(_back)
 	_title = UIKit.title("Underlight OS", 19)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(_title)
-	var close_btn := UIKit.icon_button("X", 38.0)
+	var close_btn := UIKit.icon_button("close", 38.0, UIKit.TEXT_DIM)
 	close_btn.pressed.connect(close)
 	head.add_child(close_btn)
 	column.add_child(head)
@@ -126,7 +127,7 @@ func _populate_home() -> void:
 
 
 func _app_icon(app_id: String) -> Control:
-	var glyph := "AP"
+	var glyph := "use"
 	var title := app_id.capitalize()
 	var accent := UIKit.ACCENT
 	var badge := 0
@@ -137,24 +138,34 @@ func _app_icon(app_id: String) -> Control:
 		accent = app.accent
 		badge = app.badge_count()
 	elif app_id == "inventory":
-		glyph = "BAG"
+		glyph = "bag"
 		title = "Pockets"
 		accent = UIKit.GOOD
 	elif app_id == "settings":
-		glyph = "SET"
+		glyph = "settings"
 		title = "Settings"
 		accent = UIKit.TEXT_DIM
 
-	var holder := UIKit.vbox(4)
+	var holder := UIKit.vbox(5)
 	var btn := Button.new()
-	btn.custom_minimum_size = Vector2(66, 66)
-	btn.text = glyph
-	btn.add_theme_font_size_override("font_size", 19)
-	btn.add_theme_color_override("font_color", accent)
-	btn.add_theme_stylebox_override("normal", UIKit.flat_style(accent.darkened(0.62), 16))
-	btn.add_theme_stylebox_override("hover", UIKit.flat_style(accent.darkened(0.5), 16))
-	btn.add_theme_stylebox_override("pressed", UIKit.flat_style(accent.darkened(0.72), 16))
+	btn.custom_minimum_size = Vector2(64, 64)
+	var tile := UIKit.flat_style(Color(accent.r, accent.g, accent.b, 0.16), 17)
+	tile.border_color = Color(accent.r, accent.g, accent.b, 0.34)
+	tile.set_border_width_all(1)
+	var tile_hover := UIKit.flat_style(Color(accent.r, accent.g, accent.b, 0.26), 17)
+	var tile_press := UIKit.flat_style(Color(accent.r, accent.g, accent.b, 0.09), 17)
+	btn.add_theme_stylebox_override("normal", tile)
+	btn.add_theme_stylebox_override("hover", tile_hover)
+	btn.add_theme_stylebox_override("pressed", tile_press)
+	btn.add_theme_stylebox_override("focus", tile)
 	btn.pressed.connect(func(): open_app(app_id))
+	var icon := IconRect.create(glyph, 30.0, accent)
+	icon.set_anchors_preset(Control.PRESET_FULL_RECT)
+	icon.offset_left = 17
+	icon.offset_top = 17
+	icon.offset_right = -17
+	icon.offset_bottom = -17
+	btn.add_child(icon)
 	holder.add_child(btn)
 	var l := UIKit.label(title, 11, UIKit.TEXT_DIM, HORIZONTAL_ALIGNMENT_CENTER)
 	holder.add_child(l)

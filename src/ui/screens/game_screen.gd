@@ -22,6 +22,7 @@ var _max_width: float = 720.0
 
 func _ready() -> void:
 	UIKit.fill_viewport(self)
+	theme = UITheme.get_theme()
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build_chrome()
 	build_content()
@@ -53,8 +54,10 @@ func _build_chrome() -> void:
 	margin.add_child(centerer)
 
 	_panel = UIKit.panel(UIKit.BG_RAISED)
-	_panel.custom_minimum_size = Vector2(minf(_max_width, get_viewport_rect().size.x - 40.0), 0)
-	_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var vp := get_viewport_rect().size
+	_panel.custom_minimum_size = Vector2(minf(_max_width, vp.x - 40.0),
+		minf(560.0, vp.y - 40.0))
+	_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	centerer.add_child(_panel)
 
 	var column := UIKit.vbox(10)
@@ -75,14 +78,15 @@ func _build_chrome() -> void:
 	header_extra = UIKit.hbox(8)
 	header.add_child(header_extra)
 
-	var close_btn := UIKit.icon_button("X", 44.0)
+	var close_btn := UIKit.icon_button("close", 44.0, UIKit.TEXT_DIM)
 	close_btn.pressed.connect(close)
 	header.add_child(close_btn)
 
 	column.add_child(UIKit.separator())
 
 	var scroll := UIKit.scroll()
-	scroll.custom_minimum_size = Vector2(0, 260)
+	scroll.custom_minimum_size = Vector2(0, 300)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(scroll)
 
 	content = UIKit.vbox(10)

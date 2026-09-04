@@ -42,7 +42,7 @@ func _recipe_row(recipe_id: String) -> Control:
 	row.add_child(v)
 
 	var head := UIKit.hbox(8)
-	head.add_child(UIKit.label(GameData.item_icon(out_id), 20, GameData.item_color(out_id)))
+	head.add_child(UIKit.icon_tile(GameData.item_icon(out_id), GameData.item_color(out_id), 32.0))
 	var n := UIKit.label(String(r.get("name", recipe_id)), 16)
 	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(n)

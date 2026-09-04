@@ -8,25 +8,40 @@ extends RefCounted
 ## smaller than 44 units, which is the smallest comfortable thumb target.
 
 # --- Palette ---------------------------------------------------------------
-const BG            := Color(0.043, 0.055, 0.086)
-const BG_RAISED     := Color(0.071, 0.086, 0.125)
-const BG_PANEL      := Color(0.094, 0.113, 0.157)
-const BG_INPUT      := Color(0.129, 0.149, 0.196)
-const LINE          := Color(0.20, 0.23, 0.29)
-const TEXT          := Color(0.90, 0.93, 0.96)
-const TEXT_DIM      := Color(0.58, 0.63, 0.70)
-const TEXT_FAINT    := Color(0.40, 0.45, 0.52)
-const ACCENT        := Color(0.33, 0.78, 1.00)
-const ACCENT_DEEP   := Color(0.20, 0.48, 0.85)
-const GOOD          := Color(0.35, 0.85, 0.58)
-const WARN          := Color(0.98, 0.75, 0.30)
-const BAD           := Color(0.98, 0.38, 0.42)
-const MONEY         := Color(0.55, 0.92, 0.65)
-const VIOLET        := Color(0.66, 0.45, 1.00)
+# Neon-noir: a deep blue-black city at night, lit by cyan Lumen and sodium
+# street lamps. Surfaces step up in lightness as they come forward, so depth
+# reads without needing drop shadows everywhere.
+const BG            := Color(0.024, 0.031, 0.059)   # the page behind everything
+const SURFACE       := Color(0.055, 0.075, 0.122)   # cards and panels
+const SURFACE_RAISED:= Color(0.075, 0.102, 0.161)   # rows sitting on a card
+const SURFACE_INPUT := Color(0.106, 0.137, 0.204)   # controls you can press
+const OVERLAY       := Color(0.016, 0.022, 0.043)   # modal backdrop
+
+const LINE          := Color(0.149, 0.192, 0.286)
+const LINE_SOFT     := Color(0.149, 0.192, 0.286, 0.5)
+
+const TEXT          := Color(0.910, 0.933, 0.973)
+const TEXT_DIM      := Color(0.576, 0.631, 0.722)
+const TEXT_FAINT    := Color(0.357, 0.412, 0.502)
+
+const ACCENT        := Color(0.275, 0.863, 1.000)   # Lumen cyan
+const ACCENT_DEEP   := Color(0.114, 0.435, 0.941)
+const VIOLET        := Color(0.663, 0.482, 1.000)
+const GOOD          := Color(0.247, 0.820, 0.541)
+const WARN          := Color(1.000, 0.745, 0.302)
+const BAD           := Color(1.000, 0.365, 0.420)
+const MONEY         := Color(0.431, 0.906, 0.627)
+
+# Older names kept so existing screens keep compiling.
+const BG_RAISED     := SURFACE_RAISED
+const BG_PANEL      := SURFACE
+const BG_INPUT      := SURFACE_INPUT
 
 const TOUCH_MIN := 46.0
-const RADIUS := 12
-const PAD := 14
+const RADIUS_SM := 10
+const RADIUS := 14
+const RADIUS_LG := 20
+const PAD := 15
 
 
 static func color_for_kind(kind: String) -> Color:
@@ -45,7 +60,7 @@ static func color_for_kind(kind: String) -> Color:
 
 # --- Style boxes -----------------------------------------------------------
 
-static func panel_style(color: Color = BG_PANEL, radius: int = RADIUS,
+static func panel_style(color: Color = SURFACE, radius: int = RADIUS,
 		border: Color = LINE, border_width: int = 1) -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
 	s.bg_color = color
@@ -75,7 +90,7 @@ static func flat_style(color: Color, radius: int = RADIUS) -> StyleBoxFlat:
 
 # --- Controls --------------------------------------------------------------
 
-static func panel(color: Color = BG_PANEL) -> PanelContainer:
+static func panel(color: Color = SURFACE) -> PanelContainer:
 	var p := PanelContainer.new()
 	p.add_theme_stylebox_override("panel", panel_style(color))
 	return p
@@ -85,20 +100,56 @@ static func label(text: String, size: int = 16, color: Color = TEXT,
 		align: int = HORIZONTAL_ALIGNMENT_LEFT) -> Label:
 	var l := Label.new()
 	l.text = text
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_MEDIUM))
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
 	l.horizontal_alignment = align
 	return l
 
 
-static func title(text: String, size: int = 24) -> Label:
+## Small all-caps section marker. Tracking makes short labels read as headings
+## rather than as clipped sentences.
+static func eyebrow(text: String, color: Color = TEXT_FAINT) -> Label:
+	var l := Label.new()
+	l.text = text.to_upper()
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_BOLD))
+	l.add_theme_font_size_override("font_size", 11)
+	l.add_theme_color_override("font_color", color)
+	l.add_theme_constant_override("line_spacing", 0)
+	return l
+
+
+## Numerals that will change while on screen: tabular so nothing shuffles.
+static func numeric(text: String, size: int = 16, color: Color = TEXT,
+		weight: int = UITheme.W_SEMIBOLD) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_override("font", UITheme.font(weight, true))
+	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_color_override("font_color", color)
+	return l
+
+
+static func title(text: String, size: int = 22) -> Label:
 	var l := label(text, size, TEXT)
-	l.add_theme_color_override("font_color", TEXT)
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_BOLD))
+	return l
+
+
+## Display type for the title screen and headline moments.
+static func display(text: String, size: int = 52, color: Color = ACCENT) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_BLACK))
+	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_color_override("font_color", color)
 	return l
 
 
 static func body(text: String, size: int = 14) -> Label:
 	var l := label(text, size, TEXT_DIM)
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_REGULAR))
+	l.add_theme_constant_override("line_spacing", 4)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return l
 
@@ -108,25 +159,33 @@ static func button(text: String, kind: String = "default") -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, TOUCH_MIN)
 	b.add_theme_font_size_override("font_size", 16)
-	var base := BG_INPUT
+	var base := SURFACE_INPUT
 	var fg := TEXT
+	var edge := LINE
 	match kind:
 		"primary":
 			base = ACCENT_DEEP
 			fg = Color.WHITE
+			edge = ACCENT
 		"good":
-			base = Color(0.13, 0.36, 0.26)
+			base = Color(0.055, 0.204, 0.145)
 			fg = GOOD
+			edge = Color(GOOD.r, GOOD.g, GOOD.b, 0.55)
 		"bad":
-			base = Color(0.32, 0.13, 0.16)
+			base = Color(0.220, 0.075, 0.098)
 			fg = BAD
+			edge = Color(BAD.r, BAD.g, BAD.b, 0.5)
 		"ghost":
 			base = Color(0, 0, 0, 0)
 			fg = TEXT_DIM
-	b.add_theme_stylebox_override("normal", _button_style(base))
-	b.add_theme_stylebox_override("hover", _button_style(base.lightened(0.08)))
-	b.add_theme_stylebox_override("pressed", _button_style(base.darkened(0.18)))
-	b.add_theme_stylebox_override("disabled", _button_style(base.darkened(0.45)))
+			edge = Color(0, 0, 0, 0)
+	b.add_theme_font_override("font", UITheme.font(UITheme.W_SEMIBOLD))
+	b.add_theme_stylebox_override("normal", _button_style(base, edge))
+	b.add_theme_stylebox_override("hover", _button_style(base.lightened(0.09), edge))
+	b.add_theme_stylebox_override("pressed", _button_style(base.darkened(0.2), edge))
+	b.add_theme_stylebox_override("disabled",
+		_button_style(Color(SURFACE.r, SURFACE.g, SURFACE.b, 0.85),
+			Color(LINE.r, LINE.g, LINE.b, 0.5)))
 	b.add_theme_stylebox_override("focus", _button_style(base, ACCENT))
 	b.add_theme_color_override("font_color", fg)
 	b.add_theme_color_override("font_hover_color", fg)
@@ -136,21 +195,29 @@ static func button(text: String, kind: String = "default") -> Button:
 
 
 static func _button_style(color: Color, border: Color = Color(0, 0, 0, 0)) -> StyleBoxFlat:
-	var s := flat_style(color, 10)
+	var s := flat_style(color, RADIUS_SM)
 	s.content_margin_left = 16
 	s.content_margin_right = 16
-	s.content_margin_top = 10
-	s.content_margin_bottom = 10
+	s.content_margin_top = 11
+	s.content_margin_bottom = 11
 	if border.a > 0.0:
 		s.border_color = border
-		s.set_border_width_all(2)
+		s.set_border_width_all(1)
 	return s
 
 
-static func icon_button(glyph: String, size: float = 56.0) -> Button:
-	var b := button(glyph)
+static func icon_button(icon_name: String, size: float = 56.0,
+		tint: Color = TEXT) -> Button:
+	var b := button("")
 	b.custom_minimum_size = Vector2(size, size)
-	b.add_theme_font_size_override("font_size", int(size * 0.42))
+	var icon := IconRect.create(icon_name, size * 0.42, tint)
+	icon.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var inset := size * 0.29
+	icon.offset_left = inset
+	icon.offset_top = inset
+	icon.offset_right = -inset
+	icon.offset_bottom = -inset
+	b.add_child(icon)
 	return b
 
 
@@ -203,39 +270,55 @@ static func scroll() -> ScrollContainer:
 	return s
 
 
-## A row with a coloured glyph chip, a title, a subtitle and a trailing value.
+## A row with a tinted icon tile, a title, a subtitle and a trailing value.
+## `glyph` is a UIIcons name.
 static func list_row(glyph: String, glyph_color: Color, title_text: String,
 		subtitle_text: String, trailing: String = "",
 		trailing_color: Color = TEXT) -> PanelContainer:
 	var row := PanelContainer.new()
-	var style := panel_style(BG_RAISED, 10, LINE, 1)
-	style.content_margin_top = 10
-	style.content_margin_bottom = 10
+	var style := panel_style(SURFACE_RAISED, RADIUS_SM, LINE_SOFT, 1)
+	style.content_margin_top = 11
+	style.content_margin_bottom = 11
+	style.content_margin_left = 12
+	style.content_margin_right = 12
 	row.add_theme_stylebox_override("panel", style)
 
 	var h := hbox(12)
 	row.add_child(h)
-
-	var chip := PanelContainer.new()
-	chip.add_theme_stylebox_override("panel", flat_style(glyph_color.darkened(0.55), 9))
-	chip.custom_minimum_size = Vector2(40, 40)
-	var gl := label(glyph, 20, glyph_color, HORIZONTAL_ALIGNMENT_CENTER)
-	gl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chip.add_child(gl)
-	h.add_child(chip)
+	h.add_child(icon_tile(glyph, glyph_color))
 
 	var texts := vbox(2)
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	texts.add_child(label(title_text, 16, TEXT))
+	texts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	texts.add_child(label(title_text, 15, TEXT))
 	if subtitle_text != "":
-		texts.add_child(label(subtitle_text, 12, TEXT_DIM))
+		var sub := label(subtitle_text, 12, TEXT_DIM)
+		sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		texts.add_child(sub)
 	h.add_child(texts)
 
 	if trailing != "":
-		var tl := label(trailing, 16, trailing_color, HORIZONTAL_ALIGNMENT_RIGHT)
+		var tl := numeric(trailing, 15, trailing_color)
+		tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		tl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		h.add_child(tl)
 	return row
+
+
+## A rounded tile carrying an icon, tinted from a single colour.
+static func icon_tile(glyph: String, tint: Color, box: float = 38.0) -> PanelContainer:
+	var tile := PanelContainer.new()
+	var s := flat_style(Color(tint.r, tint.g, tint.b, 0.14), RADIUS_SM)
+	s.border_color = Color(tint.r, tint.g, tint.b, 0.32)
+	s.set_border_width_all(1)
+	tile.add_theme_stylebox_override("panel", s)
+	tile.custom_minimum_size = Vector2(box, box)
+	tile.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var icon := IconRect.create(glyph, box * 0.58, tint)
+	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tile.add_child(icon)
+	return tile
 
 
 ## A labelled key/value line, used all over the stat panels.
@@ -244,7 +327,9 @@ static func stat_line(key: String, value: String, value_color: Color = TEXT) -> 
 	var k := label(key, 13, TEXT_DIM)
 	k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(k)
-	h.add_child(label(value, 13, value_color, HORIZONTAL_ALIGNMENT_RIGHT))
+	var v := numeric(value, 13, value_color, UITheme.W_MEDIUM)
+	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	h.add_child(v)
 	return h
 
 
@@ -258,7 +343,9 @@ static func chip(text: String, color: Color) -> PanelContainer:
 	s.border_color = color.darkened(0.2)
 	s.set_border_width_all(1)
 	p.add_theme_stylebox_override("panel", s)
-	p.add_child(label(text, 11, color))
+	var l := label(text.to_upper(), 10, color)
+	l.add_theme_font_override("font", UITheme.font(UITheme.W_BOLD))
+	p.add_child(l)
 	return p
 
 
@@ -354,11 +441,26 @@ static func anchor_to(c: Control, h: String, v: String, margin: Vector2,
 		c.offset_top = margin.y
 		c.offset_bottom = margin.y + box.y
 
+	# A zero dimension means "size yourself to your content". Godot grows a
+	# control right and down by default, which pushes a right- or
+	# bottom-anchored card straight off the screen, so aim the growth inward.
+	if box.x <= 0.0:
+		match h:
+			"right":
+				c.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+			"center":
+				c.grow_horizontal = Control.GROW_DIRECTION_BOTH
+			_:
+				c.grow_horizontal = Control.GROW_DIRECTION_END
+	if box.y <= 0.0:
+		c.grow_vertical = Control.GROW_DIRECTION_BEGIN if v == "bottom" \
+			else Control.GROW_DIRECTION_END
+
 
 ## Full-bleed dim backdrop for modal screens.
 static func backdrop(alpha: float = 0.72) -> ColorRect:
 	var c := ColorRect.new()
-	c.color = Color(BG.r, BG.g, BG.b, alpha)
+	c.color = Color(OVERLAY.r, OVERLAY.g, OVERLAY.b, alpha)
 	c.set_anchors_preset(Control.PRESET_FULL_RECT)
 	c.mouse_filter = Control.MOUSE_FILTER_STOP
 	return c

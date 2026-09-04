@@ -67,4 +67,4 @@ func focus_point() -> Vector3:
 
 ## Icon glyph for the interaction button.
 func icon() -> String:
-	return ".."
+	return "use"

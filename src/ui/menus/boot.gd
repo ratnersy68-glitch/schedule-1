@@ -7,6 +7,7 @@ var _moved := false
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	theme = UITheme.get_theme()
 	var bg := ColorRect.new()
 	bg.color = UIKit.BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -34,7 +35,9 @@ func _ready() -> void:
 
 	# CI / smoke-test entry point: "godot -- --autostart" drops straight into a
 	# fresh game so the whole stack can be exercised without a human tapping.
-	var args := OS.get_cmdline_user_args()
+	# On desktop the flag arrives after "--"; the web shell passes it as a
+	# plain engine argument. Check both so smoke tests work everywhere.
+	var args := OS.get_cmdline_user_args() + OS.get_cmdline_args()
 	if args.has("--autostart"):
 		_moved = true
 		call_deferred("_autostart")

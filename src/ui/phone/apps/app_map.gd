@@ -4,7 +4,7 @@ extends PhoneApp
 
 
 func _init() -> void:
-	super._init("map", "Map", "MAP", UIKit.ACCENT)
+	super._init("map", "Map", "map", UIKit.ACCENT)
 
 
 func build(container: VBoxContainer) -> void:

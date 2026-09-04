@@ -20,6 +20,7 @@ var _refresh := 0.0
 func _ready() -> void:
 	custom_minimum_size = Vector2(132, 132)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	clip_contents = true
 	set_process(true)
 
 
@@ -59,17 +60,16 @@ func _world_to_map(world: Vector3, center: Vector2, yaw: float) -> Vector2:
 	var rel := Vector2(world.x - origin.x, world.z - origin.z)
 	if rotate_with_player:
 		rel = rel.rotated(yaw)
-	var scale := (size.x * 0.5 - 6.0) / view_radius
+	var scale := (size.x * 0.5) / view_radius
 	return center + rel * scale
 
 
 func _draw() -> void:
 	var center := size * 0.5
-	var radius := size.x * 0.5
+	var rect := Rect2(Vector2.ZERO, size)
 
-	draw_circle(center, radius, Color(UIKit.BG.r, UIKit.BG.g, UIKit.BG.b, 0.82))
+	draw_rect(rect, UIKit.BG)
 	if player == null or not is_instance_valid(player):
-		draw_arc(center, radius - 1.0, 0.0, TAU, 48, UIKit.LINE, 2.0, true)
 		return
 
 	var yaw := player.rotation.y if rotate_with_player else 0.0
@@ -84,13 +84,13 @@ func _draw() -> void:
 			_world_to_map(Vector3(c1.x, 0, c0.z), center, yaw),
 			_world_to_map(c1, center, yaw),
 			_world_to_map(Vector3(c0.x, 0, c1.z), center, yaw)])
-		var col: Color = GameData.district(did).get("palette", [UIKit.BG_PANEL])[0]
+		var col: Color = GameData.district(did).get("palette", [UIKit.SURFACE])[0]
 		if not GameState.district_unlocked(did):
-			col = col.darkened(0.6)
-		draw_colored_polygon(pts, Color(col.r, col.g, col.b, 0.5))
+			col = col.darkened(0.65)
+		draw_colored_polygon(pts, Color(col.r, col.g, col.b, 0.75))
 
 	# Roads.
-	var road_col := Color(0.22, 0.24, 0.28, 0.9)
+	var road_col := Color(0.34, 0.40, 0.50, 0.85)
 	for z in CityBuilder.ROAD_Z:
 		draw_line(_world_to_map(Vector3(-20, 0, z), center, yaw),
 			_world_to_map(Vector3(400, 0, z), center, yaw), road_col, 2.0)
@@ -102,33 +102,32 @@ func _draw() -> void:
 	for prop in GameState.all_owned_properties():
 		var p: Vector3 = GameData.property(prop.id).get("position", Vector3.ZERO)
 		var mp := _world_to_map(p, center, yaw)
-		if mp.distance_to(center) < radius - 4.0:
-			draw_rect(Rect2(mp - Vector2(3, 3), Vector2(6, 6)), UIKit.GOOD)
+		draw_rect(Rect2(mp - Vector2(3.5, 3.5), Vector2(7, 7)), UIKit.GOOD)
 
 	# People.
 	for dot in _npc_dots:
-		var mp2 := _world_to_map(dot["pos"], center, yaw)
-		if mp2.distance_to(center) < radius - 4.0:
-			draw_circle(mp2, float(dot["size"]), dot["color"])
+		draw_circle(_world_to_map(dot["pos"], center, yaw), float(dot["size"]), dot["color"])
 
-	# Objective.
+	# Objective, pinned to the edge when it is off the map.
 	if has_objective:
 		var mo := _world_to_map(objective_pos, center, yaw)
-		var clamped := mo
-		if mo.distance_to(center) > radius - 8.0:
-			clamped = center + (mo - center).normalized() * (radius - 8.0)
-		draw_circle(clamped, 5.0, UIKit.WARN)
-		draw_arc(clamped, 8.0, 0.0, TAU, 20, UIKit.WARN, 1.5, true)
+		var limit := size.x * 0.5 - 9.0
+		var off := mo - center
+		if absf(off.x) > limit or absf(off.y) > limit:
+			var scale: float = limit / maxf(absf(off.x), absf(off.y))
+			mo = center + off * scale
+		draw_circle(mo, 5.0, UIKit.WARN)
+		draw_arc(mo, 8.5, 0.0, TAU, 20, Color(UIKit.WARN.r, UIKit.WARN.g, UIKit.WARN.b, 0.6),
+			1.5, true)
 
 	# The player, always a triangle pointing up.
-	var tri := PackedVector2Array([
-		center + Vector2(0, -7), center + Vector2(-5, 5), center + Vector2(5, 5)])
-	draw_colored_polygon(tri, UIKit.ACCENT)
+	draw_colored_polygon(PackedVector2Array([
+		center + Vector2(0, -8), center + Vector2(-5.5, 5.5),
+		center + Vector2(5.5, 5.5)]), UIKit.ACCENT)
+	draw_circle(center, 2.0, UIKit.BG)
 
-	draw_arc(center, radius - 1.0, 0.0, TAU, 48, UIKit.LINE, 2.0, true)
-
-	# North marker.
-	var north := Vector2(0, -1).rotated(yaw) * (radius - 12.0)
-	var font := ThemeDB.fallback_font
-	draw_string(font, center + north - Vector2(4, -4), "N",
-		HORIZONTAL_ALIGNMENT_CENTER, -1, 12, UIKit.TEXT_DIM)
+	# North marker rides the compass.
+	var north := Vector2(0, -1).rotated(yaw) * (size.x * 0.5 - 11.0)
+	draw_string(UITheme.font(UITheme.W_BOLD), center + north + Vector2(-4, 4), "N",
+		HORIZONTAL_ALIGNMENT_CENTER, -1, 11, Color(UIKit.TEXT_DIM.r, UIKit.TEXT_DIM.g,
+			UIKit.TEXT_DIM.b, 0.9))

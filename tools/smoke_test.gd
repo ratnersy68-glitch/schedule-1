@@ -16,6 +16,7 @@ var _failures: Array[String] = []
 func _ready() -> void:
 	print("\n=== UNDERLIGHT smoke test ===\n")
 	_test_content_integrity()
+	_test_interface_theme()
 	_test_inventory()
 	_test_economy()
 	_test_production()
@@ -78,6 +79,40 @@ func _test_content_integrity() -> void:
 			break
 		mid = String(GameData.missions[mid].get("next", ""))
 	check("main story chain resolves", chain_ok and seen >= 10, "%d chapters" % seen)
+
+
+func _test_interface_theme() -> void:
+	section("Interface theme")
+	var base := UITheme.base_font()
+	check("interface font loads", base != null and base is FontFile)
+	if base == null:
+		return
+	check("font has glyphs", base.get_face_count() >= 1)
+
+	var regular := UITheme.font(UITheme.W_REGULAR)
+	var black := UITheme.font(UITheme.W_BLACK)
+	check("weights are distinct resources", regular != black)
+	# A heavier weight must actually be wider, or the variable axis is not
+	# being applied and every weight is silently identical.
+	var w_regular := regular.get_string_size("Cobalt Bay 1234", HORIZONTAL_ALIGNMENT_LEFT, -1, 32).x
+	var w_black := black.get_string_size("Cobalt Bay 1234", HORIZONTAL_ALIGNMENT_LEFT, -1, 32).x
+	check("weight axis changes metrics", w_black > w_regular,
+		"%.1f vs %.1f" % [w_regular, w_black])
+
+	# Tabular numerals must all advance the same width.
+	var tab := UITheme.font(UITheme.W_SEMIBOLD, true)
+	var w_ones := tab.get_string_size("111111", HORIZONTAL_ALIGNMENT_LEFT, -1, 24).x
+	var w_mixed := tab.get_string_size("098472", HORIZONTAL_ALIGNMENT_LEFT, -1, 24).x
+	check("numerals are tabular", absf(w_ones - w_mixed) < 0.5,
+		"%.2f vs %.2f" % [w_ones, w_mixed])
+
+	var theme := UITheme.get_theme()
+	check("theme built", theme != null)
+	check("theme carries the font", theme.default_font != null)
+	check("buttons are styled", theme.get_stylebox("normal", "Button") != null)
+	check("panels are styled", theme.get_stylebox("panel", "PanelContainer") != null)
+	check("sliders have a grabber", theme.get_icon("grabber", "HSlider") != null)
+	check("check buttons have a switch", theme.get_icon("checked", "CheckButton") != null)
 
 
 func _test_inventory() -> void:
