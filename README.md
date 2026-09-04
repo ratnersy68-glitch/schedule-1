@@ -38,6 +38,21 @@ The site goes live a minute or so later. Choosing *Source: GitHub Actions*
 instead also works and republishes on every push, via
 `.github/workflows/pages.yml`.
 
+### Installing it as an app
+
+The web build is a Progressive Web App, so it installs to a home screen with
+its own icon and launches full screen with no browser chrome, and the service
+worker caches the engine so it opens offline after the first run.
+
+- **iPhone / iPad:** open the link in **Safari** (not Chrome - only Safari can
+  install to the home screen on iOS), tap **Share**, then **Add to Home
+  Screen**.
+- **Android:** Chrome offers **Install app** in its menu.
+
+That is as close to a native app as this project gets without a build machine.
+A real iOS app needs a Mac with Xcode; the repo carries an iOS export preset
+for whenever one is available.
+
 Rebuild it with:
 
 ```bash
