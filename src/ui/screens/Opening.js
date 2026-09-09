@@ -250,7 +250,7 @@ export default function Opening({ mount, params, navigate, refresh }) {
       );
 
       const chip = CardView(card, { size: 'fluid', tilt: false, effects: false });
-      const trayCell = h('div', { style: { width: '62px' } }, chip);
+      const trayCell = h('div', { style: { width: '54px' } }, chip);
       tray.append(trayCell);
 
       await wait(Math.max(120, cho.settle * speed));

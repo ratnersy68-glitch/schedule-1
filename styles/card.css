@@ -56,7 +56,7 @@
 .card[data-foil="silver"] .l-foil { opacity: .27; mix-blend-mode: overlay; }
 .card[data-foil="tint"] .l-foil { opacity: .30; mix-blend-mode: soft-light; }
 .card[data-foil="metal"] .l-foil { opacity: .32; mix-blend-mode: overlay; }
-.card[data-foil="superfractor"] .l-foil { opacity: .44; mix-blend-mode: hard-light; }
+.card[data-foil="superfractor"] .l-foil { opacity: .34; mix-blend-mode: hard-light; }
 
 /* the finish shifts with the card as it tilts, like real foil */
 .card[data-foil]:not([data-foil="none"]) .l-foil > svg {
@@ -214,7 +214,7 @@
 
 .card[data-effect="superfractor"] .card-face::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3;
-  background: conic-gradient(from 0deg, rgba(255,240,180,.34), rgba(255,255,255,.05) 22%, rgba(255,210,90,.3) 44%, rgba(255,255,255,.05) 66%, rgba(255,240,180,.34));
+  background: conic-gradient(from 0deg, rgba(255,240,180,.22), rgba(255,255,255,.03) 22%, rgba(255,210,90,.2) 44%, rgba(255,255,255,.03) 66%, rgba(255,240,180,.22));
   mix-blend-mode: overlay;
   animation: spinSlow 9s linear infinite;
 }

@@ -152,8 +152,9 @@
 .fx-flash { position: absolute; inset: 0; pointer-events: none; z-index: 40; }
 .fx-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 30; }
 .fx-rays { position: absolute; left: 50%; top: 46%; width: 170vmax; height: 170vmax; transform: translate(-50%,-50%); opacity: 0; z-index: -1; }
+.fx-rays svg { opacity: .55; }
 .fx-rays.is-on { animation: raysIn 900ms var(--ease-out) forwards; }
-@keyframes raysIn { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4) rotate(0deg); } 100% { opacity: .3; transform: translate(-50%,-50%) scale(1) rotate(26deg); } }
+@keyframes raysIn { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4) rotate(0deg); } 100% { opacity: .22; transform: translate(-50%,-50%) scale(1) rotate(26deg); } }
 .fx-rays.is-spin svg { animation: spinSlow 26s linear infinite; }
 
 .sealed-box { width: min(520px, 60vw); cursor: pointer; position: relative; z-index: 2; transition: transform var(--d-slow) var(--ease-out); }
@@ -199,8 +200,15 @@
   100% { opacity: 0; transform: scale(1.5) rotate(8deg); filter: blur(10px); }
 }
 
-.reveal-stage { display: grid; place-items: center; gap: var(--s-5); position: relative; z-index: 5; }
+.reveal-stage { display: grid; place-items: center; gap: var(--s-4); position: relative; z-index: 5; padding-bottom: var(--s-4); }
 .reveal-card { width: min(380px, 74vw); position: relative; }
+/* Rarity halo behind the hero card, so the colour of the pull reads before the art does. */
+.reveal-card::before {
+  content: ''; position: absolute; inset: -34%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rc, var(--gold)) 55%, transparent), transparent 72%);
+  filter: blur(34px);
+  opacity: .85;
+}
 .reveal-card.is-in { animation: revealIn 520ms var(--ease-back) both; }
 @keyframes revealIn { from { opacity: 0; transform: translateY(60px) scale(.86) rotateX(24deg); } to { opacity: 1; transform: none; } }
 .reveal-card.is-out { animation: revealOut 340ms var(--ease-in-out) forwards; }
@@ -224,7 +232,8 @@
 .reveal-info .rv { font-family: var(--f-display); font-size: var(--t-lg); color: var(--gold-lite); }
 
 .reveal-tray { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 900px; }
-.reveal-tray .card { width: 62px; animation: trayIn 340ms var(--ease-back) both; }
+.reveal-tray { max-height: 108px; overflow: hidden; }
+.reveal-tray .card { width: 54px; animation: trayIn 340ms var(--ease-back) both; }
 @keyframes trayIn { from { opacity: 0; transform: translateY(16px) scale(.8); } to { opacity: 1; transform: none; } }
 .reveal-progress { font-family: var(--f-mono); font-size: var(--t-sm); color: var(--text-mute); }
 
