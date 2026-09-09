@@ -95,7 +95,7 @@ export default function Opening({ mount, params, navigate, refresh }) {
     entry.packs.forEach((pack, i) => {
       const el = h('div', {
         class: ['pack', pack.opened && 'is-opened'],
-        style: { animationDelay: `${i * 26}ms` },
+        style: { animationDelay: `${i * 26}ms`, '--tilt': `${(((i * 37) % 9) - 4) * 0.6}deg` },
         role: pack.opened ? undefined : 'button',
         tabindex: pack.opened ? undefined : '0',
         title: pack.opened ? 'Already opened' : `Pack ${i + 1}`,

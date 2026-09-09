@@ -144,7 +144,7 @@
 /* --- opening --------------------------------------------------------------- */
 .break-stage {
   position: relative;
-  min-height: calc(100vh - var(--topbar) - 80px);
+  min-height: calc(100dvh - var(--topbar) - 160px);
   display: grid; place-items: center;
   isolation: isolate;
 }
@@ -157,7 +157,7 @@
 @keyframes raysIn { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4) rotate(0deg); } 100% { opacity: .22; transform: translate(-50%,-50%) scale(1) rotate(26deg); } }
 .fx-rays.is-spin svg { animation: spinSlow 26s linear infinite; }
 
-.sealed-box { width: min(520px, 78vw); cursor: pointer; position: relative; z-index: 2; transition: transform var(--d-slow) var(--ease-out); }
+.sealed-box { width: min(440px, 74vw, 42dvh); cursor: pointer; position: relative; z-index: 2; transition: transform var(--d-slow) var(--ease-out); }
 .sealed-box svg { width: 100%; filter: drop-shadow(0 40px 60px rgba(0,0,0,.75)); }
 .sealed-box:hover { transform: translateY(-10px) scale(1.03); }
 .sealed-box.is-shaking { animation: boxShake 520ms var(--ease-in-out); }
@@ -171,28 +171,38 @@
 .sealed-box.is-gone { animation: boxBurst 700ms var(--ease-out) forwards; pointer-events: none; }
 @keyframes boxBurst { to { opacity: 0; transform: scale(1.5) translateY(-40px); filter: blur(14px); } }
 
-.stage-copy { text-align: center; display: grid; gap: var(--s-3); justify-items: center; margin-bottom: var(--s-6); }
-.stage-title { font-family: var(--f-display); font-size: var(--t-2xl); letter-spacing: -.02em; }
+.stage-copy { text-align: center; display: grid; gap: var(--s-2); justify-items: center; margin-bottom: var(--s-4); }
+.stage-title { font-family: var(--f-display); font-size: clamp(1.4rem, 2.4vw, 2rem); letter-spacing: -.02em; }
 .stage-note { color: var(--text-dim); max-width: 50ch; }
 
-.pack-fan { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; max-width: 1100px; padding: var(--s-5) 0; }
+.pack-fan { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; max-width: 1100px; padding: var(--s-4) 0; }
 .pack {
   width: clamp(74px, 9vw, 116px); cursor: pointer; position: relative;
+  /* A shuffled pile, not a spreadsheet: the angle is set per wrapper in JS. */
+  --tilt: 0deg;
+  transform: rotate(var(--tilt));
   transition: transform var(--d-base) var(--ease-out), filter var(--d-base);
   animation: packIn 520ms var(--ease-back) both;
+  filter: saturate(1.08) brightness(1.06);
 }
-@keyframes packIn { from { opacity: 0; transform: translateY(38px) rotate(-6deg) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes packIn { from { opacity: 0; transform: translateY(38px) rotate(-7deg) scale(.9); } to { opacity: 1; transform: rotate(var(--tilt)); } }
 .pack svg { width: 100%; filter: drop-shadow(0 14px 22px rgba(0,0,0,.65)); }
-.pack:hover:not(.is-opened) { transform: translateY(-14px) scale(1.07); z-index: 3; }
+.pack:hover:not(.is-opened) { transform: translateY(-14px) scale(1.08) rotate(0deg); z-index: 3; filter: saturate(1.2) brightness(1.2); }
 .pack.is-opened { filter: grayscale(.85) brightness(.4); cursor: default; }
 .pack.is-opened::after {
   content: ''; position: absolute; inset: 0;
   background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,.35) 8px, rgba(0,0,0,.35) 16px);
 }
 .pack .pack-no {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  font-family: var(--f-display); font-size: 26px; color: rgba(255,255,255,.9);
-  text-shadow: 0 2px 8px rgba(0,0,0,.8); pointer-events: none;
+  position: absolute; top: 8px; left: 8px;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  display: grid; place-items: center;
+  border-radius: var(--r-pill);
+  background: rgba(6, 9, 15, .82);
+  border: 1px solid rgba(255, 255, 255, .22);
+  font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+  color: rgba(255, 255, 255, .82);
+  pointer-events: none;
 }
 .pack.is-ripping { animation: packRip 560ms var(--ease-in-out) forwards; }
 @keyframes packRip {
@@ -201,7 +211,7 @@
 }
 
 .reveal-stage { display: grid; place-items: center; gap: var(--s-4); position: relative; z-index: 5; padding-bottom: var(--s-4); }
-.reveal-card { width: min(380px, 74vw); position: relative; }
+.reveal-card { width: min(360px, 74vw, 42dvh); position: relative; }
 /* Rarity halo behind the hero card, so the colour of the pull reads before the art does. */
 .reveal-card::before {
   content: ''; position: absolute; inset: -34%; z-index: -1; pointer-events: none;
