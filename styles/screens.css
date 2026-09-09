@@ -157,7 +157,7 @@
 @keyframes raysIn { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4) rotate(0deg); } 100% { opacity: .22; transform: translate(-50%,-50%) scale(1) rotate(26deg); } }
 .fx-rays.is-spin svg { animation: spinSlow 26s linear infinite; }
 
-.sealed-box { width: min(520px, 60vw); cursor: pointer; position: relative; z-index: 2; transition: transform var(--d-slow) var(--ease-out); }
+.sealed-box { width: min(520px, 78vw); cursor: pointer; position: relative; z-index: 2; transition: transform var(--d-slow) var(--ease-out); }
 .sealed-box svg { width: 100%; filter: drop-shadow(0 40px 60px rgba(0,0,0,.75)); }
 .sealed-box:hover { transform: translateY(-10px) scale(1.03); }
 .sealed-box.is-shaking { animation: boxShake 520ms var(--ease-in-out); }
@@ -177,7 +177,7 @@
 
 .pack-fan { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; max-width: 1100px; padding: var(--s-5) 0; }
 .pack {
-  width: 116px; cursor: pointer; position: relative;
+  width: clamp(74px, 9vw, 116px); cursor: pointer; position: relative;
   transition: transform var(--d-base) var(--ease-out), filter var(--d-base);
   animation: packIn 520ms var(--ease-back) both;
 }
@@ -278,6 +278,7 @@ select.input option { background: var(--ink-200); }
 
 /* --- market ----------------------------------------------------------------- */
 .market-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--s-5); }
+@media (max-width: 1180px) { .market-grid .span-4 { grid-column: span 12; } }
 .mover-row { display: flex; align-items: center; gap: var(--s-3); padding: 9px var(--s-5); border-top: 1px solid rgba(148,172,210,.07); }
 .mover-row .nm { font-weight: 600; font-size: var(--t-sm); }
 .mover-row .tm { font-size: var(--t-xs); color: var(--text-mute); }
