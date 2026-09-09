@@ -1,12 +1,15 @@
 name: Publish the playable build
 
 # Builds the single-file game from source and serves it at the repository's
-# GitHub Pages URL. The bundle itself is a build output and is not committed.
+# GitHub Pages URL.
+#
+# Manual trigger only, deliberately. This repository's Pages site currently
+# serves a different project, and Pages hosts one site per repository, so
+# running this REPLACES whatever is live. The github-pages environment also
+# restricts deployments by branch, so this has to be allowed for this branch
+# before it can succeed.
 
 on:
-  push:
-    branches: [claude/sports-card-box-simulator-af2i1r]
-    paths-ignore: ['**.md']
   workflow_dispatch:
 
 permissions:
