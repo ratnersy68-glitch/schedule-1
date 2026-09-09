@@ -250,7 +250,7 @@ function figureDefs() {
   ]);
 }
 
-function renderPose(id, pose) {
+function renderPose(id, pose, mirror = false) {
   // Broaden the frame: pose data stores a readable skeleton, the renderer gives it
   // athletic proportions (wide shoulders, tapered waist, heavy limbs).
   const sCx = (pose.sl[0] + pose.sr[0]) / 2;
@@ -277,7 +277,15 @@ function renderPose(id, pose) {
     el('path', { d: limb(sh, elb, 30, 21), fill: 'url(#body)' }),
     el('circle', { cx: elb[0], cy: elb[1], r: 20, fill: 'url(#body)' }),
     el('path', { d: limb(elb, hand, 20, 14), fill: 'url(#body)' }),
-    el('circle', { cx: hand[0], cy: hand[1], r: 15, fill: 'url(#body)' }),
+    // hand: a tapered mitt oriented along the forearm
+    el('path', {
+      d: limb(
+        [hand[0] - (hand[0] - elb[0]) * 0.16, hand[1] - (hand[1] - elb[1]) * 0.16],
+        [hand[0] + (hand[0] - elb[0]) * 0.24, hand[1] + (hand[1] - elb[1]) * 0.24],
+        15, 11,
+      ),
+      fill: 'url(#body)',
+    }),
     // short sleeve in franchise secondary
     el('path', { d: limb(sh, [sh[0] + (elb[0] - sh[0]) * 0.3, sh[1] + (elb[1] - sh[1]) * 0.3], 31, 26), fill: TS, opacity: i === 0 ? 0.42 : 0.3 }),
   ]);
@@ -289,13 +297,8 @@ function renderPose(id, pose) {
   const cy = (SL[1] + SR[1] + HL[1] + HR[1]) / 4;
   const neck = [(SL[0] + SR[0]) / 2, (SL[1] + SR[1]) / 2 - 16];
 
-  return svg({
-    w: W, h: H, id: `athlete-${id}`,
-    children: [
-      figureDefs(),
-      el('ellipse', { cx: 300, cy: 300, rx: 250, ry: 300, fill: 'url(#backlight)' }),
-      el('ellipse', { cx: 300, cy: 760, rx: 200, ry: 42, fill: 'url(#floor)' }),
-      g({ transform: 'translate(300,782) scale(1.14) translate(-300,-782)' }, [
+  // Scaled about a low anchor so raised arms and airborne equipment stay inside the artboard.
+  const figure = g({ transform: 'translate(300,790) scale(1.06) translate(-300,-790)' }, [
         // cast shadow
         g({ transform: 'translate(22,14)', opacity: 0.2, filter: 'url(#soft)' }, [
           el('path', { d: t, fill: '#000' }), ...legPaths, ...armPaths,
@@ -312,15 +315,28 @@ function renderPose(id, pose) {
         el('path', { d: `M${SR[0] - 16},${SR[1] + 22}L${HR[0] - 10},${HR[1] - 10}`, stroke: TS, 'stroke-width': 8, opacity: 0.45, 'stroke-linecap': 'round' }),
         // collar
         el('path', { d: `M${cx - 30},${(SL[1] + SR[1]) / 2 + 2}Q${cx},${(SL[1] + SR[1]) / 2 + 30} ${cx + 30},${(SL[1] + SR[1]) / 2 + 2}`, stroke: TA, 'stroke-width': 6, fill: 'none', opacity: 0.6, 'stroke-linecap': 'round' }),
-        el('text', {
-          class: 'jersey-num', x: cx, y: cy + 30, 'font-family': HEADLINE, 'font-size': 84,
-          'font-weight': 900, fill: TA, 'text-anchor': 'middle', opacity: 0.92,
-        }, '00'),
         g({ transform: `translate(${pose.head[0]},${pose.head[1]}) scale(1.24) translate(${-pose.head[0]},${-pose.head[1]})` },
           HEADGEAR[pose.sport](pose.head, pose.headRot)),
-        armPaths[0],
-        pose.gear(pose) || '',
-      ]),
+    armPaths[0],
+    pose.gear(pose) || '',
+  ]);
+
+  // The jersey number rides outside the mirror so the digits stay the right way round.
+  const numberX = mirror ? W - cx : cx;
+  const numberY = 790 + (cy + 30 - 790) * 1.06;
+
+  return svg({
+    w: W, h: H, id: `athlete-${id}${mirror ? '-mirror' : ''}`,
+    children: [
+      figureDefs(),
+      el('ellipse', { cx: 300, cy: 300, rx: 250, ry: 300, fill: 'url(#backlight)' }),
+      el('ellipse', { cx: 300, cy: 760, rx: 200, ry: 42, fill: 'url(#floor)' }),
+      mirror ? g({ transform: `translate(${W},0) scale(-1,1)` }, [figure]) : figure,
+      el('text', {
+        class: 'jersey-num', x: numberX.toFixed(1), y: numberY.toFixed(1),
+        'font-family': HEADLINE, 'font-size': 96, 'font-weight': 900,
+        fill: TA, 'text-anchor': 'middle', opacity: 0.92,
+      }, '00'),
     ],
   });
 }
@@ -328,10 +344,14 @@ function renderPose(id, pose) {
 export function athleteAssets() {
   const out = {};
   for (const [id, pose] of Object.entries(POSES)) {
-    out[`pose-${id}`] = renderPose(id, pose);
+    out[`pose-${id}`] = renderPose(id, pose, false);
+    // A mirrored cut of every pose: twenty-four arrangements from twelve rigs.
+    out[`pose-${id}-mirror`] = renderPose(id, pose, true);
   }
   return out;
 }
 
 export const POSE_IDS = Object.keys(POSES);
-export const POSE_SPORT = Object.fromEntries(Object.entries(POSES).map(([k, p]) => [k, p.sport]));
+export const POSE_SPORT = Object.fromEntries(
+  Object.entries(POSES).flatMap(([k, p]) => [[k, p.sport], [`${k}-mirror`, p.sport]]),
+);

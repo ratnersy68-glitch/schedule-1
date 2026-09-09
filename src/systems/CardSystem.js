@@ -132,7 +132,7 @@ export const CardSystem = {
       brand: box.brand,
       manufacturer: box.manufacturer,
       template: box.template,
-      pose: player.pose,
+      pose: player.jersey % 2 === 0 ? `${player.pose}-mirror` : player.pose,
       cardNumber: String(spec.cardNumber),
       cardType,
       parallel: spec.parallel || 'none',

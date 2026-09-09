@@ -1476,6 +1476,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.qb_throw-mirror",
+      "folder": "assets/cards/poses/football",
+      "file": "pose-qb_throw-mirror.svg",
+      "path": "assets/cards/poses/football/pose-qb_throw-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"qb_throw-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.rb_stiffarm",
       "folder": "assets/cards/poses/football",
       "file": "pose-rb_stiffarm.svg",
@@ -1484,6 +1496,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"rb_stiffarm\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.rb_stiffarm-mirror",
+      "folder": "assets/cards/poses/football",
+      "file": "pose-rb_stiffarm-mirror.svg",
+      "path": "assets/cards/poses/football/pose-rb_stiffarm-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"rb_stiffarm-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },
@@ -1500,6 +1524,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.wr_catch-mirror",
+      "folder": "assets/cards/poses/football",
+      "file": "pose-wr_catch-mirror.svg",
+      "path": "assets/cards/poses/football/pose-wr_catch-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"wr_catch-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.dl_rush",
       "folder": "assets/cards/poses/football",
       "file": "pose-dl_rush.svg",
@@ -1508,6 +1544,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"dl_rush\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.dl_rush-mirror",
+      "folder": "assets/cards/poses/football",
+      "file": "pose-dl_rush-mirror.svg",
+      "path": "assets/cards/poses/football/pose-dl_rush-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"dl_rush-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },
@@ -1524,6 +1572,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.dunk-mirror",
+      "folder": "assets/cards/poses/basketball",
+      "file": "pose-dunk-mirror.svg",
+      "path": "assets/cards/poses/basketball/pose-dunk-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"dunk-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.jumper",
       "folder": "assets/cards/poses/basketball",
       "file": "pose-jumper.svg",
@@ -1532,6 +1592,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"jumper\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.jumper-mirror",
+      "folder": "assets/cards/poses/basketball",
+      "file": "pose-jumper-mirror.svg",
+      "path": "assets/cards/poses/basketball/pose-jumper-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"jumper-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },
@@ -1548,6 +1620,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.drive-mirror",
+      "folder": "assets/cards/poses/basketball",
+      "file": "pose-drive-mirror.svg",
+      "path": "assets/cards/poses/basketball/pose-drive-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"drive-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.block",
       "folder": "assets/cards/poses/basketball",
       "file": "pose-block.svg",
@@ -1556,6 +1640,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"block\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.block-mirror",
+      "folder": "assets/cards/poses/basketball",
+      "file": "pose-block-mirror.svg",
+      "path": "assets/cards/poses/basketball/pose-block-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"block-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },
@@ -1572,6 +1668,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.swing-mirror",
+      "folder": "assets/cards/poses/baseball",
+      "file": "pose-swing-mirror.svg",
+      "path": "assets/cards/poses/baseball/pose-swing-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"swing-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.pitch",
       "folder": "assets/cards/poses/baseball",
       "file": "pose-pitch.svg",
@@ -1580,6 +1688,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"pitch\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.pitch-mirror",
+      "folder": "assets/cards/poses/baseball",
+      "file": "pose-pitch-mirror.svg",
+      "path": "assets/cards/poses/baseball/pose-pitch-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"pitch-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },
@@ -1596,6 +1716,18 @@
       "status": "generated-vector"
     },
     {
+      "key": "pose.field-mirror",
+      "folder": "assets/cards/poses/baseball",
+      "file": "pose-field-mirror.svg",
+      "path": "assets/cards/poses/baseball/pose-field-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"field-mirror\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
       "key": "pose.slide",
       "folder": "assets/cards/poses/baseball",
       "file": "pose-slide.svg",
@@ -1604,6 +1736,18 @@
       "height": 820,
       "format": "SVG",
       "usage": "Athlete cutout, pose \"slide\". Recoloured per franchise at runtime.",
+      "required": true,
+      "status": "generated-vector"
+    },
+    {
+      "key": "pose.slide-mirror",
+      "folder": "assets/cards/poses/baseball",
+      "file": "pose-slide-mirror.svg",
+      "path": "assets/cards/poses/baseball/pose-slide-mirror.svg",
+      "width": 600,
+      "height": 820,
+      "format": "SVG",
+      "usage": "Athlete cutout, pose \"slide-mirror\". Recoloured per franchise at runtime.",
       "required": true,
       "status": "generated-vector"
     },

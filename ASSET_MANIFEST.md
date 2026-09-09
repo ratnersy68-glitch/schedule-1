@@ -4,8 +4,8 @@ Every image the game can display is listed here. The runtime never builds a path
 by hand: `src/core/assets.js` loads `data/assets.manifest.json` and resolves art
 by key, so replacing a file is a drop-in operation.
 
-- **Total assets:** 151
-- **Required:** 120
+- **Total assets:** 163
+- **Required:** 132
 - **Optional:** 31
 - **Card artboard:** 750 x 1050 (2.5:3.5 trading card ratio)
 - **Slab artboard:** 820 x 1300, card window 700 x 980 at (60, 282)
@@ -221,17 +221,29 @@ photography or externally commissioned art with no code change.
 | Key | File | Size | Format | Used for | Required |
 | --- | --- | --- | --- | --- | --- |
 | `pose.qb_throw` | `assets/cards/poses/football/pose-qb_throw.svg` | 600x820 | SVG | Athlete cutout, pose "qb_throw". Recoloured per franchise at runtime. | Required |
+| `pose.qb_throw-mirror` | `assets/cards/poses/football/pose-qb_throw-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "qb_throw-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.rb_stiffarm` | `assets/cards/poses/football/pose-rb_stiffarm.svg` | 600x820 | SVG | Athlete cutout, pose "rb_stiffarm". Recoloured per franchise at runtime. | Required |
+| `pose.rb_stiffarm-mirror` | `assets/cards/poses/football/pose-rb_stiffarm-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "rb_stiffarm-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.wr_catch` | `assets/cards/poses/football/pose-wr_catch.svg` | 600x820 | SVG | Athlete cutout, pose "wr_catch". Recoloured per franchise at runtime. | Required |
+| `pose.wr_catch-mirror` | `assets/cards/poses/football/pose-wr_catch-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "wr_catch-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.dl_rush` | `assets/cards/poses/football/pose-dl_rush.svg` | 600x820 | SVG | Athlete cutout, pose "dl_rush". Recoloured per franchise at runtime. | Required |
+| `pose.dl_rush-mirror` | `assets/cards/poses/football/pose-dl_rush-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "dl_rush-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.dunk` | `assets/cards/poses/basketball/pose-dunk.svg` | 600x820 | SVG | Athlete cutout, pose "dunk". Recoloured per franchise at runtime. | Required |
+| `pose.dunk-mirror` | `assets/cards/poses/basketball/pose-dunk-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "dunk-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.jumper` | `assets/cards/poses/basketball/pose-jumper.svg` | 600x820 | SVG | Athlete cutout, pose "jumper". Recoloured per franchise at runtime. | Required |
+| `pose.jumper-mirror` | `assets/cards/poses/basketball/pose-jumper-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "jumper-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.drive` | `assets/cards/poses/basketball/pose-drive.svg` | 600x820 | SVG | Athlete cutout, pose "drive". Recoloured per franchise at runtime. | Required |
+| `pose.drive-mirror` | `assets/cards/poses/basketball/pose-drive-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "drive-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.block` | `assets/cards/poses/basketball/pose-block.svg` | 600x820 | SVG | Athlete cutout, pose "block". Recoloured per franchise at runtime. | Required |
+| `pose.block-mirror` | `assets/cards/poses/basketball/pose-block-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "block-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.swing` | `assets/cards/poses/baseball/pose-swing.svg` | 600x820 | SVG | Athlete cutout, pose "swing". Recoloured per franchise at runtime. | Required |
+| `pose.swing-mirror` | `assets/cards/poses/baseball/pose-swing-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "swing-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.pitch` | `assets/cards/poses/baseball/pose-pitch.svg` | 600x820 | SVG | Athlete cutout, pose "pitch". Recoloured per franchise at runtime. | Required |
+| `pose.pitch-mirror` | `assets/cards/poses/baseball/pose-pitch-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "pitch-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.field` | `assets/cards/poses/baseball/pose-field.svg` | 600x820 | SVG | Athlete cutout, pose "field". Recoloured per franchise at runtime. | Required |
+| `pose.field-mirror` | `assets/cards/poses/baseball/pose-field-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "field-mirror". Recoloured per franchise at runtime. | Required |
 | `pose.slide` | `assets/cards/poses/baseball/pose-slide.svg` | 600x820 | SVG | Athlete cutout, pose "slide". Recoloured per franchise at runtime. | Required |
+| `pose.slide-mirror` | `assets/cards/poses/baseball/pose-slide-mirror.svg` | 600x820 | SVG | Athlete cutout, pose "slide-mirror". Recoloured per franchise at runtime. | Required |
 
 ## Parallel finishes
 
