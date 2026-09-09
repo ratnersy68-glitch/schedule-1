@@ -14,16 +14,16 @@
   "parallels": [
     { "id": "none",         "label": "Base",           "tier": "common",    "printRun": null, "value": 1.0,  "foil": "none",       "color": "#9AA5B5", "ink": "#0E1116" },
     { "id": "holo",         "label": "Holo Foil",      "tier": "uncommon",  "printRun": null, "value": 2.2,  "foil": "holo",       "color": "#BFD8E8", "ink": "#0E1116" },
-    { "id": "refractor",    "label": "Refractor",      "tier": "uncommon",  "printRun": null, "value": 2.8,  "foil": "refractor",  "color": "#CFE9F2", "ink": "#0E1116" },
-    { "id": "silver",       "label": "Silver Prizm",   "tier": "rare",      "printRun": null, "value": 6.5,  "foil": "silver",     "color": "#D8DEE6", "ink": "#0E1116" },
-    { "id": "blue",         "label": "Blue",           "tier": "rare",      "printRun": 199,  "value": 9.0,  "foil": "tint",       "color": "#3C7FE0", "ink": "#F2F6FF" },
-    { "id": "green",        "label": "Green",          "tier": "rare",      "printRun": 99,   "value": 14.0, "foil": "tint",       "color": "#2FA36B", "ink": "#F0FFF7" },
-    { "id": "purple",       "label": "Purple",         "tier": "epic",      "printRun": 75,   "value": 20.0, "foil": "tint",       "color": "#8B5CF6", "ink": "#F7F2FF" },
-    { "id": "orange",       "label": "Orange",         "tier": "epic",      "printRun": 60,   "value": 26.0, "foil": "tint",       "color": "#F08127", "ink": "#FFF6EC" },
-    { "id": "red",          "label": "Red",            "tier": "epic",      "printRun": 49,   "value": 34.0, "foil": "tint",       "color": "#D93A3A", "ink": "#FFF0F0" },
-    { "id": "gold",         "label": "Gold",           "tier": "legendary", "printRun": 10,   "value": 90.0, "foil": "metal",      "color": "#D4A72C", "ink": "#2A1E05" },
-    { "id": "black",        "label": "Black Finite",   "tier": "legendary", "printRun": 5,    "value": 150.0,"foil": "metal",      "color": "#171A1F", "ink": "#EDEFF3" },
-    { "id": "superfractor", "label": "Superfractor",   "tier": "oneofone",  "printRun": 1,    "value": 600.0,"foil": "superfractor","color": "#F2D479","ink": "#2A1E05" }
+    { "id": "refractor",    "label": "Refractor",      "tier": "uncommon",  "printRun": null, "value": 2.6,  "foil": "refractor",  "color": "#CFE9F2", "ink": "#0E1116" },
+    { "id": "silver",       "label": "Silver Prizm",   "tier": "rare",      "printRun": null, "value": 5.5,  "foil": "silver",     "color": "#D8DEE6", "ink": "#0E1116" },
+    { "id": "blue",         "label": "Blue",           "tier": "rare",      "printRun": 199,  "value": 8.0,  "foil": "tint",       "color": "#3C7FE0", "ink": "#F2F6FF" },
+    { "id": "green",        "label": "Green",          "tier": "rare",      "printRun": 99,   "value": 12.0, "foil": "tint",       "color": "#2FA36B", "ink": "#F0FFF7" },
+    { "id": "purple",       "label": "Purple",         "tier": "epic",      "printRun": 75,   "value": 16.0, "foil": "tint",       "color": "#8B5CF6", "ink": "#F7F2FF" },
+    { "id": "orange",       "label": "Orange",         "tier": "epic",      "printRun": 60,   "value": 20.0, "foil": "tint",       "color": "#F08127", "ink": "#FFF6EC" },
+    { "id": "red",          "label": "Red",            "tier": "epic",      "printRun": 49,   "value": 26.0, "foil": "tint",       "color": "#D93A3A", "ink": "#FFF0F0" },
+    { "id": "gold",         "label": "Gold",           "tier": "legendary", "printRun": 10,   "value": 55.0, "foil": "metal",      "color": "#D4A72C", "ink": "#2A1E05" },
+    { "id": "black",        "label": "Black Finite",   "tier": "legendary", "printRun": 5,    "value": 85.0,"foil": "metal",      "color": "#171A1F", "ink": "#EDEFF3" },
+    { "id": "superfractor", "label": "Superfractor",   "tier": "oneofone",  "printRun": 1,    "value": 400.0,"foil": "superfractor","color": "#F2D479","ink": "#2A1E05" }
   ],
 
   "cardTypes": [
@@ -39,7 +39,7 @@
   ],
 
   "hitTypes": [
-    { "id": "patch",      "label": "Patch Relic",      "cardType": "patch",      "auto": false, "memorabilia": true,  "value": 3.5,  "runs": [null, 199, 99, 49] },
+    { "id": "patch",      "label": "Patch Relic",      "cardType": "patch",      "auto": false, "memorabilia": true,  "value": 34.0,  "runs": [null, 199, 99, 49] },
     { "id": "auto",       "label": "Autograph",        "cardType": "auto",       "auto": true,  "memorabilia": false, "value": 5.0,  "runs": [null, 199, 99, 49] },
     { "id": "rookieAuto", "label": "Rookie Autograph", "cardType": "rookieAuto", "auto": true,  "memorabilia": false, "value": 11.0, "runs": [199, 99, 49, 25] },
     { "id": "patchAuto",  "label": "Patch Autograph",  "cardType": "patchAuto",  "auto": true,  "memorabilia": true,  "value": 18.0, "runs": [99, 49, 25, 10] },

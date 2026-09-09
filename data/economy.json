@@ -1,0 +1,296 @@
+{
+  "$comment": "Every economic constant. Balance the game here, not in gameplay code.",
+  "startingCash": 900,
+  "sellFeeRate": 0.06,
+  "dailyStipend": 120,
+  "value": {
+    "tierBase": [
+      0.25,
+      0.7,
+      2.2,
+      7,
+      20
+    ],
+    "rookieMultiplier": 2.1,
+    "popularity": {
+      "floor": 0.6,
+      "ceiling": 1.5
+    },
+    "hitParallelDamp": 0.06,
+    "hitParallelCap": 4.0,
+    "serialMultipliers": {
+      "1": 12,
+      "3": 7,
+      "5": 5.5,
+      "10": 4,
+      "25": 2.6,
+      "49": 1.9,
+      "60": 1.7,
+      "75": 1.55,
+      "99": 1.4,
+      "199": 1.15,
+      "default": 1
+    },
+    "scale": 0.18
+  },
+  "grading": {
+    "multipliers": {
+      "1": 0.1,
+      "2": 0.14,
+      "3": 0.18,
+      "4": 0.24,
+      "5": 0.32,
+      "6": 0.44,
+      "7": 0.62,
+      "8": 0.95,
+      "9": 1.65,
+      "10": 4.4
+    },
+    "tiers": [
+      {
+        "id": "value",
+        "label": "Value",
+        "fee": 22,
+        "days": 1.0,
+        "maxValue": 500,
+        "variance": 0.9,
+        "blurb": "Bulk lane. Slow, cheap, a little more grader noise."
+      },
+      {
+        "id": "express",
+        "label": "Express",
+        "fee": 65,
+        "days": 0.45,
+        "maxValue": 5000,
+        "variance": 1.0,
+        "blurb": "Standard turnaround with a senior grader review."
+      },
+      {
+        "id": "vault",
+        "label": "Vault",
+        "fee": 190,
+        "days": 0.18,
+        "maxValue": null,
+        "variance": 1.12,
+        "blurb": "White glove. Fastest, and the steadiest grades."
+      }
+    ],
+    "dayMs": 180000,
+    "subgradeThresholds": [
+      [
+        90.5,
+        10
+      ],
+      [
+        86.5,
+        9
+      ],
+      [
+        82,
+        8
+      ],
+      [
+        77,
+        7
+      ],
+      [
+        71,
+        6
+      ],
+      [
+        64,
+        5
+      ],
+      [
+        56,
+        4
+      ],
+      [
+        46,
+        3
+      ],
+      [
+        34,
+        2
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "conditionQualityByProfile": {
+      "entry": 91,
+      "mid": 91.5,
+      "prizm": 91.3,
+      "prospect": 91.5,
+      "chrome": 91.5,
+      "finest": 92,
+      "treasures": 93,
+      "flawless": 94
+    },
+    "centeringPenalty": 3,
+    "conditionSpread": 5.0,
+    "worstSubWeight": 0.5,
+    "compositeWeights": {
+      "centering": 0.35,
+      "corners": 0.25,
+      "edges": 0.2,
+      "surface": 0.2
+    }
+  },
+  "market": {
+    "tickMs": 120000,
+    "drift": 0.018,
+    "reversion": 0.06,
+    "supplyImpact": 0.012,
+    "newsChance": 0.35,
+    "newsMagnitude": [
+      0.06,
+      0.28
+    ],
+    "indexFloor": 0.55,
+    "indexCeiling": 2.4,
+    "saleNoise": 0.035
+  },
+  "progression": {
+    "xpPerPack": 12,
+    "xpPerBox": 60,
+    "xpPerHit": 45,
+    "xpPerNumbered": 20,
+    "xpPerGrade": 55,
+    "xpPerGem": 160,
+    "curve": {
+      "base": 260,
+      "growth": 1.35
+    },
+    "levelRewards": {
+      "2": 150,
+      "3": 300,
+      "4": 500,
+      "5": 900,
+      "6": 1400,
+      "7": 2200,
+      "8": 3400,
+      "9": 5000,
+      "10": 7500
+    }
+  },
+  "challenges": {
+    "slots": 3,
+    "pool": [
+      {
+        "id": "open-packs",
+        "label": "Rip {n} packs",
+        "metric": "packsOpened",
+        "targets": [
+          5,
+          10,
+          20
+        ],
+        "reward": [
+          120,
+          240,
+          460
+        ],
+        "xp": 60
+      },
+      {
+        "id": "open-box",
+        "label": "Open {n} hobby boxes",
+        "metric": "boxesOpened",
+        "targets": [
+          1,
+          2,
+          3
+        ],
+        "reward": [
+          180,
+          380,
+          620
+        ],
+        "xp": 80
+      },
+      {
+        "id": "pull-hit",
+        "label": "Pull {n} autographs or relics",
+        "metric": "hits",
+        "targets": [
+          2,
+          4,
+          7
+        ],
+        "reward": [
+          200,
+          420,
+          780
+        ],
+        "xp": 100
+      },
+      {
+        "id": "pull-serial",
+        "label": "Pull {n} numbered cards",
+        "metric": "numbered",
+        "targets": [
+          3,
+          6,
+          12
+        ],
+        "reward": [
+          160,
+          340,
+          660
+        ],
+        "xp": 80
+      },
+      {
+        "id": "grade-cards",
+        "label": "Send {n} cards to AGA",
+        "metric": "gradedCount",
+        "targets": [
+          1,
+          3,
+          5
+        ],
+        "reward": [
+          140,
+          380,
+          700
+        ],
+        "xp": 90
+      },
+      {
+        "id": "sell-value",
+        "label": "Sell {n} dollars of cardboard",
+        "metric": "totalSales",
+        "targets": [
+          500,
+          1500,
+          4000
+        ],
+        "reward": [
+          150,
+          400,
+          900
+        ],
+        "xp": 90,
+        "money": true
+      },
+      {
+        "id": "pull-cards",
+        "label": "Pull {n} cards",
+        "metric": "cardsPulled",
+        "targets": [
+          40,
+          100,
+          220
+        ],
+        "reward": [
+          120,
+          300,
+          600
+        ],
+        "xp": 60
+      }
+    ]
+  }
+}
