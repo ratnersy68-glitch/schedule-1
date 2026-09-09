@@ -204,3 +204,19 @@ Every athlete, franchise, league, manufacturer, product and the grading service 
 fictional and unaffiliated with any real league, brand or grading company. The data
 model matches how real licensed products are described, so a licensed checklist
 could be dropped into `data/` without touching code.
+
+## Playable build
+
+`node tools/bundle.mjs` inlines every module, stylesheet, font, data file and SVG
+into a single self-contained HTML page at `dist/breakroom.html` (about 1.4 MB).
+It makes no network requests and runs straight off disk, so it can be opened
+locally or published as a standalone page.
+
+The game source is untouched by the bundler: modules are wrapped in a small
+registry, `fetch` is shimmed to read from the inlined tables, and the payload is
+escaped to pure ASCII so the page renders identically whether or not the host
+document declares a charset.
+
+`node tools/bundle-test.mjs` opens that file with all non-`file://` requests
+blocked and plays a box through it, which fails loudly if anything is still
+loading from the network.

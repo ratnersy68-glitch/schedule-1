@@ -8,6 +8,7 @@
     "assets": "node tools/generate-assets.mjs",
     "manifest": "node tools/generate-manifest.mjs",
     "build": "npm run assets && npm run manifest",
+    "bundle": "node tools/bundle.mjs",
     "start": "node tools/serve.mjs",
     "dev": "npm run build && node tools/serve.mjs"
   },

@@ -66,7 +66,7 @@ async function boot() {
   bootEl.classList.add('is-done');
   setTimeout(() => bootEl.remove(), 640);
 
-  const hash = location.hash.slice(1);
+  const hash = readHash();
   navigate(ROUTES[hash] ? hash : 'home', {}, { replace: true });
 
   if (loaded.fresh) {
@@ -175,6 +175,10 @@ function refreshChrome() {
   );
 }
 
+function readHash() {
+  try { return location.hash.slice(1); } catch { return ''; }
+}
+
 /* ---------------------------------------------------------------- router */
 
 export async function navigate(route, params = {}, { replace = false } = {}) {
@@ -183,8 +187,11 @@ export async function navigate(route, params = {}, { replace = false } = {}) {
   const changed = app.route !== route;
   app.route = route;
   app.params = params;
-  if (replace) history.replaceState({ route }, '', `#${route}`);
-  else if (changed || Object.keys(params).length) history.pushState({ route }, '', `#${route}`);
+  // A sandboxed frame can refuse history writes; navigation must not depend on them.
+  try {
+    if (replace) history.replaceState({ route }, '', `#${route}`);
+    else if (changed || Object.keys(params).length) history.pushState({ route }, '', `#${route}`);
+  } catch { /* no addressable history here */ }
 
   const { page, title, bg } = app.els;
   app.els.title.querySelector('.topbar-title').textContent = def.title;
@@ -227,7 +234,7 @@ async function setBackground(name) {
 
 function wireEvents() {
   window.addEventListener('popstate', () => {
-    const hash = location.hash.slice(1) || 'home';
+    const hash = readHash() || 'home';
     if (ROUTES[hash]) navigate(hash, {}, { replace: true });
   });
 
