@@ -30,6 +30,46 @@ const HEADLINES = [
 export const MarketSystem = {
   anchorFor(player) { return 0.82 + (player.popularity / 100) * 0.5; },
 
+  /**
+   * A brand new save starts every player exactly on their anchor, which makes the
+   * market read as dead. Seed a small spread and a few ticks of history so the
+   * board has movement the first time it is opened.
+   */
+  seed() {
+    const m = S().market;
+    if (m.seeded) return;
+    const cfg = Data.economy.market;
+    store.update((s) => {
+      const mk = s.market;
+      mk.history ||= {};
+      for (const p of Data.players) {
+        const anchor = this.anchorFor(p);
+        const start = anchor * (1 + rng.normal(0, cfg.seedSpread));
+        mk.index[p.id] = Math.min(cfg.indexCeiling, Math.max(cfg.indexFloor, start));
+        const hist = [];
+        let v = anchor;
+        for (let i = 0; i < (cfg.historyLength ?? 16); i += 1) {
+          v += rng.normal(0, cfg.drift * 1.6) + (anchor - v) * cfg.reversion;
+          hist.push(Number(v.toFixed(4)));
+        }
+        hist[hist.length - 1] = Number(mk.index[p.id].toFixed(4));
+        mk.history[p.id] = hist;
+      }
+      // A few headlines already on the wire, so the board reads as a running market.
+      const seen = new Set();
+      for (let i = 0; i < 5; i += 1) {
+        const p = Data.players[Math.floor(rng() * Data.players.length)];
+        if (seen.has(p.id)) continue;
+        seen.add(p.id);
+        const [tpl, dir] = HEADLINES[Math.floor(rng() * HEADLINES.length)];
+        const mag = rng.range(cfg.newsMagnitude[0], cfg.newsMagnitude[1]) * (dir === 'up' ? 1 : -1);
+        mk.news.push({ ts: Date.now() - (i + 1) * 90_000, playerId: p.id, headline: tpl.replace('{p}', p.name), change: mag });
+      }
+      mk.seeded = true;
+    });
+    this.tick(true);
+  },
+
   index(playerId) {
     const m = S().market;
     if (m.index[playerId] === undefined) {
@@ -59,6 +99,9 @@ export const MarketSystem = {
           const pull = (anchor - cur) * cfg.reversion;
           const next = cur + noise + pull;
           mk.index[p.id] = Math.min(cfg.indexCeiling, Math.max(cfg.indexFloor, next));
+          const hist = (mk.history[p.id] ||= []);
+          hist.push(Number(mk.index[p.id].toFixed(4)));
+          if (hist.length > (cfg.historyLength ?? 16)) hist.shift();
         }
         if (rng() < cfg.newsChance) {
           const p = Data.players[Math.floor(rng() * Data.players.length)];
@@ -109,11 +152,25 @@ export const MarketSystem = {
   },
 
   /** Movers for the marketplace dashboard. */
+  history(playerId) {
+    const h = S().market.history?.[playerId];
+    return h && h.length > 1 ? h : [this.index(playerId), this.index(playerId)];
+  },
+
+  /** Change over the stored window, which is what the board should show. */
+  changeFor(playerId) {
+    const h = this.history(playerId);
+    const first = h[0] || 1;
+    return (this.index(playerId) / first - 1) * 100;
+  },
+
   movers(limit = 6) {
-    const rows = Data.players.map((p) => {
-      const idx = this.index(p.id);
-      return { player: p, index: idx, change: (idx / this.anchorFor(p) - 1) * 100 };
-    });
+    const rows = Data.players.map((p) => ({
+      player: p,
+      index: this.index(p.id),
+      change: this.changeFor(p.id),
+      history: this.history(p.id),
+    }));
     rows.sort((a, b) => b.change - a.change);
     return { up: rows.slice(0, limit), down: rows.slice(-limit).reverse() };
   },

@@ -139,7 +139,7 @@
     }
   },
   "market": {
-    "tickMs": 120000,
+    "tickMs": 45000,
     "drift": 0.018,
     "reversion": 0.06,
     "supplyImpact": 0.012,
@@ -150,7 +150,9 @@
     ],
     "indexFloor": 0.55,
     "indexCeiling": 2.4,
-    "saleNoise": 0.035
+    "saleNoise": 0.035,
+    "historyLength": 16,
+    "seedSpread": 0.09
   },
   "progression": {
     "xpPerPack": 12,

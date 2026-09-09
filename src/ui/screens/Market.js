@@ -10,6 +10,7 @@ import { EconomySystem } from '../../systems/EconomySystem.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
 import { Button, Stat, Chip, Empty, Modal, KV, toast } from '../components/ui.js';
 import { CardView, preloadCards } from '../components/CardView.js';
+import { Sparkline } from '../components/Sparkline.js';
 import { openInspector } from '../components/CardInspector.js';
 
 const SELL_MODES = [
@@ -52,6 +53,7 @@ export default function Market({ mount, refresh, navigate }) {
           h('div', { class: 'nm truncate' }, r.player.name),
           h('div', { class: 'tm truncate' }, `${team.city} ${team.nickname} · ${r.player.position}${r.player.rookie ? ' · RC' : ''}`),
         ),
+        Sparkline(r.history),
         h('div', { class: `ch ${r.change >= 0 ? 'pos' : 'neg'}` }, `${r.change >= 0 ? '+' : ''}${r.change.toFixed(1)}%`),
       ));
     }
@@ -109,7 +111,7 @@ export default function Market({ mount, refresh, navigate }) {
     panel.append(h('div', { class: 'row', style: { padding: 'var(--s-3) var(--s-5)', borderTop: '1px solid var(--hairline)' } },
       h('span', { class: 'muted' }, `${num(list.length)} cards · ${money(total)} after fees`),
       h('div', { class: 'spacer' }),
-      Button(`Sell all ${mode === 'best' ? 'listed' : SELL_MODES.find((m) => m[0] === mode)[1].toLowerCase()}`, {
+      Button(`Sell all ${num(list.length)} shown`, {
         variant: 'gold', size: 'sm', icon: 'cash', sound: 'sell',
         onClick: () => confirmBulk(list),
       }),

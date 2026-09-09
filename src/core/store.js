@@ -14,7 +14,7 @@ export function createState() {
     submissions: [],         // GradingSubmission[]
     ledger: [],              // { ts, kind, label, amount }
     pulls: [],               // recent pull digest for the dashboard
-    market: { index: {}, tick: 0, lastTick: Date.now(), news: [] },
+    market: { index: {}, history: {}, tick: 0, lastTick: Date.now(), news: [], seeded: false },
     stats: {
       boxesOpened: 0, packsOpened: 0, cardsPulled: 0,
       totalSpent: 0, totalSales: 0, gradingFees: 0,

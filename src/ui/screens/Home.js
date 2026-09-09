@@ -15,6 +15,7 @@ import { BreakSystem } from '../../systems/BreakSystem.js';
 import { CardSystem } from '../../systems/CardSystem.js';
 import { Button, Stat, Bar, Icon, Chip, Empty, toast } from '../components/ui.js';
 import { CardView, preloadCards } from '../components/CardView.js';
+import { Sparkline } from '../components/Sparkline.js';
 import { Slab } from '../components/Slab.js';
 
 const greet = () => {
@@ -48,9 +49,10 @@ export default function Home({ mount, navigate, refresh }) {
         h('div', { class: 'hero-stats' },
           Stat('Balance', money(s.cash), { accent: 'var(--gold)', gold: true, note: EconomySystem.stipendAvailable() ? 'Daily credit available' : 'Daily credit claimed' }),
           Stat('Collection', compactMoney(summary.value), { accent: 'var(--blue)', note: `${num(summary.count)} cards` }),
-          Stat('Lifetime profit', money(EconomySystem.profit(), { sign: true }), { accent: EconomySystem.profit() >= 0 ? 'var(--green)' : 'var(--red)', note: `${num(s.stats.boxesOpened)} boxes opened` }),
+          Stat('Lifetime profit', money(EconomySystem.profit(), { sign: true }), { accent: EconomySystem.profit() >= 0 ? 'var(--green)' : 'var(--red)', note: `${num(s.stats.boxesOpened)} box${s.stats.boxesOpened === 1 ? '' : 'es'} opened` }),
           Stat('Gem rate', s.stats.gemRate.graded ? `${Math.round((s.stats.gemRate.tens / s.stats.gemRate.graded) * 100)}%` : '--', { accent: 'var(--violet)', note: `${num(s.stats.gradedCount)} graded` }),
         ),
+        progressStrip(prog),
         h('div', { class: 'hero-cta' },
           sealed.length
             ? Button(`Open ${Data.box(sealed[0].boxId).shortName}`, { variant: 'gold', icon: 'box', onClick: () => navigate('open') })
@@ -82,6 +84,30 @@ export default function Home({ mount, navigate, refresh }) {
 
   render();
   return { destroy() {} };
+}
+
+/** Level track plus what the next level unlocks - fills the hero and gives the player a target. */
+function progressStrip(prog) {
+  const next = ProgressionSystem.nextUnlock();
+  const s = S();
+  return h('div', { class: 'hero-progress' },
+    h('div', { class: 'row' },
+      h('span', { class: 'eyebrow' }, `Level ${prog.level}`),
+      h('div', { class: 'spacer' }),
+      h('span', { class: 'muted', style: { fontFamily: 'var(--f-mono)', fontSize: 'var(--t-xs)' } }, `${num(prog.into)} / ${num(prog.need)} XP`),
+    ),
+    Bar(prog.pct, { tone: 'gold' }),
+    h('div', { class: 'row', style: { marginTop: 'var(--s-2)' } },
+      Icon(next ? 'lock' : 'check'),
+      h('span', { class: 'muted', style: { fontSize: 'var(--t-sm)' } },
+        next
+          ? `${next.name} unlocks at level ${next.unlockLevel}`
+          : 'Every product on the shelf is unlocked.'),
+      h('div', { class: 'spacer' }),
+      h('span', { class: 'muted', style: { fontSize: 'var(--t-xs)' } },
+        `${num(s.stats.packsOpened)} packs · ${num(s.stats.cardsPulled)} cards · ${num(s.stats.hits)} hits`),
+    ),
+  );
 }
 
 function heroLine(s, sealed, ready) {
@@ -264,6 +290,7 @@ function marketPanel(navigate) {
           h('div', { class: 'nm' }, r.player.name),
           h('div', { class: 'tm' }, `${team.city} ${team.nickname} · ${r.player.position}`),
         ),
+        Sparkline(r.history),
         h('div', { class: ['ch', r.change >= 0 ? 'pos' : 'neg'] }, `${r.change >= 0 ? '+' : ''}${r.change.toFixed(1)}%`),
       ));
     }

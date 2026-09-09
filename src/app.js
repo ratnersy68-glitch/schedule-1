@@ -55,6 +55,7 @@ async function boot() {
   const loaded = SaveSystem.load();
   AudioSystem.init(S().settings);
   SaveSystem.start();
+  MarketSystem.seed();
   MarketSystem.tick();
   ChallengeSystem.ensureToday();
   initToasts();
@@ -254,6 +255,10 @@ function wireEvents() {
     toast({ title: 'Challenge complete', note: `${row.label} · ${money(row.reward)}`, tone: 'good', icon: 'check' });
   });
 
+  // Opening product moves the market: supply arrives, headlines follow.
+  bus.on(EVENTS.BOX_OPENED, () => MarketSystem.tick(true));
+  bus.on(EVENTS.PACK_OPENED, () => { if (Math.random() < 0.34) MarketSystem.tick(true); });
+
   bus.on(EVENTS.NAVIGATE, ({ route, params }) => navigate(route, params));
 
   document.addEventListener('keydown', (e) => {
@@ -262,6 +267,28 @@ function wireEvents() {
     if (map[e.key]) navigate(map[e.key]);
   });
 }
+
+/**
+ * Single-player game: the whole model is exposed for tinkering, tooling and the
+ * headless flow tests. Nothing here is required by the interface itself.
+ */
+window.BreakRoom = {
+  version: 1,
+  state: () => S(),
+  store,
+  navigate,
+  refresh: refreshChrome,
+  systems: {
+    Data, EconomySystem, MarketSystem, GradingSystem, ProgressionSystem,
+    ChallengeSystem, InventorySystem, SaveSystem, Assets,
+  },
+  /** Pull every open grading submission forward so results are ready now. */
+  fastForwardGrading() {
+    store.update((s) => { for (const sub of s.submissions) if (!sub.collected) sub.readyAt = Date.now() - 1000; });
+    SaveSystem.save();
+    return GradingSystem.readyCount();
+  },
+};
 
 boot().catch((err) => {
   console.error(err);

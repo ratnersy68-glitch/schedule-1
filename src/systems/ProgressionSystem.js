@@ -21,7 +21,7 @@ export const ProgressionSystem = {
     const s = S();
     const floor = this.totalXpForLevel(s.level);
     const need = this.xpForLevel(s.level);
-    const into = s.xp - floor;
+    const into = Math.max(0, s.xp - floor);
     return { level: s.level, into, need, pct: Math.max(0, Math.min(1, into / need)) };
   },
 

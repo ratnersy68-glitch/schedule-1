@@ -67,6 +67,8 @@ export function CardView(card, options = {}) {
       rarity: card.rarity,
       ink: isLight(team.colors.primary) ? 'dark' : 'light',
       uid: card.uid,
+      ...(card.memorabilia ? { relic: '1' } : {}),
+      ...(card.autograph ? { auto: '1' } : {}),
     },
   });
 

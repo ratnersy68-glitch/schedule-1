@@ -51,12 +51,12 @@
 
 /* --- parallel finish ------------------------------------------------------ */
 .l-foil { opacity: 0; mix-blend-mode: color-dodge; pointer-events: none; }
-.card[data-foil="holo"] .l-foil { opacity: .34; mix-blend-mode: color-dodge; }
+.card[data-foil="holo"] .l-foil { opacity: .28; mix-blend-mode: color-dodge; }
 .card[data-foil="refractor"] .l-foil { opacity: .30; mix-blend-mode: color-dodge; }
 .card[data-foil="silver"] .l-foil { opacity: .27; mix-blend-mode: overlay; }
 .card[data-foil="tint"] .l-foil { opacity: .30; mix-blend-mode: soft-light; }
-.card[data-foil="metal"] .l-foil { opacity: .40; mix-blend-mode: overlay; }
-.card[data-foil="superfractor"] .l-foil { opacity: .52; mix-blend-mode: hard-light; }
+.card[data-foil="metal"] .l-foil { opacity: .32; mix-blend-mode: overlay; }
+.card[data-foil="superfractor"] .l-foil { opacity: .44; mix-blend-mode: hard-light; }
 
 /* the finish shifts with the card as it tilts, like real foil */
 .card[data-foil]:not([data-foil="none"]) .l-foil > svg {
@@ -135,13 +135,16 @@
 .l-relic { display: grid; place-items: center; pointer-events: none; }
 .c-patch {
   position: absolute; left: 50%; transform: translateX(-50%);
-  top: 30cqi; width: 34cqi; height: 26cqi;
+  top: 27cqi; width: 34cqi; height: 25cqi;
   border-radius: 1.4cqi; overflow: hidden;
   box-shadow: inset 0 0 3cqi rgba(0,0,0,.6), 0 1cqi 2.4cqi rgba(0,0,0,.6);
   border: .5cqi solid rgba(255,255,255,.22);
 }
 .c-patch svg { width: 100%; height: 100%; }
-.c-auto { position: absolute; left: 8cqi; right: 8cqi; bottom: 26cqi; height: 22cqi; }
+.c-auto { position: absolute; left: 8cqi; right: 8cqi; bottom: 31cqi; height: 21cqi; }
+/* A relic window and a signature already fill the card face; the set logo steps aside. */
+.card[data-relic] .c-brand { display: none; }
+.card[data-auto]:not([data-relic]) .c-brand { bottom: 21cqi; width: 32cqi; opacity: .6; }
 .c-auto svg { width: 100%; height: 100%; overflow: visible; }
 .c-auto path {
   fill: none; stroke: var(--sig-color, #1B2A41);
@@ -237,26 +240,30 @@
 }
 .slab-shell { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .slab-shell > svg { width: 100%; height: 100%; }
+/* Geometry is expressed against the slab's inline size, so every offset below is
+   the manifest pixel value divided by the 820px artboard width. */
 .slab-window {
   position: absolute;
-  left: 7.32cqi; top: 21.7cqi; width: 85.4cqi; height: 75.4cqi;
+  left: 7.32cqi; top: 34.4cqi; width: 85.4cqi; height: 119.5cqi;
   border-radius: 1.2cqi; overflow: hidden; z-index: 1;
   box-shadow: inset 0 0 2cqi rgba(0, 0, 0, .55);
 }
-.slab-window .card { --card-ratio: 700 / 980; }
+.slab-window .card { width: 100%; height: 100%; aspect-ratio: auto; }
 .slab-window .card-face { border-radius: 0; box-shadow: none; }
+.slab-window .card .card-face::after { animation-duration: 7s; }
+.slab-window .card[data-effect] .card-face { animation: none; box-shadow: none; }
 .slab-label {
-  position: absolute; left: 5.37cqi; top: 3.08cqi; width: 89.3cqi; height: 16.15cqi;
+  position: absolute; left: 5.37cqi; top: 4.88cqi; width: 89.3cqi; height: 25.6cqi;
   z-index: 2; border-radius: .9cqi; overflow: hidden;
 }
 .slab-label > .slab-label-art { position: absolute; inset: 0; }
 .slab-label > .slab-label-art svg { width: 100%; height: 100%; }
-.slab-label-copy { position: absolute; inset: 0; padding: 6cqi 3cqi 1.4cqi; color: var(--label-ink, #0E1420); }
+.slab-label-copy { position: absolute; inset: 0; padding: 7.6cqi 3cqi 1.8cqi; color: var(--label-ink, #0E1420); }
 .sl-player { font-family: var(--f-display); font-size: 4.2cqi; line-height: 1.05; letter-spacing: -.01em; text-transform: uppercase; }
 .sl-set { font-family: var(--f-body); font-weight: 600; font-size: 2.5cqi; opacity: .72; margin-top: .5cqi; }
 .sl-treat { font-family: var(--f-body); font-weight: 600; font-size: 2.3cqi; opacity: .6; }
 .sl-grade {
-  position: absolute; right: 2.4cqi; top: 5.4cqi; width: 19cqi; text-align: center;
+  position: absolute; right: 2.4cqi; top: 7.4cqi; width: 19cqi; text-align: center;
 }
 .sl-grade .g-name { font-family: var(--f-label); font-size: 2.7cqi; letter-spacing: .12em; opacity: .8; }
 .sl-grade .g-num { font-family: var(--f-display); font-size: 8.4cqi; line-height: .9; }

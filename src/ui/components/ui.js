@@ -1,5 +1,5 @@
 /** Small shared building blocks: icons, buttons, chips, stats, bars, modal, toast. */
-import { h, clear } from '../../core/dom.js';
+import { h, clear, append } from '../../core/dom.js';
 import { Assets, AssetKeys } from '../../core/assets.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
 import { bus, EVENTS } from '../../core/events.js';
@@ -66,7 +66,7 @@ export function Modal({ title, body, actions = [], width = 640, onClose, dismiss
     onClose?.();
   };
 
-  modal.append(
+  append(modal, [
     h('div', { class: 'modal-head' },
       h('div', { class: 'modal-title' }, title),
       h('div', { class: 'spacer' }),
@@ -74,7 +74,7 @@ export function Modal({ title, body, actions = [], width = 640, onClose, dismiss
     ),
     h('div', { class: 'modal-body' }, body),
     actions.length ? h('div', { class: 'modal-foot' }, ...actions) : null,
-  );
+  ]);
 
   scrim.append(modal);
   if (dismissable) {
