@@ -104,6 +104,15 @@ export function toast({ title, note, tone = 'info', icon = 'info', ttl = 4200 })
     ),
   );
   toastHost.append(el);
+  // Keep the stack short: a burst of level-ups should not blanket the screen.
+  const MAX = 4;
+  while (toastHost.children.length > MAX) {
+    const oldest = toastHost.firstElementChild;
+    oldest.classList.add('is-out');
+    setTimeout(() => oldest.remove(), 240);
+    if (toastHost.children.length > MAX + 2) oldest.remove();
+    else break;
+  }
   setTimeout(() => {
     el.classList.add('is-out');
     setTimeout(() => el.remove(), 260);

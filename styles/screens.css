@@ -39,13 +39,13 @@
 @media (max-width: 900px) { .top-metrics { display: none; } }
 
 /* --- home ------------------------------------------------------------------ */
-.home-hero { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--s-5); margin-bottom: var(--s-6); }
+.home-hero { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--s-5); margin-bottom: var(--s-6); align-items: start; }
 @media (max-width: 1180px) { .home-hero { grid-template-columns: 1fr; } }
 .hero-panel { padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-5); }
 .hero-greet { font-family: var(--f-display); font-size: var(--t-3xl); line-height: 1.02; letter-spacing: -.025em; }
 .hero-line { color: var(--text-dim); max-width: 56ch; }
 .hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-3); }
-.hero-cta { display: flex; gap: var(--s-3); flex-wrap: wrap; margin-top: auto; }
+.hero-cta { display: flex; gap: var(--s-3); flex-wrap: wrap; }
 .hero-progress {
   padding: var(--s-4);
   border-radius: var(--r-md);
