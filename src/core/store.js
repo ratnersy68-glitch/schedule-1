@@ -9,6 +9,7 @@ export function createState() {
     cash: 900,
     xp: 0,
     level: 1,
+    vault: [],               // sealed boxes bought but not finished
     collection: [],          // Card[]
     submissions: [],         // GradingSubmission[]
     ledger: [],              // { ts, kind, label, amount }

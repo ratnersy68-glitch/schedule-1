@@ -83,6 +83,7 @@ function footballHelmet(p, rot = 0) {
 function ballCap(p, rot = 0) {
   const [x, y] = p;
   return g({ transform: `rotate(${rot} ${x} ${y})` }, [
+    el('path', { d: `M${x - 30},${y + 30}a30,36 0 0 1 60,0c0,20 -12,32 -30,32s-30,-12 -30,-32Z`, fill: 'url(#helm)' }),
     el('path', { d: `M${x - 40},${y + 44}a40,44 0 0 1 80,0Z`, fill: 'url(#helm)' }),
     el('path', { d: `M${x - 40},${y + 42}a40,44 0 0 1 80,0c-8,-24 -22,-34 -40,-34s-32,10 -40,34Z`, fill: TA, opacity: 0.28 }),
     el('path', { d: `M${x - 46},${y + 44}c16,-10 66,-12 84,-2c6,4 4,10 -6,10h-72c-8,0 -12,-5 -6,-8Z`, fill: '#0B0E12', opacity: 0.65 }),
@@ -93,6 +94,7 @@ function ballCap(p, rot = 0) {
 function bareHead(p, rot = 0) {
   const [x, y] = p;
   return g({ transform: `rotate(${rot} ${x} ${y})` }, [
+    el('path', { d: `M${x - 36},${y + 6}a36,42 0 0 1 72,0c0,29 -15,48 -36,48s-36,-19 -36,-48Z`, fill: '#05070B', opacity: 0.55, transform: `translate(4,5)` }),
     el('path', { d: `M${x - 34},${y + 6}a34,40 0 0 1 68,0c0,28 -14,46 -34,46s-34,-18 -34,-46Z`, fill: 'url(#helm)' }),
     el('path', { d: `M${x - 34},${y + 2}a34,40 0 0 1 68,0c0,4 0,8 -1,12c-10,-14 -20,-20 -33,-20s-23,6 -33,20c-1,-4 -1,-8 -1,-12Z`, fill: '#080A0D', opacity: 0.55 }),
     el('path', { d: `M${x + 22},${y + 8}c7,11 7,28 0,40`, stroke: TA, 'stroke-width': 5, fill: 'none', opacity: 0.5, 'stroke-linecap': 'round' }),
@@ -237,7 +239,7 @@ function figureDefs() {
     linearGradient('body', [['0%', TPL], ['46%', TP], ['100%', TPD]], { x1: '8%', y1: '0%', x2: '92%', y2: '100%' }),
     linearGradient('pants', [['0%', TP], ['48%', TPD], ['100%', '#0A0E15']], { x1: '8%', y1: '0%', x2: '92%', y2: '100%' }),
     linearGradient('jersey', [['0%', TPL], ['58%', TP], ['100%', TPD]], { x1: '20%', y1: '0%', x2: '85%', y2: '100%' }),
-    linearGradient('helm', [['0%', TPL], ['55%', TP], ['100%', TPD]], { x1: '15%', y1: '0%', x2: '85%', y2: '100%' }),
+    linearGradient('helm', [['0%', TA, 0.9], ['38%', TPL], ['100%', TP]], { x1: '18%', y1: '0%', x2: '82%', y2: '100%' }),
     linearGradient('leather', [['0%', '#C9762F'], ['55%', '#8C4718'], ['100%', '#4A2109']], { x1: '20%', y1: '0%', x2: '80%', y2: '100%' }),
     linearGradient('wood', [['0%', '#E4C08A'], ['60%', '#B07C42'], ['100%', '#5C3A17']], { x1: '0%', y1: '0%', x2: '100%', y2: '0%' }),
     radialGradient('floor', [['0%', TS, 0.42], ['100%', TS, 0]]),
@@ -293,7 +295,7 @@ function renderPose(id, pose) {
       figureDefs(),
       el('ellipse', { cx: 300, cy: 300, rx: 250, ry: 300, fill: 'url(#backlight)' }),
       el('ellipse', { cx: 300, cy: 760, rx: 200, ry: 42, fill: 'url(#floor)' }),
-      g({ transform: 'translate(300,780) scale(1.06) translate(-300,-780)' }, [
+      g({ transform: 'translate(300,782) scale(1.14) translate(-300,-782)' }, [
         // cast shadow
         g({ transform: 'translate(22,14)', opacity: 0.2, filter: 'url(#soft)' }, [
           el('path', { d: t, fill: '#000' }), ...legPaths, ...armPaths,

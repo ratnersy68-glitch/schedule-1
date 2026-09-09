@@ -8,6 +8,17 @@ import { rng } from '../core/rng.js';
 
 const today = () => new Date().toDateString();
 
+/** Trim plural nouns when a target happens to be one. */
+function plural(label, n) {
+  if (n !== 1) return label;
+  return label
+    .replace(/\bboxes\b/, 'box')
+    .replace(/\bpacks\b/, 'pack')
+    .replace(/\bcards\b/, 'card')
+    .replace(/\bautographs or relics\b/, 'autograph or relic')
+    .replace(/\bnumbered cards\b/, 'numbered card');
+}
+
 export const ChallengeSystem = {
   ensureToday() {
     const s = S();
@@ -22,7 +33,7 @@ export const ChallengeSystem = {
       const target = def.targets[difficulty];
       return {
         key: def.id,
-        label: def.label.replace('{n}', def.money ? `$${target.toLocaleString()}` : String(target)),
+        label: plural(def.label.replace('{n}', def.money ? `$${target.toLocaleString()}` : String(target)), target),
         metric: def.metric,
         target,
         start: this.metricValue(def.metric),

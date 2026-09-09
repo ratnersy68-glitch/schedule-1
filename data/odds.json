@@ -633,14 +633,14 @@
     }
   },
   "$evTargets": {
-    "$comment": "Target expected-value-to-price ratio per profile. tools/simulate.mjs --write prices each product from its measured EV so the house edge is deliberate and expensive boxes are genuinely better per dollar.",
-    "entry": 0.78,
-    "mid": 0.82,
-    "prizm": 0.85,
-    "prospect": 0.83,
-    "chrome": 0.83,
-    "finest": 0.83,
-    "treasures": 0.88,
-    "flawless": 0.92
+    "$comment": "Target expected-value-to-price ratio per profile. Set above 1.0 on purpose: the median box returns well under its price, so the mean has to sit above it for progression to work. Big hits fund the climb.",
+    "entry": 1.1,
+    "mid": 1.1,
+    "prizm": 1.12,
+    "prospect": 1.1,
+    "chrome": 1.1,
+    "finest": 1.1,
+    "treasures": 1.14,
+    "flawless": 1.16
   }
 }

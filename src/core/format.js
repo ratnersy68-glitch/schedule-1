@@ -5,7 +5,9 @@ const MONEY_C = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'U
 const NUM = new Intl.NumberFormat('en-US');
 
 export function money(n, { cents = false, sign = false } = {}) {
-  const v = Number(n) || 0;
+  let v = Number(n) || 0;
+  // A card is never worth nothing; show the quarter rather than a bare zero.
+  if (v > 0 && v < 0.005) v = 0.01;
   const body = cents || Math.abs(v) < 10 ? MONEY_C.format(Math.abs(v)) : MONEY.format(Math.abs(v));
   const prefix = v < 0 ? '-' : sign ? '+' : '';
   return `${prefix}${body}`;

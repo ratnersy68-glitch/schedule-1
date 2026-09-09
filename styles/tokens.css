@@ -1,0 +1,96 @@
+/* ===========================================================================
+   The Break Room - design tokens
+   One source of truth for colour, type, spacing, radius, elevation and motion.
+   =========================================================================== */
+
+:root {
+  /* --- surface ramp ----------------------------------------------------- */
+  --ink-000: #05070B;
+  --ink-050: #080B12;
+  --ink-100: #0C1119;
+  --ink-200: #121826;
+  --ink-300: #18202F;
+  --ink-400: #202B3D;
+  --ink-500: #2C3A50;
+  --ink-600: #3D4E68;
+
+  --surface: rgba(18, 24, 38, 0.72);
+  --surface-raised: rgba(26, 34, 52, 0.82);
+  --surface-sunken: rgba(8, 11, 18, 0.66);
+  --surface-solid: #121826;
+  --hairline: rgba(148, 172, 210, 0.14);
+  --hairline-strong: rgba(160, 186, 226, 0.26);
+
+  /* --- text ------------------------------------------------------------- */
+  --text: #EAF0FA;
+  --text-dim: #A9B7CD;
+  --text-mute: #6E7E96;
+  --text-faint: #4C5A70;
+
+  /* --- brand ------------------------------------------------------------ */
+  --gold: #E7B24B;
+  --gold-lite: #FFDE9B;
+  --gold-deep: #8E6716;
+  --blue: #4EA8FF;
+  --blue-deep: #1E63C4;
+  --green: #43C88C;
+  --red: #F0554F;
+  --violet: #A970FF;
+
+  /* --- rarity ----------------------------------------------------------- */
+  --r-common: #8A94A6;
+  --r-uncommon: #5FBF8F;
+  --r-rare: #4EA8FF;
+  --r-epic: #A970FF;
+  --r-legendary: #F5B33C;
+  --r-mythic: #FF5470;
+  --r-oneofone: #FFE27A;
+
+  /* --- type ------------------------------------------------------------- */
+  --f-display: 'Archivo Black', 'Helvetica Neue', Impact, sans-serif;
+  --f-label: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --f-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  --t-xs: 0.6875rem;   /* 11 */
+  --t-sm: 0.8125rem;   /* 13 */
+  --t-md: 0.9375rem;   /* 15 */
+  --t-lg: 1.125rem;    /* 18 */
+  --t-xl: 1.5rem;      /* 24 */
+  --t-2xl: 2rem;       /* 32 */
+  --t-3xl: 2.75rem;    /* 44 */
+  --t-4xl: 4rem;       /* 64 */
+
+  /* --- space ------------------------------------------------------------ */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
+  --s-9: 56px; --s-10: 72px;
+
+  /* --- radius ----------------------------------------------------------- */
+  --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-pill: 999px;
+
+  /* --- elevation -------------------------------------------------------- */
+  --e-1: 0 1px 2px rgba(0, 0, 0, .5);
+  --e-2: 0 4px 14px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .4);
+  --e-3: 0 14px 40px rgba(0, 0, 0, .55), 0 3px 8px rgba(0, 0, 0, .4);
+  --e-4: 0 30px 80px rgba(0, 0, 0, .68), 0 8px 20px rgba(0, 0, 0, .45);
+  --e-glow: 0 0 0 1px rgba(231, 178, 75, .35), 0 0 32px rgba(231, 178, 75, .22);
+
+  /* --- motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --ease-back: cubic-bezier(.34, 1.56, .64, 1);
+  --d-fast: 140ms;
+  --d-base: 240ms;
+  --d-slow: 420ms;
+
+  /* --- layout ----------------------------------------------------------- */
+  --rail: 264px;
+  --topbar: 72px;
+  --page-max: 1560px;
+  --card-ratio: 0.7143;   /* 750 / 1050 */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --d-fast: 1ms; --d-base: 1ms; --d-slow: 1ms; }
+}

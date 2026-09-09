@@ -118,12 +118,12 @@ export function hobbyBox(box) {
       ]),
 
       // foil seal
-      g({ transform: 'translate(516,352) rotate(12)' }, [
-        el('circle', { r: 66, fill: `url(#m${id})` }),
-        el('circle', { r: 56, fill: 'none', stroke: shade(p.base, 0.4), 'stroke-width': 3, opacity: 0.6 }),
-        el('text', { y: -10, 'font-family': HEADLINE, 'font-size': 23, 'font-weight': 900, fill: shade(p.base, 0.6), 'text-anchor': 'middle' }, 'FACTORY'),
-        el('text', { y: 16, 'font-family': HEADLINE, 'font-size': 23, 'font-weight': 900, fill: shade(p.base, 0.6), 'text-anchor': 'middle' }, 'SEALED'),
-        el('text', { y: 40, 'font-family': MONO, 'font-size': 12, fill: shade(p.base, 0.5), 'text-anchor': 'middle', 'letter-spacing': 1 }, 'HOBBY ONLY'),
+      g({ transform: 'translate(492,378) rotate(11)' }, [
+        el('circle', { r: 58, fill: `url(#m${id})` }),
+        el('circle', { r: 49, fill: 'none', stroke: shade(p.base, 0.4), 'stroke-width': 3, opacity: 0.6 }),
+        el('text', { y: -8, 'font-family': HEADLINE, 'font-size': 20, 'font-weight': 900, fill: shade(p.base, 0.6), 'text-anchor': 'middle' }, 'FACTORY'),
+        el('text', { y: 14, 'font-family': HEADLINE, 'font-size': 20, 'font-weight': 900, fill: shade(p.base, 0.6), 'text-anchor': 'middle' }, 'SEALED'),
+        el('text', { y: 34, 'font-family': MONO, 'font-size': 11, fill: shade(p.base, 0.5), 'text-anchor': 'middle', 'letter-spacing': 1 }, 'HOBBY ONLY'),
       ]),
 
       // edges

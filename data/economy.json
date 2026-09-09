@@ -196,7 +196,7 @@
       },
       {
         "id": "open-box",
-        "label": "Open {n} hobby boxes",
+        "label": "Open {n} sealed hobby boxes",
         "metric": "boxesOpened",
         "targets": [
           1,
@@ -244,7 +244,7 @@
       },
       {
         "id": "grade-cards",
-        "label": "Send {n} cards to AGA",
+        "label": "Send {n} cards to Apex",
         "metric": "gradedCount",
         "targets": [
           1,
@@ -260,7 +260,7 @@
       },
       {
         "id": "sell-value",
-        "label": "Sell {n} dollars of cardboard",
+        "label": "Sell {n} of cardboard",
         "metric": "totalSales",
         "targets": [
           500,

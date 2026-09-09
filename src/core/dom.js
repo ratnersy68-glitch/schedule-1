@@ -5,7 +5,7 @@ export function h(tag, props = {}, ...children) {
   for (const [k, v] of Object.entries(props || {})) {
     if (v === null || v === undefined || v === false) continue;
     if (k === 'class') el.className = Array.isArray(v) ? v.filter(Boolean).join(' ') : v;
-    else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+    else if (k === 'style' && typeof v === 'object') applyStyle(el, v);
     else if (k === 'dataset') Object.assign(el.dataset, v);
     else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v);
     else if (k === 'html') el.innerHTML = v;
@@ -14,6 +14,16 @@ export function h(tag, props = {}, ...children) {
     else el.setAttribute(k, v);
   }
   append(el, children);
+  return el;
+}
+
+/** Style objects may carry CSS custom properties, which Object.assign silently drops. */
+export function applyStyle(el, style) {
+  for (const [prop, value] of Object.entries(style)) {
+    if (value === null || value === undefined || value === false) continue;
+    if (prop.startsWith('--')) el.style.setProperty(prop, String(value));
+    else el.style[prop] = value;
+  }
   return el;
 }
 

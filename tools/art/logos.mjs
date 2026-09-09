@@ -1,5 +1,5 @@
 /** League marks, franchise crests and product wordmarks. */
-import { el, svg, defs, g, linearGradient, radialGradient, roundRect, star, poly, HEADLINE, DISPLAY, text } from './svg.mjs';
+import { el, svg, defs, g, linearGradient, radialGradient, roundRect, star, poly, seeded, HEADLINE, DISPLAY, text } from './svg.mjs';
 import { shade, tint, mix, ink, alpha } from './color.mjs';
 
 /* ------------------------------------------------------------ crest shapes */
@@ -120,29 +120,76 @@ export function brandMark(box) {
 
 export function insertArt(kind) {
   const W = 600; const H = 820;
+  const fade = el('linearGradient', { id: 'insFade', x1: '0%', y1: '0%', x2: '0%', y2: '100%' }, [
+    el('stop', { offset: '0%', 'stop-color': '#fff', 'stop-opacity': 0.9 }),
+    el('stop', { offset: '58%', 'stop-color': '#fff', 'stop-opacity': 0.55 }),
+    el('stop', { offset: '100%', 'stop-color': '#fff', 'stop-opacity': 0 }),
+  ]);
+  const mask = el('mask', { id: 'insMask' }, el('rect', { width: W, height: H, fill: 'url(#insFade)' }));
+  const band = el('linearGradient', { id: 'insBand', x1: '0%', y1: '0%', x2: '0%', y2: '100%' }, [
+    el('stop', { offset: '0%', 'stop-color': 'var(--ts,#C8963E)', 'stop-opacity': 0 }),
+    el('stop', { offset: '50%', 'stop-color': 'var(--ts,#C8963E)', 'stop-opacity': 0.3 }),
+    el('stop', { offset: '100%', 'stop-color': 'var(--ts,#C8963E)', 'stop-opacity': 0 }),
+  ]);
+
   const pieces = {
-    burst: Array.from({ length: 26 }, (_, i) => el('path', {
-      d: `M300,410L${300 + Math.cos((i / 26) * 6.283) * 620},${410 + Math.sin((i / 26) * 6.283) * 620}`,
-      stroke: 'var(--ts,#C8963E)', 'stroke-width': i % 2 ? 10 : 26, opacity: i % 2 ? 0.16 : 0.3,
-    })),
+    // radial speed lines from behind the athlete
+    burst: Array.from({ length: 44 }, (_, i) => {
+      const a = (i / 44) * Math.PI * 2;
+      const w = i % 4 === 0 ? 0.028 : 0.009;
+      return el('path', {
+        d: `M300,430L${300 + Math.cos(a - w) * 900},${430 + Math.sin(a - w) * 900}L${300 + Math.cos(a + w) * 900},${430 + Math.sin(a + w) * 900}Z`,
+        fill: i % 4 === 0 ? 'var(--ts,#C8963E)' : 'var(--ta,#E9E4D8)',
+        opacity: i % 4 === 0 ? 0.3 : 0.12,
+      });
+    }),
+    // full-bleed city silhouette with lit windows
     skyline: [
-      el('path', { d: 'M0,820V560l40-90 34 90 46-160 42 160 56-120 44 120 60-190 46 190 58-110 44 110 46-70 44 70v260Z', fill: 'var(--tp,#1B2A41)', opacity: 0.5 }),
-      ...Array.from({ length: 40 }, (_, i) => el('rect', { x: 20 + (i % 10) * 58, y: 600 + Math.floor(i / 10) * 46, width: 14, height: 20, fill: 'var(--ts,#C8963E)', opacity: 0.35 })),
+      ...Array.from({ length: 22 }, (_, i) => {
+        const r = seeded(`sk${i}`);
+        const bw = 26 + r() * 34;
+        const bh = 150 + r() * 380;
+        const x = -20 + i * 30;
+        return el('rect', { x, y: H - bh, width: bw, height: bh, fill: 'var(--ta,#E9E4D8)', opacity: 0.1 + r() * 0.12 });
+      }),
+      ...Array.from({ length: 90 }, (_, i) => {
+        const r = seeded(`sw${i}`);
+        return el('rect', { x: r() * W, y: H - 40 - r() * 420, width: 6, height: 9, fill: 'var(--ts,#C8963E)', opacity: 0.35 + r() * 0.4 });
+      }),
     ],
-    splash: Array.from({ length: 14 }, (_, i) => el('ellipse', {
-      cx: 300 + Math.cos(i * 2.4) * (60 + i * 16), cy: 400 + Math.sin(i * 1.7) * (70 + i * 18),
-      rx: 90 - i * 3, ry: 62 - i * 2, fill: i % 3 === 0 ? 'var(--ts,#C8963E)' : 'var(--ta,#E9E4D8)',
-      opacity: 0.14, transform: `rotate(${i * 24} 300 400)`,
-    })),
+    // paint splash rings
+    splash: Array.from({ length: 22 }, (_, i) => {
+      const r = seeded(`sp${i}`);
+      return el('ellipse', {
+        cx: 300 + Math.cos(i * 2.1) * (40 + i * 14),
+        cy: 400 + Math.sin(i * 1.6) * (50 + i * 15),
+        rx: 130 - i * 4, ry: 96 - i * 3,
+        fill: 'none',
+        stroke: i % 3 === 0 ? 'var(--ts,#C8963E)' : 'var(--ta,#E9E4D8)',
+        'stroke-width': 2 + r() * 7,
+        opacity: 0.1 + r() * 0.16,
+        transform: `rotate(${i * 27} 300 400)`,
+      });
+    }),
+    // heraldic banner sweep
     banner: [
-      el('path', { d: 'M110,60h380v560l-190-96-190 96Z', fill: 'none', stroke: 'var(--ts,#C8963E)', 'stroke-width': 8, opacity: 0.45 }),
-      el('path', { d: 'M150,100h300v470l-150-76-150 76Z', fill: 'var(--tp,#1B2A41)', opacity: 0.28 }),
+      ...Array.from({ length: 9 }, (_, i) => el('path', {
+        d: `M${-120 + i * 84},0L${120 + i * 84},0L${-40 + i * 84},${H}L${-280 + i * 84},${H}Z`,
+        fill: i % 2 ? 'var(--ts,#C8963E)' : 'var(--ta,#E9E4D8)',
+        opacity: i % 2 ? 0.14 : 0.06,
+      })),
+      el('path', { d: 'M60,44h480v92H60Z', fill: 'none', stroke: 'var(--ts,#C8963E)', 'stroke-width': 5, opacity: 0.4 }),
     ],
+    // engineered grid with a bright horizon band
     grid: [
-      ...Array.from({ length: 13 }, (_, i) => el('path', { d: `M${i * 50},0V820`, stroke: 'var(--ta,#E9E4D8)', 'stroke-width': 2, opacity: 0.12 })),
-      ...Array.from({ length: 17 }, (_, i) => el('path', { d: `M0,${i * 50}H600`, stroke: 'var(--ta,#E9E4D8)', 'stroke-width': 2, opacity: 0.12 })),
-      el('rect', { x: 90, y: 180, width: 420, height: 460, fill: 'none', stroke: 'var(--ts,#C8963E)', 'stroke-width': 10, opacity: 0.5 }),
+      ...Array.from({ length: 25 }, (_, i) => el('path', { d: `M${i * 25},0V${H}`, stroke: 'var(--ta,#E9E4D8)', 'stroke-width': i % 5 === 0 ? 2 : 0.8, opacity: i % 5 === 0 ? 0.16 : 0.07 })),
+      ...Array.from({ length: 33 }, (_, i) => el('path', { d: `M0,${i * 25}H${W}`, stroke: 'var(--ta,#E9E4D8)', 'stroke-width': i % 5 === 0 ? 2 : 0.8, opacity: i % 5 === 0 ? 0.16 : 0.07 })),
+      el('rect', { y: 300, width: W, height: 210, fill: 'url(#insBand)', opacity: 0.5 }),
     ],
   }[kind] || [];
-  return svg({ w: W, h: H, id: `insert-${kind}`, children: [g({}, pieces)] });
+
+  return svg({
+    w: W, h: H, id: `insert-${kind}`,
+    children: [defs([fade, band, mask]), g({ mask: 'url(#insMask)' }, pieces)],
+  });
 }
