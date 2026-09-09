@@ -1,0 +1,55 @@
+name: Publish the playable build
+
+# Builds the single-file game from source and serves it at the repository's
+# GitHub Pages URL. The bundle itself is a build output and is not committed.
+
+on:
+  push:
+    branches: [claude/sports-card-box-simulator-af2i1r]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Redraw artwork and bundle the game
+        run: |
+          node tools/generate-assets.mjs
+          mkdir -p site
+          node tools/bundle.mjs site/index.html
+          cp site/index.html site/breakroom.html
+          ls -lh site
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
