@@ -1,0 +1,59 @@
+{
+  "$comment": "Centralised definition of rarity tiers, parallel finishes, insert sets and hit types. Tune values here without touching gameplay code.",
+
+  "rarityTiers": [
+    { "id": "common",    "label": "Common",     "order": 0, "color": "#8A94A6", "effect": "none",        "glow": "#8A94A6" },
+    { "id": "uncommon",  "label": "Uncommon",   "order": 1, "color": "#5FBF8F", "effect": "sheen",       "glow": "#5FBF8F" },
+    { "id": "rare",      "label": "Rare",       "order": 2, "color": "#4EA8FF", "effect": "foil",        "glow": "#4EA8FF" },
+    { "id": "epic",      "label": "Epic",       "order": 3, "color": "#A970FF", "effect": "holo",        "glow": "#A970FF" },
+    { "id": "legendary", "label": "Legendary",  "order": 4, "color": "#F5B33C", "effect": "animatedFoil","glow": "#F5B33C" },
+    { "id": "mythic",    "label": "Mythic",     "order": 5, "color": "#FF5470", "effect": "prismatic",   "glow": "#FF5470" },
+    { "id": "oneofone",  "label": "One of One", "order": 6, "color": "#FFF0B3", "effect": "superfractor","glow": "#FFE27A" }
+  ],
+
+  "parallels": [
+    { "id": "none",         "label": "Base",           "tier": "common",    "printRun": null, "value": 1.0,  "foil": "none",       "color": "#9AA5B5", "ink": "#0E1116" },
+    { "id": "holo",         "label": "Holo Foil",      "tier": "uncommon",  "printRun": null, "value": 2.2,  "foil": "holo",       "color": "#BFD8E8", "ink": "#0E1116" },
+    { "id": "refractor",    "label": "Refractor",      "tier": "uncommon",  "printRun": null, "value": 2.8,  "foil": "refractor",  "color": "#CFE9F2", "ink": "#0E1116" },
+    { "id": "silver",       "label": "Silver Prizm",   "tier": "rare",      "printRun": null, "value": 6.5,  "foil": "silver",     "color": "#D8DEE6", "ink": "#0E1116" },
+    { "id": "blue",         "label": "Blue",           "tier": "rare",      "printRun": 199,  "value": 9.0,  "foil": "tint",       "color": "#3C7FE0", "ink": "#F2F6FF" },
+    { "id": "green",        "label": "Green",          "tier": "rare",      "printRun": 99,   "value": 14.0, "foil": "tint",       "color": "#2FA36B", "ink": "#F0FFF7" },
+    { "id": "purple",       "label": "Purple",         "tier": "epic",      "printRun": 75,   "value": 20.0, "foil": "tint",       "color": "#8B5CF6", "ink": "#F7F2FF" },
+    { "id": "orange",       "label": "Orange",         "tier": "epic",      "printRun": 60,   "value": 26.0, "foil": "tint",       "color": "#F08127", "ink": "#FFF6EC" },
+    { "id": "red",          "label": "Red",            "tier": "epic",      "printRun": 49,   "value": 34.0, "foil": "tint",       "color": "#D93A3A", "ink": "#FFF0F0" },
+    { "id": "gold",         "label": "Gold",           "tier": "legendary", "printRun": 10,   "value": 90.0, "foil": "metal",      "color": "#D4A72C", "ink": "#2A1E05" },
+    { "id": "black",        "label": "Black Finite",   "tier": "legendary", "printRun": 5,    "value": 150.0,"foil": "metal",      "color": "#171A1F", "ink": "#EDEFF3" },
+    { "id": "superfractor", "label": "Superfractor",   "tier": "oneofone",  "printRun": 1,    "value": 600.0,"foil": "superfractor","color": "#F2D479","ink": "#2A1E05" }
+  ],
+
+  "cardTypes": [
+    { "id": "base",         "label": "Base",              "baseTier": "common"   },
+    { "id": "rookie",       "label": "Rookie Card",       "baseTier": "common"   },
+    { "id": "insert",       "label": "Insert",            "baseTier": "uncommon" },
+    { "id": "auto",         "label": "Autograph",         "baseTier": "rare"     },
+    { "id": "rookieAuto",   "label": "Rookie Autograph",  "baseTier": "epic"     },
+    { "id": "patch",        "label": "Patch Relic",       "baseTier": "rare"     },
+    { "id": "patchAuto",    "label": "Patch Autograph",   "baseTier": "epic"     },
+    { "id": "dualAuto",     "label": "Dual Autograph",    "baseTier": "legendary"},
+    { "id": "booklet",      "label": "Booklet",           "baseTier": "legendary"}
+  ],
+
+  "hitTypes": [
+    { "id": "patch",      "label": "Patch Relic",      "cardType": "patch",      "auto": false, "memorabilia": true,  "value": 3.5,  "runs": [null, 199, 99, 49] },
+    { "id": "auto",       "label": "Autograph",        "cardType": "auto",       "auto": true,  "memorabilia": false, "value": 5.0,  "runs": [null, 199, 99, 49] },
+    { "id": "rookieAuto", "label": "Rookie Autograph", "cardType": "rookieAuto", "auto": true,  "memorabilia": false, "value": 11.0, "runs": [199, 99, 49, 25] },
+    { "id": "patchAuto",  "label": "Patch Autograph",  "cardType": "patchAuto",  "auto": true,  "memorabilia": true,  "value": 18.0, "runs": [99, 49, 25, 10] },
+    { "id": "dualAuto",   "label": "Dual Autograph",   "cardType": "dualAuto",   "auto": true,  "memorabilia": false, "value": 30.0, "runs": [25, 10, 5] },
+    { "id": "booklet",    "label": "Booklet Patch Auto","cardType": "booklet",   "auto": true,  "memorabilia": true,  "value": 55.0, "runs": [10, 5, 3] }
+  ],
+
+  "insertSets": [
+    { "id": "ins-kinetic",   "label": "Kinetic",          "sport": "any", "value": 1.8, "art": "burst"   },
+    { "id": "ins-downtown",  "label": "Downtown",         "sport": "any", "value": 6.0, "art": "skyline" },
+    { "id": "ins-color-blast","label": "Color Blast",     "sport": "any", "value": 8.0, "art": "splash"  },
+    { "id": "ins-legacy",    "label": "Legacy Marks",     "sport": "any", "value": 2.4, "art": "banner"  },
+    { "id": "ins-cage",      "label": "Iron Cage",        "sport": "NBA", "value": 3.0, "art": "grid"    },
+    { "id": "ins-gridiron",  "label": "Gridiron Kings",   "sport": "NFL", "value": 3.0, "art": "grid"    },
+    { "id": "ins-diamond",   "label": "Diamond Standard", "sport": "MLB", "value": 3.0, "art": "grid"    }
+  ]
+}

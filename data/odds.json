@@ -1,0 +1,119 @@
+{
+  "$comment": "Centralised odds manager data. Products reference a profile id and may override any field. Tune here; gameplay code never hardcodes probabilities.",
+
+  "hitTables": {
+    "entry":    [ { "id": "patch", "w": 45 }, { "id": "auto", "w": 40 }, { "id": "rookieAuto", "w": 13 }, { "id": "patchAuto", "w": 2 }, { "id": "dualAuto", "w": 0.3 }, { "id": "booklet", "w": 0.05 } ],
+    "mid":      [ { "id": "patch", "w": 35 }, { "id": "auto", "w": 43 }, { "id": "rookieAuto", "w": 18 }, { "id": "patchAuto", "w": 3.5 }, { "id": "dualAuto", "w": 0.6 }, { "id": "booklet", "w": 0.1 } ],
+    "chrome":   [ { "id": "patch", "w": 12 }, { "id": "auto", "w": 55 }, { "id": "rookieAuto", "w": 30 }, { "id": "patchAuto", "w": 2.5 }, { "id": "dualAuto", "w": 0.4 }, { "id": "booklet", "w": 0.05 } ],
+    "premium":  [ { "id": "patch", "w": 14 }, { "id": "auto", "w": 22 }, { "id": "rookieAuto", "w": 34 }, { "id": "patchAuto", "w": 24 }, { "id": "dualAuto", "w": 5 }, { "id": "booklet", "w": 1 } ],
+    "flawless": [ { "id": "patch", "w": 6 },  { "id": "auto", "w": 16 }, { "id": "rookieAuto", "w": 30 }, { "id": "patchAuto", "w": 33 }, { "id": "dualAuto", "w": 12 }, { "id": "booklet", "w": 3 } ]
+  },
+
+  "parallelTables": {
+    "entry":    [ { "id": "holo", "w": 42 }, { "id": "silver", "w": 30 }, { "id": "blue", "w": 14 }, { "id": "green", "w": 8 }, { "id": "purple", "w": 3.6 }, { "id": "orange", "w": 1.6 }, { "id": "red", "w": 1.1 }, { "id": "gold", "w": 0.35 }, { "id": "black", "w": 0.12 }, { "id": "superfractor", "w": 0.025 } ],
+    "mid":      [ { "id": "holo", "w": 26 }, { "id": "silver", "w": 34 }, { "id": "blue", "w": 16 }, { "id": "green", "w": 10 }, { "id": "purple", "w": 6 }, { "id": "orange", "w": 3.5 }, { "id": "red", "w": 2.5 }, { "id": "gold", "w": 0.9 }, { "id": "black", "w": 0.3 }, { "id": "superfractor", "w": 0.06 } ],
+    "prizm":    [ { "id": "silver", "w": 44 }, { "id": "holo", "w": 18 }, { "id": "blue", "w": 15 }, { "id": "green", "w": 9.5 }, { "id": "purple", "w": 6 }, { "id": "orange", "w": 3.6 }, { "id": "red", "w": 2.6 }, { "id": "gold", "w": 1.0 }, { "id": "black", "w": 0.35 }, { "id": "superfractor", "w": 0.08 } ],
+    "chrome":   [ { "id": "refractor", "w": 48 }, { "id": "holo", "w": 14 }, { "id": "blue", "w": 16 }, { "id": "green", "w": 9 }, { "id": "purple", "w": 5.5 }, { "id": "orange", "w": 3.2 }, { "id": "red", "w": 2.4 }, { "id": "gold", "w": 1.0 }, { "id": "black", "w": 0.36 }, { "id": "superfractor", "w": 0.09 } ],
+    "premium":  [ { "id": "silver", "w": 16 }, { "id": "blue", "w": 18 }, { "id": "green", "w": 17 }, { "id": "purple", "w": 15 }, { "id": "orange", "w": 12 }, { "id": "red", "w": 11 }, { "id": "gold", "w": 6.5 }, { "id": "black", "w": 3.0 }, { "id": "superfractor", "w": 0.55 } ],
+    "flawless": [ { "id": "green", "w": 12 }, { "id": "purple", "w": 16 }, { "id": "orange", "w": 17 }, { "id": "red", "w": 20 }, { "id": "gold", "w": 20 }, { "id": "black", "w": 12 }, { "id": "superfractor", "w": 3.0 } ]
+  },
+
+  "profiles": {
+    "entry": {
+      "label": "Entry Hobby",
+      "baseSlots": 4,
+      "rookieChance": 0.30,
+      "upgrades": [ { "kind": "insert", "chance": 0.30 }, { "kind": "parallel", "chance": 0.40 } ],
+      "boxHits": 2,
+      "hitTable": "entry",
+      "parallelTable": "entry",
+      "playerTierWeights": [26, 26, 24, 16, 8],
+      "hitTierWeights": [10, 18, 28, 28, 16],
+      "caseHitChance": 0.010
+    },
+    "mid": {
+      "label": "Mid Hobby",
+      "baseSlots": 5,
+      "rookieChance": 0.35,
+      "upgrades": [ { "kind": "insert", "chance": 0.45 }, { "kind": "parallel", "chance": 0.85 } ],
+      "boxHits": 3,
+      "hitTable": "mid",
+      "parallelTable": "mid",
+      "playerTierWeights": [18, 22, 26, 22, 12],
+      "hitTierWeights": [6, 14, 26, 32, 22],
+      "caseHitChance": 0.018
+    },
+    "prizm": {
+      "label": "Flagship Hobby",
+      "baseSlots": 12,
+      "rookieChance": 0.32,
+      "upgrades": [ { "kind": "insert", "chance": 0.90 }, { "kind": "parallel", "chance": 1.60 } ],
+      "boxHits": 3,
+      "hitTable": "mid",
+      "parallelTable": "prizm",
+      "playerTierWeights": [16, 20, 26, 24, 14],
+      "hitTierWeights": [5, 13, 25, 33, 24],
+      "caseHitChance": 0.022
+    },
+    "prospect": {
+      "label": "Prospect Chrome",
+      "baseSlots": 4,
+      "rookieChance": 0.72,
+      "upgrades": [ { "kind": "insert", "chance": 0.28 }, { "kind": "parallel", "chance": 0.75 } ],
+      "boxHits": 2,
+      "hitTable": "chrome",
+      "parallelTable": "chrome",
+      "playerTierWeights": [20, 22, 24, 22, 12],
+      "hitTierWeights": [8, 16, 26, 30, 20],
+      "caseHitChance": 0.016
+    },
+    "chrome": {
+      "label": "Flagship Chrome",
+      "baseSlots": 4,
+      "rookieChance": 0.38,
+      "upgrades": [ { "kind": "insert", "chance": 0.34 }, { "kind": "parallel", "chance": 0.60 } ],
+      "boxHits": 2,
+      "hitTable": "chrome",
+      "parallelTable": "chrome",
+      "playerTierWeights": [22, 24, 24, 20, 10],
+      "hitTierWeights": [9, 17, 27, 29, 18],
+      "caseHitChance": 0.014
+    },
+    "finest": {
+      "label": "Finest Hobby",
+      "baseSlots": 5,
+      "rookieChance": 0.42,
+      "upgrades": [ { "kind": "insert", "chance": 0.40 }, { "kind": "parallel", "chance": 1.10 } ],
+      "boxHits": 2,
+      "hitTable": "mid",
+      "parallelTable": "chrome",
+      "playerTierWeights": [14, 20, 27, 25, 14],
+      "hitTierWeights": [5, 13, 25, 33, 24],
+      "caseHitChance": 0.024
+    },
+    "treasures": {
+      "label": "Ultra Premium",
+      "baseSlots": 4,
+      "rookieChance": 0.52,
+      "upgrades": [ { "kind": "insert", "chance": 0.50 }, { "kind": "parallel", "chance": 1.00 } ],
+      "boxHits": 5,
+      "hitTable": "premium",
+      "parallelTable": "premium",
+      "playerTierWeights": [4, 10, 22, 34, 30],
+      "hitTierWeights": [1, 5, 17, 37, 40],
+      "caseHitChance": 0.055
+    },
+    "flawless": {
+      "label": "Luxury Case",
+      "baseSlots": 3,
+      "rookieChance": 0.58,
+      "upgrades": [ { "kind": "insert", "chance": 0.40 }, { "kind": "parallel", "chance": 1.40 } ],
+      "boxHits": 7,
+      "hitTable": "flawless",
+      "parallelTable": "flawless",
+      "playerTierWeights": [2, 6, 18, 36, 38],
+      "hitTierWeights": [0, 3, 12, 36, 49],
+      "caseHitChance": 0.090
+    }
+  }
+}

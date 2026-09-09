@@ -1,0 +1,31 @@
+{
+  "$comment": "Fictional franchises. Colors drive crest art, card templates and parallel tinting.",
+  "teams": [
+    { "id": "FB-CAN", "sport": "NFL", "city": "Canton",      "nickname": "Ironworks",   "abbr": "CAN", "crest": "shield",   "colors": { "primary": "#1B2A41", "secondary": "#C8963E", "accent": "#E9E4D8" } },
+    { "id": "FB-BAY", "sport": "NFL", "city": "Bayview",     "nickname": "Kingfishers", "abbr": "BAY", "crest": "wing",     "colors": { "primary": "#0E5A6E", "secondary": "#F2A03D", "accent": "#DFF3F7" } },
+    { "id": "FB-RAM", "sport": "NFL", "city": "Rampart",     "nickname": "Sentinels",   "abbr": "RAM", "crest": "shield",   "colors": { "primary": "#3A1C4E", "secondary": "#B7A5D8", "accent": "#F1ECFA" } },
+    { "id": "FB-GLF", "sport": "NFL", "city": "Gulfport",    "nickname": "Marauders",   "abbr": "GLF", "crest": "chevron",  "colors": { "primary": "#6B1F2B", "secondary": "#D9B26A", "accent": "#F6E9DC" } },
+    { "id": "FB-AUR", "sport": "NFL", "city": "Aurora",      "nickname": "Voltage",     "abbr": "AUR", "crest": "bolt",     "colors": { "primary": "#132C33", "secondary": "#4FE0B5", "accent": "#E6FFF7" } },
+    { "id": "FB-RED", "sport": "NFL", "city": "Redstone",    "nickname": "Outlaws",     "abbr": "RED", "crest": "star",     "colors": { "primary": "#8C2A1E", "secondary": "#2B2B2B", "accent": "#F4DDD5" } },
+    { "id": "FB-NOR", "sport": "NFL", "city": "Northgate",   "nickname": "Timberjacks", "abbr": "NOR", "crest": "chevron",  "colors": { "primary": "#1F4034", "secondary": "#C6852F", "accent": "#EAF2EC" } },
+    { "id": "FB-VER", "sport": "NFL", "city": "Verona",      "nickname": "Centurions",  "abbr": "VER", "crest": "shield",   "colors": { "primary": "#2C2F45", "secondary": "#9AA6C4", "accent": "#EDF0F7" } },
+
+    { "id": "BB-HAR", "sport": "NBA", "city": "Harbor City", "nickname": "Tide",        "abbr": "HAR", "crest": "circle",   "colors": { "primary": "#0B3D63", "secondary": "#38C6E8", "accent": "#E8F7FC" } },
+    { "id": "BB-SOL", "sport": "NBA", "city": "Solaris",     "nickname": "Nova",        "abbr": "SOL", "crest": "star",     "colors": { "primary": "#3D1436", "secondary": "#FF7A45", "accent": "#FFEDE4" } },
+    { "id": "BB-MET", "sport": "NBA", "city": "Metro",       "nickname": "Vipers",      "abbr": "MET", "crest": "chevron",  "colors": { "primary": "#14231A", "secondary": "#8FD14F", "accent": "#EFFAE6" } },
+    { "id": "BB-GRA", "sport": "NBA", "city": "Granite",     "nickname": "Peaks",       "abbr": "GRA", "crest": "mountain", "colors": { "primary": "#2A3340", "secondary": "#B8C4D2", "accent": "#F2F5F9" } },
+    { "id": "BB-COB", "sport": "NBA", "city": "Cobalt",      "nickname": "Motion",      "abbr": "COB", "crest": "circle",   "colors": { "primary": "#12237A", "secondary": "#F5C542", "accent": "#EDF0FF" } },
+    { "id": "BB-LAK", "sport": "NBA", "city": "Lakeshore",   "nickname": "Halos",       "abbr": "LAK", "crest": "circle",   "colors": { "primary": "#4A1C6B", "secondary": "#F2D06B", "accent": "#F7EEFF" } },
+    { "id": "BB-SAB", "sport": "NBA", "city": "Sable City",  "nickname": "Royals",      "abbr": "SAB", "crest": "shield",   "colors": { "primary": "#101014", "secondary": "#C9A227", "accent": "#F5F0DE" } },
+    { "id": "BB-PAL", "sport": "NBA", "city": "Palm Court",  "nickname": "Solstice",    "abbr": "PAL", "crest": "star",     "colors": { "primary": "#B4471F", "secondary": "#FFD79A", "accent": "#FFF3E6" } },
+
+    { "id": "BS-RIV", "sport": "MLB", "city": "Riverton",    "nickname": "Rails",       "abbr": "RIV", "crest": "circle",   "colors": { "primary": "#1E2B38", "secondary": "#C0392B", "accent": "#EFF2F5" } },
+    { "id": "BS-EME", "sport": "MLB", "city": "Emerald Bay", "nickname": "Anchors",     "abbr": "EME", "crest": "wing",     "colors": { "primary": "#0F4A3C", "secondary": "#E2C275", "accent": "#E9F5F0" } },
+    { "id": "BS-FOR", "sport": "MLB", "city": "Fort Hollow", "nickname": "Miners",      "abbr": "FOR", "crest": "mountain", "colors": { "primary": "#3B2E1E", "secondary": "#E0A93B", "accent": "#F6EEE0" } },
+    { "id": "BS-SIL", "sport": "MLB", "city": "Silver Creek","nickname": "Coyotes",     "abbr": "SIL", "crest": "chevron",  "colors": { "primary": "#4B4F58", "secondary": "#D96C3A", "accent": "#F4F0EC" } },
+    { "id": "BS-PIN", "sport": "MLB", "city": "Pinehurst",   "nickname": "Pioneers",    "abbr": "PIN", "crest": "shield",   "colors": { "primary": "#1C3A5E", "secondary": "#E8E2D0", "accent": "#F4F7FB" } },
+    { "id": "BS-BAR", "sport": "MLB", "city": "Bayline",     "nickname": "Barons",      "abbr": "BAR", "crest": "shield",   "colors": { "primary": "#5A1A33", "secondary": "#D8B26D", "accent": "#F8ECF1" } },
+    { "id": "BS-COP", "sport": "MLB", "city": "Copper Ridge","nickname": "Bandits",     "abbr": "COP", "crest": "star",     "colors": { "primary": "#7A3A1D", "secondary": "#3E6B62", "accent": "#F7EAE0" } },
+    { "id": "BS-UNI", "sport": "MLB", "city": "Union Park",  "nickname": "Sentries",    "abbr": "UNI", "crest": "bolt",     "colors": { "primary": "#25324B", "secondary": "#7FB2E5", "accent": "#EDF3FA" } }
+  ]
+}

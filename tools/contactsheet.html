@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+ body{background:#0a0d13;color:#cbd5e1;font-family:Inter,sans-serif;margin:0;padding:24px}
+ h2{font-family:'Archivo Black';font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#7c8aa3;margin:28px 0 12px}
+ .grid{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+ .cell{background:#11161f;border:1px solid #1e2733;border-radius:10px;padding:10px;text-align:center}
+ .cell b{display:block;font-size:10px;color:#64748b;margin-top:6px;font-weight:500}
+ .cell svg{display:block}
+ .team{--tp:#0B3D63;--tp-l:#2E6FA0;--tp-d:#05202F;--ts:#38C6E8;--ta:#E8F7FC}
+</style></head><body>
+<div id="root"></div>
+<script type="module">
+const m = await (await fetch('/data/assets.manifest.json')).json();
+const groups = {};
+for (const a of m.assets) (groups[a.folder] ||= []).push(a);
+const root = document.getElementById('root');
+const only = new URLSearchParams(location.search).get('only');
+for (const [folder, list] of Object.entries(groups)) {
+  if (only && !folder.includes(only)) continue;
+  const h = document.createElement('h2'); h.textContent = folder + '  (' + list.length + ')'; root.append(h);
+  const g = document.createElement('div'); g.className='grid';
+  for (const a of list) {
+    const c = document.createElement('div'); c.className='cell team';
+    const svg = await (await fetch('/'+a.path)).text();
+    const scale = a.width > 300 ? 260/a.width : (a.width < 60 ? 1 : 1);
+    c.innerHTML = svg.replace(/width="[\d.]+"/,'width="'+(a.width*(a.width>300?260/a.width:1)).toFixed(0)+'"')
+                     .replace(/height="[\d.]+"/,'height="'+(a.height*(a.width>300?260/a.width:1)).toFixed(0)+'"');
+    const b=document.createElement('b'); b.textContent=a.key; c.append(b);
+    g.append(c);
+  }
+  root.append(g);
+}
+document.title='ready';
+</script></body></html>

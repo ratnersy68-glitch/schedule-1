@@ -1,0 +1,137 @@
+{
+  "$comment": "Hobby box products only. No retail configurations. estimatedValue is measured by tools/simulate.mjs.",
+  "boxes": [
+    {
+      "id": "BOX-NFL-OPTIC-25", "name": "Optic Elite Football", "shortName": "Optic Elite",
+      "sport": "NFL", "year": 2025, "manufacturer": "Meridian", "brand": "Optic Elite",
+      "price": 135, "packs": 20, "cardsPerPack": 4, "profile": "entry", "template": "optic",
+      "unlockLevel": 1, "estimatedValue": 0,
+      "palette": { "base": "#101A2B", "ink": "#F3F6FB", "accent": "#37D6C3", "accent2": "#1F6FEB", "foil": "#8FE9DD" },
+      "guarantees": [ "2 autographs or memorabilia cards per box", "8 numbered parallels per box (avg)" ],
+      "chase": [ "Gold /10", "Black Finite /5", "Superfractor 1/1" ],
+      "blurb": "The gateway hobby box. Bright optical chrome stock, a deep rookie checklist and two guaranteed hits."
+    },
+    {
+      "id": "BOX-NFL-SELECT-25", "name": "Vertex Select Football", "shortName": "Vertex Select",
+      "sport": "NFL", "year": 2025, "manufacturer": "Meridian", "brand": "Vertex Select",
+      "price": 320, "packs": 12, "cardsPerPack": 5, "profile": "mid", "template": "select",
+      "unlockLevel": 2, "estimatedValue": 0,
+      "palette": { "base": "#150E23", "ink": "#F6F2FF", "accent": "#C08CFF", "accent2": "#5A2EA6", "foil": "#E5D2FF" },
+      "guarantees": [ "3 autographs or memorabilia cards per box", "Tri-level checklist: Concourse / Premier / Field Level" ],
+      "chase": [ "Red /49", "Gold /10", "Black Finite /5", "Superfractor 1/1" ],
+      "blurb": "Three checklist tiers stacked into one box. Premier and Field Level rookies carry the case."
+    },
+    {
+      "id": "BOX-NFL-PRIZM-25", "name": "Spectra Prizm Football", "shortName": "Spectra Prizm",
+      "sport": "NFL", "year": 2025, "manufacturer": "Meridian", "brand": "Spectra Prizm",
+      "price": 540, "packs": 12, "cardsPerPack": 12, "profile": "prizm", "template": "prizm",
+      "unlockLevel": 3, "estimatedValue": 0,
+      "palette": { "base": "#0B1220", "ink": "#EEF4FF", "accent": "#5AC8FA", "accent2": "#0A84FF", "foil": "#CFE9FF" },
+      "guarantees": [ "3 autographs or memorabilia cards per box", "144 cards - the deepest silver run in the hobby" ],
+      "chase": [ "Silver Prizm rookies", "Gold /10", "Black Finite /5", "Superfractor 1/1" ],
+      "blurb": "The flagship. 144 cards per box and the silver parallel that defines the modern rookie market."
+    },
+    {
+      "id": "BOX-NFL-TREASURES-25", "name": "Sovereign Treasures Football", "shortName": "Sovereign Treasures",
+      "sport": "NFL", "year": 2025, "manufacturer": "Sovereign", "brand": "National Treasures",
+      "price": 1750, "packs": 4, "cardsPerPack": 8, "profile": "treasures", "template": "treasures",
+      "unlockLevel": 5, "estimatedValue": 0,
+      "palette": { "base": "#0E0C0A", "ink": "#F7EFDD", "accent": "#C8A24A", "accent2": "#6E4E1C", "foil": "#F0DCA6" },
+      "guarantees": [ "5 autographs or memorabilia cards per box", "Every card numbered to 99 or lower" ],
+      "chase": [ "Rookie Patch Auto /25", "Booklet /5", "Superfractor 1/1" ],
+      "blurb": "Museum-grade stock, oversized patches and on-card rookie signatures. Everything inside is numbered."
+    },
+    {
+      "id": "BOX-NFL-FLAWLESS-25", "name": "Flawless Gridiron", "shortName": "Flawless Gridiron",
+      "sport": "NFL", "year": 2025, "manufacturer": "Sovereign", "brand": "Flawless",
+      "price": 5200, "packs": 2, "cardsPerPack": 10, "profile": "flawless", "template": "flawless",
+      "unlockLevel": 8, "estimatedValue": 0,
+      "palette": { "base": "#050506", "ink": "#F4F4F6", "accent": "#D9D9DE", "accent2": "#8A8A93", "foil": "#FFFFFF" },
+      "guarantees": [ "7 autographs or memorabilia cards per box", "Diamond-embedded base cards" ],
+      "chase": [ "Dual Auto /10", "Booklet /3", "Superfractor 1/1" ],
+      "blurb": "Two packs. Twenty cards. Nothing common. The most expensive sealed product on the shelf."
+    },
+
+    {
+      "id": "BOX-NBA-OPTIC-25", "name": "Optic Elite Basketball", "shortName": "Optic Elite",
+      "sport": "NBA", "year": 2025, "manufacturer": "Meridian", "brand": "Optic Elite",
+      "price": 150, "packs": 20, "cardsPerPack": 4, "profile": "entry", "template": "optic",
+      "unlockLevel": 1, "estimatedValue": 0,
+      "palette": { "base": "#1A1020", "ink": "#FBF3FF", "accent": "#FF8A3D", "accent2": "#C0392B", "foil": "#FFD3A8" },
+      "guarantees": [ "2 autographs or memorabilia cards per box", "Rated Rookie subset" ],
+      "chase": [ "Gold /10", "Black Finite /5", "Superfractor 1/1" ],
+      "blurb": "Hardwood's entry point. Rated Rookies on optical chrome with two guaranteed hits."
+    },
+    {
+      "id": "BOX-NBA-SELECT-25", "name": "Vertex Select Basketball", "shortName": "Vertex Select",
+      "sport": "NBA", "year": 2025, "manufacturer": "Meridian", "brand": "Vertex Select",
+      "price": 345, "packs": 12, "cardsPerPack": 5, "profile": "mid", "template": "select",
+      "unlockLevel": 2, "estimatedValue": 0,
+      "palette": { "base": "#0D1A17", "ink": "#EFFFF9", "accent": "#4FE0B5", "accent2": "#12705C", "foil": "#B9FFEA" },
+      "guarantees": [ "3 autographs or memorabilia cards per box", "Courtside / Premier / Concourse tiers" ],
+      "chase": [ "Red /49", "Gold /10", "Superfractor 1/1" ],
+      "blurb": "Tiered checklist, die-cut Courtside rookies and three hits a box."
+    },
+    {
+      "id": "BOX-NBA-PRIZM-25", "name": "Spectra Prizm Basketball", "shortName": "Spectra Prizm",
+      "sport": "NBA", "year": 2025, "manufacturer": "Meridian", "brand": "Spectra Prizm",
+      "price": 660, "packs": 12, "cardsPerPack": 12, "profile": "prizm", "template": "prizm",
+      "unlockLevel": 4, "estimatedValue": 0,
+      "palette": { "base": "#0A0F1C", "ink": "#EAF1FF", "accent": "#7C6CFF", "accent2": "#2B1E9E", "foil": "#D6D0FF" },
+      "guarantees": [ "3 autographs or memorabilia cards per box", "Silver Prizm rookie run" ],
+      "chase": [ "Silver Prizm rookies", "Gold /10", "Superfractor 1/1" ],
+      "blurb": "The basketball flagship. The silver rookie card that sets the market for a whole draft class."
+    },
+    {
+      "id": "BOX-NBA-TREASURES-25", "name": "Sovereign Treasures Basketball", "shortName": "Sovereign Treasures",
+      "sport": "NBA", "year": 2025, "manufacturer": "Sovereign", "brand": "National Treasures",
+      "price": 1980, "packs": 4, "cardsPerPack": 8, "profile": "treasures", "template": "treasures",
+      "unlockLevel": 6, "estimatedValue": 0,
+      "palette": { "base": "#0C0A0E", "ink": "#F4EEF7", "accent": "#B9A0D8", "accent2": "#4B2E6B", "foil": "#E6D6FF" },
+      "guarantees": [ "5 autographs or memorabilia cards per box", "Every card numbered to 99 or lower" ],
+      "chase": [ "Rookie Patch Auto /25", "Logoman 1/1", "Booklet /5" ],
+      "blurb": "Thick stock, jumbo prime patches and the rookie patch autograph the whole hobby chases."
+    },
+    {
+      "id": "BOX-NBA-FLAWLESS-25", "name": "Flawless Hardwood", "shortName": "Flawless Hardwood",
+      "sport": "NBA", "year": 2025, "manufacturer": "Sovereign", "brand": "Flawless",
+      "price": 5900, "packs": 2, "cardsPerPack": 10, "profile": "flawless", "template": "flawless",
+      "unlockLevel": 9, "estimatedValue": 0,
+      "palette": { "base": "#060607", "ink": "#F6F4EE", "accent": "#E3C77A", "accent2": "#8E7530", "foil": "#FFF0C2" },
+      "guarantees": [ "7 autographs or memorabilia cards per box", "Diamond-embedded base cards" ],
+      "chase": [ "Dual Auto /10", "Booklet /3", "Superfractor 1/1" ],
+      "blurb": "Gem-set luxury. Twenty cards, every one of them a hit or a numbered parallel."
+    },
+
+    {
+      "id": "BOX-MLB-PROSPECT-25", "name": "Prospect Chrome Baseball", "shortName": "Prospect Chrome",
+      "sport": "MLB", "year": 2025, "manufacturer": "Cardinal", "brand": "Prospect Chrome",
+      "price": 210, "packs": 12, "cardsPerPack": 4, "profile": "prospect", "template": "prospect",
+      "unlockLevel": 1, "estimatedValue": 0,
+      "palette": { "base": "#0A1622", "ink": "#EAF6FF", "accent": "#41C9E2", "accent2": "#0B5C79", "foil": "#BFEFFB" },
+      "guarantees": [ "2 autographs per box", "1st Bowman prospect checklist" ],
+      "chase": [ "Refractor prospect autos", "Gold /10", "Superfractor 1/1" ],
+      "blurb": "The prospecting box. Nearly every card is a first-year prospect. Buy the future, wait five years."
+    },
+    {
+      "id": "BOX-MLB-CHROME-25", "name": "Apex Chrome Baseball", "shortName": "Apex Chrome",
+      "sport": "MLB", "year": 2025, "manufacturer": "Cardinal", "brand": "Apex Chrome",
+      "price": 290, "packs": 24, "cardsPerPack": 4, "profile": "chrome", "template": "chrome",
+      "unlockLevel": 2, "estimatedValue": 0,
+      "palette": { "base": "#141414", "ink": "#F7F3EA", "accent": "#E0533C", "accent2": "#8C2418", "foil": "#FFD2C6" },
+      "guarantees": [ "2 autographs or memorabilia cards per box", "24 packs - the longest hobby box on the shelf" ],
+      "chase": [ "Rookie refractors", "Gold /10", "Superfractor 1/1" ],
+      "blurb": "Twenty-four packs of chrome. The rookie card collectors still buy a decade later."
+    },
+    {
+      "id": "BOX-MLB-FINEST-25", "name": "Finest Edition Baseball", "shortName": "Finest Edition",
+      "sport": "MLB", "year": 2025, "manufacturer": "Cardinal", "brand": "Finest Edition",
+      "price": 400, "packs": 8, "cardsPerPack": 5, "profile": "finest", "template": "finest",
+      "unlockLevel": 3, "estimatedValue": 0,
+      "palette": { "base": "#101B16", "ink": "#EFFAF3", "accent": "#7ED957", "accent2": "#1E6B3A", "foil": "#CBF7B4" },
+      "guarantees": [ "2 autographs or memorabilia cards per box", "Refractor-heavy configuration" ],
+      "chase": [ "X-Fractor rookies", "Gold /10", "Superfractor 1/1" ],
+      "blurb": "Mirror-finish stock and the highest refractor rate of any baseball hobby box."
+    }
+  ]
+}

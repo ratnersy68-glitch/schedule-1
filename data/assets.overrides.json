@@ -1,0 +1,4 @@
+{
+  "$comment": "Optional artwork overrides. Map an asset key from data/assets.manifest.json to any path (raster or vector). The registry prefers this over the manifest path, so commissioned art can replace generated art without touching code.",
+  "overrides": {}
+}
