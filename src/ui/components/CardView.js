@@ -52,7 +52,16 @@ export function CardView(card, options = {}) {
   const rarity = Data.rarity(card.rarity);
   const foil = FOIL_OF(card.parallel);
 
-  const style = { ...teamTokens(team), '--rc': rarity.color };
+  const product = Data.box(card.setId);
+  const pal = product.palette;
+  const style = {
+    ...teamTokens(team),
+    '--ps': pal.accent,
+    '--pf': pal.foil,
+    '--pi': pal.ink,
+    '--pb': pal.base,
+    '--rc': rarity.color,
+  };
   if (parallel.id !== 'none' && foil === 'tint') {
     style['--parallel-color'] = parallel.color;
     style['--parallel-strength'] = '0.72';
@@ -65,6 +74,7 @@ export function CardView(card, options = {}) {
       foil,
       effect: effects ? rarity.effect : 'none',
       rarity: card.rarity,
+      template: card.template,
       ink: isLight(team.colors.primary) ? 'dark' : 'light',
       uid: card.uid,
       ...(card.memorabilia ? { relic: '1' } : {}),
@@ -109,7 +119,7 @@ export function CardView(card, options = {}) {
     extras.append(h('div', { class: 'c-patch', html: patchSvg(card, team.colors, { prime }) }));
   }
   if (card.autograph) {
-    extras.append(h('div', { class: 'c-auto', html: signatureSvg(card.player) }));
+    extras.append(h('div', { class: 'c-auto', html: signatureSvg(card.player, { dual: card.hitType === 'dualAuto' }) }));
   }
 
   /* --- art -------------------------------------------------------------- */

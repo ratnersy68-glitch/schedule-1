@@ -88,8 +88,15 @@ export function signaturePath(name) {
   return { d, flourish, viewBox: `0 0 ${width} 90` };
 }
 
-export function signatureSvg(name, { className = '' } = {}) {
+export function signatureSvg(name, { className = '', dual = false } = {}) {
   const { d, flourish, viewBox } = signaturePath(name);
+  const second = dual ? signaturePath(`${name} II`) : null;
   return `<svg class="${className}" viewBox="${viewBox}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">`
-    + `<path d="${d}"/><path d="${flourish}" opacity=".8" stroke-width="1.8"/></svg>`;
+    + (second
+      ? `<g transform="translate(6,-16) rotate(-5 148 45) scale(.8)" opacity=".92">`
+        + `<path d="${second.d}"/><path d="${second.flourish}" opacity=".8" stroke-width="1.8"/></g>`
+        + `<g transform="translate(-4,18) rotate(3 148 45) scale(.82)">`
+        + `<path d="${d}"/><path d="${flourish}" opacity=".8" stroke-width="1.8"/></g>`
+      : `<g transform="rotate(-2.5 148 45)"><path d="${d}"/><path d="${flourish}" opacity=".8" stroke-width="1.8"/></g>`)
+    + `</svg>`;
 }

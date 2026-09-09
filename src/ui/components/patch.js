@@ -11,9 +11,12 @@ function seeded(seed) {
 export function patchSvg(card, colors, { prime = false } = {}) {
   const rand = seeded(card.uid + card.player);
   const { primary, secondary, accent } = colors;
+  // Jersey material, not UI colour: saturated team tones plus the white of the
+  // uniform. The near-white accent is kept for stitching so panels stay readable.
+  const jersey = '#E6E9EF';
   const palette = prime
-    ? [primary, secondary, accent, tint(secondary, 0.3), shade(primary, 0.35)]
-    : [primary, shade(primary, 0.3), secondary];
+    ? [primary, secondary, jersey, shade(secondary, 0.35), shade(primary, 0.2), tint(primary, 0.2)]
+    : [primary, shade(primary, 0.32), secondary];
 
   const W = 200; const H = 150;
   const panels = [];
@@ -30,8 +33,13 @@ export function patchSvg(card, colors, { prime = false } = {}) {
   const stitches = Array.from({ length: prime ? 5 : 3 }, (_, i) => {
     const sy = 18 + i * (H / (prime ? 5 : 3));
     const dash = Array.from({ length: 14 }, (_, k) => `M${k * 15 + 4},${(sy + Math.sin(k) * 2).toFixed(1)}h7`).join('');
-    return `<path d="${dash}" stroke="${accent}" stroke-opacity=".55" stroke-width="2" fill="none"/>`;
+    return `<path d="${dash}" stroke="${accent}" stroke-opacity=".7" stroke-width="2.4" fill="none"/>`;
   }).join('');
+
+  // A slice of a letter or number, the way a prime patch cuts through a nameplate.
+  const glyph = prime
+    ? `<path d="M42,26h34v98H42Zm52,0h30l26,52 26,-52h30v98h-30V72l-26,50h-2l-26,-50v50H94Z" fill="${jersey}" fill-opacity=".9"/>`
+    : '';
 
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
@@ -47,6 +55,7 @@ export function patchSvg(card, colors, { prime = false } = {}) {
       </pattern>
     </defs>
     ${panels.join('')}
+    ${glyph}
     <rect width="${W}" height="${H}" fill="url(#pw${card.uid})"/>
     ${stitches}
     <rect width="${W}" height="${H}" fill="url(#pl${card.uid})"/>

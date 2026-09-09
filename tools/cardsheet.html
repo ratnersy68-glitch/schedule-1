@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<link rel="stylesheet" href="/styles/tokens.css">
+<link rel="stylesheet" href="/styles/base.css">
+<link rel="stylesheet" href="/styles/components.css">
+<link rel="stylesheet" href="/styles/card.css">
+<style>
+ body{background:#080b12;padding:24px;overflow:auto}
+ .sheet{display:flex;flex-wrap:wrap;gap:18px}
+ .cell{width:220px}
+ .cap{font-size:11px;color:#7c8aa3;margin-top:6px;font-family:Inter}
+ h2{font-family:'Archivo Black';font-size:13px;letter-spacing:.14em;color:#8fa1bd;margin:24px 0 10px}
+</style></head><body>
+<div id="root"></div>
+<script type="module">
+import { Assets } from '/src/core/assets.js';
+import { Data } from '/src/systems/DataService.js';
+import { CardSystem } from '/src/systems/CardSystem.js';
+import { CardView } from '/src/ui/components/CardView.js';
+import { Slab } from '/src/ui/components/Slab.js';
+import { h } from '/src/core/dom.js';
+
+await Promise.all([Assets.load('/'), Data.load('/')]);
+const root = document.getElementById('root');
+
+function make(boxId, playerId, opts = {}) {
+  const box = Data.box(boxId);
+  const player = Data.player(playerId);
+  return CardSystem.create({ boxId, player, cardNumber: opts.n ?? 101, cardType: opts.cardType ?? (player.rookie ? 'rookie' : 'base'),
+    parallel: opts.parallel ?? 'none', insertSet: opts.insertSet, hitType: opts.hitType, serial: opts.serial });
+}
+
+function section(title, cards) {
+  root.append(h('h2', {}, title));
+  const sheet = h('div', { class: 'sheet' });
+  for (const [label, card] of cards) {
+    const cell = h('div', { class: 'cell' });
+    cell.append(card.grade ? Slab(card, { size: 'fluid' }) : CardView(card, { size: 'fluid', tilt: false }));
+    cell.append(h('div', { class: 'cap' }, label));
+    sheet.append(cell);
+  }
+  root.append(sheet);
+}
+
+const view = new URLSearchParams(location.search).get('view') || 'parallels';
+
+if (view === 'parallels') {
+  section('Parallels - Spectra Prizm Football', Data.parallels.map((p) =>
+    [`${p.label}${p.printRun ? ` /${p.printRun}` : ''}`, make('BOX-NFL-PRIZM-25', 'P-FB-001', {
+      parallel: p.id, serial: p.printRun ? { num: Math.ceil(p.printRun / 3), run: p.printRun } : null })]));
+}
+if (view === 'hits') {
+  section('Hits - Sovereign Treasures', Data.hitTypes.map((hd) =>
+    [hd.label, make('BOX-NBA-TREASURES-25', 'P-BB-001', {
+      cardType: hd.cardType, hitType: hd.id, parallel: hd.id === 'booklet' ? 'gold' : 'none',
+      serial: { num: 3, run: hd.runs.filter(Boolean)[0] ?? 25 } })]));
+}
+if (view === 'templates') {
+  const ids = ['BOX-NFL-OPTIC-25','BOX-NFL-SELECT-25','BOX-NFL-PRIZM-25','BOX-NFL-TREASURES-25','BOX-NFL-FLAWLESS-25','BOX-MLB-PROSPECT-25','BOX-MLB-CHROME-25','BOX-MLB-FINEST-25'];
+  section('One template per product', ids.map((id) => {
+    const box = Data.box(id);
+    const pool = Data.playersFor(box.sport);
+    return [box.shortName, make(id, pool[0].id, { parallel: 'silver' })];
+  }));
+}
+if (view === 'inserts') {
+  section('Insert sets', Data.insertSets.map((i) =>
+    [i.label, make('BOX-NBA-PRIZM-25', 'P-BB-003', { cardType: 'insert', insertSet: i.id })]));
+}
+if (view === 'slabs') {
+  const grades = [10, 9, 8, 6];
+  section('Graded slabs', grades.map((g) => {
+    const c = make('BOX-NFL-TREASURES-25', 'P-FB-001', { cardType: 'rookieAuto', hitType: 'rookieAuto', serial: { num: 7, run: 25 } });
+    c.grade = { grade: g, subs: { centering: g, corners: g, edges: g, surface: g }, cert: '77219460' + g, tier: 'vault', gradedAt: Date.now() };
+    return [`AGA ${g}`, c];
+  }));
+}
+if (view === 'sports') {
+  const combos = [['BOX-NFL-PRIZM-25','P-FB-001'],['BOX-NFL-PRIZM-25','P-FB-004'],['BOX-NFL-PRIZM-25','P-FB-009'],
+                  ['BOX-NBA-PRIZM-25','P-BB-001'],['BOX-NBA-PRIZM-25','P-BB-002'],['BOX-NBA-PRIZM-25','P-BB-003'],
+                  ['BOX-MLB-CHROME-25','P-BS-001'],['BOX-MLB-CHROME-25','P-BS-002'],['BOX-MLB-CHROME-25','P-BS-006'],['BOX-MLB-CHROME-25','P-BS-004']];
+  section('Poses across sports', combos.map(([b, p]) => [Data.player(p).name, make(b, p, { parallel: 'refractor' })]));
+}
+await new Promise((r) => setTimeout(r, 900));
+document.title = 'ready';
+</script></body></html>

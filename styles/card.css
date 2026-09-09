@@ -45,8 +45,8 @@
 .l-field { background: linear-gradient(155deg, var(--tp-l), var(--tp) 46%, var(--tp-d)); }
 .l-frame-bg { mix-blend-mode: normal; }
 .l-insert { opacity: .7; mix-blend-mode: screen; }
-.l-art { top: 1cqi; bottom: 31cqi; height: auto; }
-.l-art > svg { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+.l-art { top: 1cqi; bottom: calc(var(--plate-top) + 6cqi); height: auto; }
+.l-art > svg { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 0 1.6cqi rgba(0, 0, 0, .75)); }
 .l-frame-fg { pointer-events: none; }
 
 /* --- parallel finish ------------------------------------------------------ */
@@ -81,11 +81,24 @@
   mix-blend-mode: screen;
 }
 
-/* --- typography ----------------------------------------------------------- */
+/* --- typography -----------------------------------------------------------
+   Each template prints its nameplate at a different height, so the text block is
+   positioned against the plate rather than the card edge. Values are the manifest
+   pixel offsets divided by the 750px artboard width.
+   -------------------------------------------------------------------------- */
 .l-type { pointer-events: none; }
+.card { --plate-bottom: 0cqi; --plate-top: 22cqi; }
+.card[data-template="optic"]     { --plate-bottom: 0.6cqi;  --plate-top: 22cqi; }
+.card[data-template="select"]    { --plate-bottom: 6.2cqi;  --plate-top: 25.3cqi; }
+.card[data-template="prizm"]     { --plate-bottom: 5.1cqi;  --plate-top: 22.1cqi; }
+.card[data-template="treasures"] { --plate-bottom: 5.6cqi;  --plate-top: 27.7cqi; }
+.card[data-template="flawless"]  { --plate-bottom: 0.8cqi;  --plate-top: 20cqi; }
+.card[data-template="prospect"]  { --plate-bottom: 4.8cqi;  --plate-top: 24.3cqi; }
+.card[data-template="chrome"]    { --plate-bottom: 1.9cqi;  --plate-top: 22.7cqi; }
+.card[data-template="finest"]    { --plate-bottom: 5.6cqi;  --plate-top: 23.2cqi; }
 
 .c-name {
-  position: absolute; left: 7cqi; right: 7cqi; bottom: 8.4cqi;
+  position: absolute; left: 7cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 11.2cqi);
   font-family: var(--f-display);
   font-size: 8.6cqi; line-height: .95;
   letter-spacing: -.02em;
@@ -97,24 +110,25 @@
 .c-name.is-long { font-size: 7.1cqi; }
 .c-name.is-xlong { font-size: 6cqi; }
 .c-meta {
-  position: absolute; left: 7.4cqi; right: 7cqi; bottom: 4.4cqi;
-  font-family: var(--f-label); font-size: 4.1cqi; letter-spacing: .16em;
+  position: absolute; left: 7.4cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 6.2cqi);
+  font-family: var(--f-label); font-size: 4.1cqi; line-height: 1; letter-spacing: .16em;
   color: var(--ts); text-transform: uppercase;
   text-shadow: 0 0.2cqi .7cqi rgba(0, 0, 0, .8);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .c-treat {
-  position: absolute; left: 7.4cqi; bottom: 1cqi;
-  font-family: var(--f-mono); font-size: 2.9cqi; letter-spacing: .1em;
+  position: absolute; left: 7.4cqi; right: 22cqi; bottom: calc(var(--plate-bottom) + 1.5cqi);
+  font-family: var(--f-mono); font-size: 2.7cqi; letter-spacing: .08em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   color: rgba(255, 255, 255, .62);
 }
 .c-num {
-  position: absolute; right: 6cqi; bottom: 1cqi;
-  font-family: var(--f-mono); font-size: 2.9cqi; color: rgba(255, 255, 255, .55);
+  position: absolute; right: 6cqi; bottom: calc(var(--plate-bottom) + 1.5cqi);
+  font-family: var(--f-mono); font-size: 2.7cqi; color: rgba(255, 255, 255, .55);
 }
 .c-crest { position: absolute; left: 4.6cqi; top: 4cqi; width: 15cqi; height: 15cqi; filter: drop-shadow(0 .5cqi 1cqi rgba(0,0,0,.6)); }
 .c-league { position: absolute; right: 4.6cqi; top: 4cqi; width: 14cqi; opacity: .82; filter: drop-shadow(0 .5cqi 1cqi rgba(0,0,0,.6)); }
-.c-brand { position: absolute; left: 50%; transform: translateX(-50%); bottom: 24cqi; width: 40cqi; opacity: .85; filter: drop-shadow(0 .4cqi 1cqi rgba(0,0,0,.7)); }
+.c-brand { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(var(--plate-top) + 1.4cqi); width: 38cqi; opacity: .85; filter: drop-shadow(0 .4cqi 1cqi rgba(0,0,0,.7)); }
 .c-rookie {
   position: absolute; left: 4.6cqi; top: 21cqi;
   padding: .8cqi 2.2cqi; border-radius: 1cqi;
@@ -123,7 +137,7 @@
   box-shadow: 0 .4cqi 1cqi rgba(0,0,0,.5);
 }
 .c-serial {
-  position: absolute; right: 4.6cqi; bottom: 21cqi;
+  position: absolute; right: 4.6cqi; bottom: calc(var(--plate-top) + 1cqi);
   padding: .9cqi 2.4cqi; border-radius: 1cqi;
   font-family: var(--f-mono); font-weight: 600; font-size: 3.7cqi;
   color: #fff; background: rgba(6, 8, 12, .74);
@@ -135,23 +149,26 @@
 .l-relic { display: grid; place-items: center; pointer-events: none; }
 .c-patch {
   position: absolute; left: 50%; transform: translateX(-50%);
-  top: 27cqi; width: 34cqi; height: 25cqi;
+  top: 26cqi; width: 38cqi; height: 28cqi;
   border-radius: 1.4cqi; overflow: hidden;
   box-shadow: inset 0 0 3cqi rgba(0,0,0,.6), 0 1cqi 2.4cqi rgba(0,0,0,.6);
   border: .5cqi solid rgba(255,255,255,.22);
 }
 .c-patch svg { width: 100%; height: 100%; }
-.c-auto { position: absolute; left: 8cqi; right: 8cqi; bottom: 31cqi; height: 21cqi; }
+.c-auto { position: absolute; left: 8cqi; right: 8cqi; bottom: calc(var(--plate-top) + 7cqi); height: 21cqi; }
 /* A relic window and a signature already fill the card face; the set logo steps aside. */
 .card[data-relic] .c-brand { display: none; }
-.card[data-auto]:not([data-relic]) .c-brand { bottom: 21cqi; width: 32cqi; opacity: .6; }
+.card[data-auto]:not([data-relic]) .c-brand { width: 30cqi; opacity: .55; }
 .c-auto svg { width: 100%; height: 100%; overflow: visible; }
+/* Ink sits on the card stock, so it carries a soft shadow rather than a glow. */
 .c-auto path {
-  fill: none; stroke: var(--sig-color, #1B2A41);
-  stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
-  filter: drop-shadow(0 1px 1px rgba(255,255,255,.25));
+  fill: none; stroke: var(--sig-color, #14213D);
+  stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
-.card[data-ink="light"] .c-auto path { --sig-color: #F2F6FF; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.c-auto svg { filter: drop-shadow(0 .3cqi .3cqi rgba(0, 0, 0, .55)); }
+.card[data-ink="light"] .c-auto path { --sig-color: #EEF3FF; }
+.card[data-ink="light"] .c-auto svg { filter: drop-shadow(0 .3cqi .4cqi rgba(0, 0, 0, .7)); }
 
 /* --- rarity effects ------------------------------------------------------- */
 .card[data-effect="sheen"] .card-face::after,
