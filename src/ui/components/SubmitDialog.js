@@ -6,7 +6,7 @@ import { GradingSystem } from '../../systems/GradingSystem.js';
 import { CardSystem } from '../../systems/CardSystem.js';
 import { EconomySystem } from '../../systems/EconomySystem.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
-import { Button, Modal, KV, toast, Bar } from './ui.js';
+import { Button, Modal, KV, toast } from './ui.js';
 import { CardView } from './CardView.js';
 
 export function openSubmitDialog(cards, { onDone } = {}) {

@@ -5,8 +5,7 @@
  * drama proportional to its rarity -> pack wrap-up -> box wrap-up.
  */
 import { h, clear, wait } from '../../core/dom.js';
-import { S } from '../../core/store.js';
-import { money, num, compactMoney } from '../../core/format.js';
+import { money, num } from '../../core/format.js';
 import { Assets, AssetKeys } from '../../core/assets.js';
 import { Data } from '../../systems/DataService.js';
 import { BreakSystem } from '../../systems/BreakSystem.js';
@@ -14,8 +13,8 @@ import { CardSystem } from '../../systems/CardSystem.js';
 import { AnimationSystem } from '../../systems/AnimationSystem.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
 import { burst } from '../../effects/particles.js';
-import { Button, Stat, Icon, Empty, Chip, toast } from '../components/ui.js';
-import { CardView, CardTile, preloadCards } from '../components/CardView.js';
+import { Button, Stat, Empty, toast } from '../components/ui.js';
+import { CardView, preloadCards } from '../components/CardView.js';
 
 export default function Opening({ mount, params, navigate, refresh }) {
   let vaultId = params.vaultId ?? BreakSystem.next()?.id ?? null;

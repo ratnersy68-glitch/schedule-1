@@ -1,6 +1,6 @@
 /** Full card detail: large art, provenance, condition, value and the sell/grade actions. */
-import { h, clear } from '../../core/dom.js';
-import { money, num, timeAgo, pct } from '../../core/format.js';
+import { h } from '../../core/dom.js';
+import { money, num, timeAgo } from '../../core/format.js';
 import { Data } from '../../systems/DataService.js';
 import { CardSystem } from '../../systems/CardSystem.js';
 import { MarketSystem } from '../../systems/MarketSystem.js';

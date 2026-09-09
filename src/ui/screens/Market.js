@@ -9,7 +9,7 @@ import { CollectionSystem } from '../../systems/CollectionSystem.js';
 import { EconomySystem } from '../../systems/EconomySystem.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
 import { Button, Stat, Chip, Empty, Modal, KV, toast } from '../components/ui.js';
-import { CardView, preloadCards } from '../components/CardView.js';
+import { CardView } from '../components/CardView.js';
 import { Sparkline } from '../components/Sparkline.js';
 import { openInspector } from '../components/CardInspector.js';
 

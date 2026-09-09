@@ -7,7 +7,7 @@ import { CollectionSystem, SORTS, emptyFilters } from '../../systems/CollectionS
 import { CardSystem } from '../../systems/CardSystem.js';
 import { MarketSystem } from '../../systems/MarketSystem.js';
 import { InventorySystem } from '../../systems/InventorySystem.js';
-import { Button, Chip, Icon, Stat, Empty, toast } from '../components/ui.js';
+import { Button, Chip, Icon, Empty } from '../components/ui.js';
 import { CardTile, preloadCards } from '../components/CardView.js';
 import { openInspector } from '../components/CardInspector.js';
 import { openSubmitDialog } from '../components/SubmitDialog.js';
@@ -68,6 +68,12 @@ export default function Collection({ mount, refresh }) {
         .filter((b) => facets.set[b.id])
         .map((b) => [b.id, `${b.name} (${facets.set[b.id]})`])],
       (v) => { filters.set = v; page = 60; render(); }),
+      Object.keys(facets.year).length > 1
+        ? selectGroup('Year', filters.year, [['all', 'Any year'],
+          ...Object.keys(facets.year).sort().reverse().map((y) => [y, `${y} (${facets.year[y]})`])],
+        (v) => { filters.year = v; page = 60; render(); })
+        : null,
+      valueGroup(),
       selectGroup('Grade', filters.grade, [['all', 'Any grade'], ['none', 'Ungraded'],
         ...[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].filter((g) => facets.grade[g]).map((g) => [String(g), `AGA ${g} (${facets.grade[g]})`])],
       (v) => { filters.grade = v; page = 60; render(); }),
@@ -130,6 +136,22 @@ export default function Collection({ mount, refresh }) {
       main.append(h('div', { style: { display: 'grid', placeItems: 'center', marginTop: 'var(--s-6)' } },
         Button(`Show ${Math.min(60, cards.length - page)} more`, { variant: 'ghost', onClick: () => { page += 60; render(); } })));
     }
+  }
+
+  /** Minimum value slider, stepped so the handle lands on useful thresholds. */
+  function valueGroup() {
+    const steps = [0, 1, 5, 10, 25, 50, 100, 250, 500, 1000];
+    const idx = Math.max(0, steps.findIndex((v) => v >= filters.minValue));
+    const label = h('span', { class: 'muted', style: { fontFamily: 'var(--f-mono)', fontSize: 'var(--t-xs)' } },
+      filters.minValue ? `${money(filters.minValue)}+` : 'Any value');
+    return h('div', { class: 'filter-group' },
+      h('div', { class: 'row' }, h('h4', { style: { margin: 0 } }, 'Minimum value'), h('div', { class: 'spacer' }), label),
+      h('input', {
+        type: 'range', min: '0', max: String(steps.length - 1), value: String(idx), style: { width: '100%' },
+        oninput: (e) => { label.textContent = steps[Number(e.target.value)] ? `${money(steps[Number(e.target.value)])}+` : 'Any value'; },
+        onchange: (e) => { filters.minValue = steps[Number(e.target.value)]; page = 60; render(); },
+      }),
+    );
   }
 
   const group = (title, chips) => h('div', { class: 'filter-group' },

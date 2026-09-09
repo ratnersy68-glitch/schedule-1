@@ -52,7 +52,7 @@
 /* --- parallel finish ------------------------------------------------------ */
 .l-foil { opacity: 0; mix-blend-mode: color-dodge; pointer-events: none; }
 .card[data-foil="holo"] .l-foil { opacity: .28; mix-blend-mode: color-dodge; }
-.card[data-foil="refractor"] .l-foil { opacity: .30; mix-blend-mode: color-dodge; }
+.card[data-foil="refractor"] .l-foil { opacity: .3; mix-blend-mode: overlay; }
 .card[data-foil="silver"] .l-foil { opacity: .27; mix-blend-mode: overlay; }
 .card[data-foil="tint"] .l-foil { opacity: .30; mix-blend-mode: soft-light; }
 .card[data-foil="metal"] .l-foil { opacity: .32; mix-blend-mode: overlay; }
@@ -98,32 +98,32 @@
 .card[data-template="finest"]    { --plate-bottom: 5.6cqi;  --plate-top: 23.2cqi; }
 
 .c-name {
-  position: absolute; left: 7cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 11.2cqi);
+  position: absolute; left: 7cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 9.6cqi);
   font-family: var(--f-display);
-  font-size: 8.6cqi; line-height: .95;
+  font-size: 7.6cqi; line-height: .95;
   letter-spacing: -.02em;
   color: #fff;
   text-shadow: 0 0.4cqi 1cqi rgba(0, 0, 0, .75);
   text-transform: uppercase;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.c-name.is-long { font-size: 7.1cqi; }
-.c-name.is-xlong { font-size: 6cqi; }
+.c-name.is-long { font-size: 6.5cqi; }
+.c-name.is-xlong { font-size: 5.6cqi; }
 .c-meta {
-  position: absolute; left: 7.4cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 6.2cqi);
+  position: absolute; left: 7.4cqi; right: 7cqi; bottom: calc(var(--plate-bottom) + 5.4cqi);
   font-family: var(--f-label); font-size: 4.1cqi; line-height: 1; letter-spacing: .16em;
   color: var(--ts); text-transform: uppercase;
   text-shadow: 0 0.2cqi .7cqi rgba(0, 0, 0, .8);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .c-treat {
-  position: absolute; left: 7.4cqi; right: 22cqi; bottom: calc(var(--plate-bottom) + 1.5cqi);
+  position: absolute; left: 7.4cqi; right: 22cqi; bottom: calc(var(--plate-bottom) + 1.4cqi);
   font-family: var(--f-mono); font-size: 2.7cqi; letter-spacing: .08em;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   color: rgba(255, 255, 255, .62);
 }
 .c-num {
-  position: absolute; right: 6cqi; bottom: calc(var(--plate-bottom) + 1.5cqi);
+  position: absolute; right: 6cqi; bottom: calc(var(--plate-bottom) + 1.4cqi);
   font-family: var(--f-mono); font-size: 2.7cqi; color: rgba(255, 255, 255, .55);
 }
 .c-crest { position: absolute; left: 4.6cqi; top: 4cqi; width: 15cqi; height: 15cqi; filter: drop-shadow(0 .5cqi 1cqi rgba(0,0,0,.6)); }
@@ -236,16 +236,16 @@
 }
 .card-tile:hover { transform: translateY(-6px) scale(1.02); z-index: 2; }
 .card-tile:active { transform: translateY(-2px) scale(1.005); }
-.card-tile .card-cap {
+.card-cap {
+  display: flex; align-items: baseline; gap: 6px;
   margin-top: var(--s-2);
   font-size: var(--t-xs); color: var(--text-mute);
-  display: flex; align-items: baseline; gap: 6px;
 }
-.card-tile .card-cap b { color: var(--text); font-weight: 600; min-width: 0; }
-.card-cap { display: flex; align-items: baseline; gap: 6px; font-size: var(--t-xs); color: var(--text-mute); margin-top: var(--s-2); }
-.card-cap b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-weight: 600; }
-.card-cap .val { margin-left: auto; font-family: var(--f-mono); color: var(--gold-lite); flex: none; }
-.card-tile .card-cap .val { margin-left: auto; font-family: var(--f-mono); color: var(--gold-lite); }
+.card-cap b {
+  min-width: 0; color: var(--text); font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.card-cap .val { margin-left: auto; flex: none; font-family: var(--f-mono); color: var(--gold-lite); }
 
 /* --- slab ----------------------------------------------------------------- */
 .slab {

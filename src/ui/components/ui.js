@@ -1,5 +1,5 @@
 /** Small shared building blocks: icons, buttons, chips, stats, bars, modal, toast. */
-import { h, clear, append } from '../../core/dom.js';
+import { h, append } from '../../core/dom.js';
 import { Assets, AssetKeys } from '../../core/assets.js';
 import { AudioSystem } from '../../audio/AudioSystem.js';
 import { bus, EVENTS } from '../../core/events.js';

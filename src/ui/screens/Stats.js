@@ -2,7 +2,6 @@
 import { h, clear } from '../../core/dom.js';
 import { S, store } from '../../core/store.js';
 import { money, num, timeAgo, compactMoney } from '../../core/format.js';
-import { Data } from '../../systems/DataService.js';
 import { EconomySystem } from '../../systems/EconomySystem.js';
 import { CollectionSystem } from '../../systems/CollectionSystem.js';
 import { InventorySystem } from '../../systems/InventorySystem.js';

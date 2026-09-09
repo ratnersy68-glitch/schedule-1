@@ -1,7 +1,7 @@
 /** Hobby Shop: sealed hobby boxes only, with published odds. */
 import { h, clear } from '../../core/dom.js';
 import { S } from '../../core/store.js';
-import { money, num, oneIn, compactMoney } from '../../core/format.js';
+import { money, oneIn, compactMoney } from '../../core/format.js';
 import { Assets, AssetKeys } from '../../core/assets.js';
 import { Data } from '../../systems/DataService.js';
 import { OddsSystem } from '../../systems/OddsSystem.js';
@@ -163,8 +163,11 @@ function confirmPurchase(box, render, navigate, refresh) {
       Button('Cancel', { variant: 'ghost', onClick: () => modal.close() }),
       Button('Buy and break it', {
         variant: 'gold', icon: 'box',
-        onClick: () => {
+        onClick: (e) => {
+          const btn = e.currentTarget;
+          btn.setLoading(true);
           const entry = BreakSystem.purchase(box.id);
+          btn.setLoading(false);
           modal.close();
           if (!entry) { toast({ title: 'Purchase failed', note: 'Not enough cash.', tone: 'bad', icon: 'error' }); return; }
           AudioSystem.play('purchase');

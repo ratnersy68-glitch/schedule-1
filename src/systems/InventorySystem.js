@@ -1,7 +1,6 @@
 /** Owns the collection array: adding pulls, removing sales, mutating grades. */
 import { store, S } from '../core/store.js';
 import { CardSystem } from './CardSystem.js';
-import { Data } from './DataService.js';
 
 export const InventorySystem = {
   all() { return S().collection; },
