@@ -220,3 +220,17 @@ document declares a charset.
 `node tools/bundle-test.mjs` opens that file with all non-`file://` requests
 blocked and plays a box through it, which fails loudly if anything is still
 loading from the network.
+
+The built page is committed at `dist/breakroom.html`, so it can be played
+straight from the repository without cloning:
+
+- **Play in the browser:**
+  `https://rawcdn.githack.com/ratnersy68-glitch/schedule-1/<commit>/dist/breakroom.html`
+  (githack serves the file with an HTML content type; GitHub's own raw URL sends
+  `text/plain`, which downloads instead of rendering).
+- **Download and open locally:** the raw URL for the same path. No server needed.
+
+`.github/workflows/pages.yml` can publish it at the repository's GitHub Pages URL
+instead, but it is manual-trigger only on purpose: Pages hosts one site per
+repository and this repository's site currently serves a different project, so
+running it replaces what is live.
