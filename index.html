@@ -85,6 +85,7 @@
   @media (max-width: 720px){
     #instructions{ display:none; }
   }
+  body.joystick-active #instructions{ display:none; }
   @media (max-width: 480px){
     #statsPanel{ padding:8px 12px; min-width:0; top:10px; left:10px; }
     #statsPanel .row{ font-size:11px; gap:10px; margin-bottom:2px; }
@@ -178,6 +179,44 @@
   #playAgainBtn:active{ transform:scale(0.97); }
 
   #fpsTag{ position:absolute; bottom:6px; right:6px; font-size:10px; color:rgba(255,255,255,0.15); pointer-events:none; }
+
+  /* ---------- Virtual joystick (touch) ---------- */
+  #joystickBase{
+    position:absolute;
+    left:max(26px, env(safe-area-inset-left));
+    bottom:max(26px, env(safe-area-inset-bottom));
+    width:128px; height:128px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,0.07), rgba(14,18,28,0.45));
+    border:2px solid rgba(255,255,255,0.16);
+    box-shadow:0 8px 24px rgba(0,0,0,0.35), inset 0 0 16px rgba(255,255,255,0.04);
+    pointer-events:auto;
+    touch-action:none;
+    display:none;
+    z-index:5;
+  }
+  #joystickBase.visible{ display:block; }
+  #joystickBase::after{
+    content:"";
+    position:absolute; inset:14px; border-radius:50%;
+    border:1px dashed rgba(255,255,255,0.12);
+  }
+  #joystickKnob{
+    position:absolute; top:50%; left:50%;
+    width:54px; height:54px; margin:-27px 0 0 -27px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(75,227,255,0.6), rgba(75,227,255,0.18));
+    border:2px solid rgba(75,227,255,0.65);
+    box-shadow:0 0 16px rgba(75,227,255,0.35), inset 0 0 10px rgba(255,255,255,0.15);
+    transition:box-shadow 0.15s ease, background 0.15s ease;
+    will-change:transform;
+  }
+  #joystickBase.dragging #joystickKnob{
+    box-shadow:0 0 26px rgba(75,227,255,0.6), inset 0 0 12px rgba(255,255,255,0.2);
+    background:radial-gradient(circle at 35% 30%, rgba(75,227,255,0.85), rgba(75,227,255,0.3));
+  }
+  @media (min-width:900px){
+    #joystickBase{ width:110px; height:110px; }
+    #joystickKnob{ width:46px; height:46px; margin:-23px 0 0 -23px; }
+  }
 </style>
 </head>
 <body>
@@ -197,10 +236,14 @@
 
   <div id="instructions" class="panel">
     <b>Mouse</b> to steer &middot; <b>Click / Space</b> to boost<br>
-    <b>Drag</b> to steer on touch &middot; use the <b>BOOST</b> button
+    <b>Joystick</b> to steer on touch &middot; use the <b>BOOST</b> button
   </div>
 
   <div id="miniHint" class="panel">Move the cursor to steer</div>
+
+  <div id="joystickBase">
+    <div id="joystickKnob"></div>
+  </div>
 
   <div id="boostBtn">BOOST</div>
 </div>
@@ -340,10 +383,10 @@ window.addEventListener('keyup', (e) => {
 
 function handleTouchMove(e){
   if(e.touches.length === 0) return;
-  // Only steer from touches not on the boost button
+  // Only steer from touches not on the boost button or the joystick
   for(const t of e.touches){
     const el = document.elementFromPoint(t.clientX, t.clientY);
-    if(el && el.id === 'boostBtn') continue;
+    if(el && (el.id === 'boostBtn' || el.closest('#joystickBase'))) continue;
     input.pointerX = t.clientX;
     input.pointerY = t.clientY;
     input.hasPointer = true;
@@ -355,6 +398,85 @@ function handleTouchMove(e){
 }
 canvas.addEventListener('touchstart', handleTouchMove, { passive:false });
 canvas.addEventListener('touchmove', handleTouchMove, { passive:false });
+
+// --- Virtual joystick (primary touch steering control) ---
+const joystickBase = document.getElementById('joystickBase');
+const joystickKnob = document.getElementById('joystickKnob');
+const JOY_MAX_RADIUS = 40;   // px the knob visually travels
+const JOY_DEADZONE = 6;      // px before steering input registers
+let joystickTouchId = null;
+const joystickCenter = { x: 0, y: 0 };
+
+function isTouchCapable(){
+  return ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+}
+
+function updateJoystickVisibility(){
+  const show = isTouchCapable() && window.innerWidth <= 900;
+  joystickBase.classList.toggle('visible', show);
+  document.body.classList.toggle('joystick-active', show);
+}
+updateJoystickVisibility();
+window.addEventListener('resize', updateJoystickVisibility);
+
+function joystickMove(clientX, clientY){
+  const dx = clientX - joystickCenter.x;
+  const dy = clientY - joystickCenter.y;
+  const dist = Math.hypot(dx, dy);
+  const angle = Math.atan2(dy, dx);
+  const visualDist = Math.min(dist, JOY_MAX_RADIUS);
+  joystickKnob.style.transform =
+    `translate(${(Math.cos(angle)*visualDist).toFixed(1)}px, ${(Math.sin(angle)*visualDist).toFixed(1)}px)`;
+  if(dist > JOY_DEADZONE){
+    input.pointerX = VW/2 + Math.cos(angle) * 300;
+    input.pointerY = VH/2 + Math.sin(angle) * 300;
+    input.hasPointer = true;
+    input.usingTouch = true;
+    hideMiniHint();
+  }
+}
+
+function joystickReset(){
+  joystickKnob.style.transform = 'translate(0px, 0px)';
+  joystickBase.classList.remove('dragging');
+  joystickTouchId = null;
+}
+
+joystickBase.addEventListener('touchstart', (e) => {
+  const t = e.changedTouches[0];
+  const rect = joystickBase.getBoundingClientRect();
+  joystickCenter.x = rect.left + rect.width/2;
+  joystickCenter.y = rect.top + rect.height/2;
+  joystickTouchId = t.identifier;
+  joystickBase.classList.add('dragging');
+  joystickMove(t.clientX, t.clientY);
+  e.preventDefault();
+  e.stopPropagation();
+}, { passive:false });
+
+joystickBase.addEventListener('touchmove', (e) => {
+  for(const t of e.changedTouches){
+    if(t.identifier === joystickTouchId){
+      joystickMove(t.clientX, t.clientY);
+      break;
+    }
+  }
+  e.preventDefault();
+  e.stopPropagation();
+}, { passive:false });
+
+function joystickEnd(e){
+  for(const t of e.changedTouches){
+    if(t.identifier === joystickTouchId){
+      joystickReset();
+      break;
+    }
+  }
+  e.preventDefault();
+  e.stopPropagation();
+}
+joystickBase.addEventListener('touchend', joystickEnd, { passive:false });
+joystickBase.addEventListener('touchcancel', joystickEnd, { passive:false });
 
 const boostBtn = document.getElementById('boostBtn');
 function setBoostActive(v){
