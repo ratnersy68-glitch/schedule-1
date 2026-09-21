@@ -1,0 +1,29 @@
+{
+  "name": "forge-training-log",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "seed": "node tests/e2e/seed.mjs tests/e2e/seed.json",
+    "test:e2e": "npm run seed && node tests/e2e/01-log-a-workout.mjs && node tests/e2e/02-history-records-backup.mjs && node tests/e2e/03-builder-and-resume.mjs && node tests/e2e/04-timer-and-pwa.mjs && node tests/e2e/05-visual-sweep.mjs"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "playwright": "^1.63.0",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
+  }
+}
