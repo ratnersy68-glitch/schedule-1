@@ -6,3 +6,4 @@ dist-ssr
 .vite
 .screenshots
 tests/e2e/seed.json
+dist-static

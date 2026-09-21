@@ -53,6 +53,11 @@ Deploy `dist/` to any static host. The service worker and manifest are only acti
 production build, so install-to-home-screen and offline use need `build` + `preview`
 (or a real deployment), not `dev`.
 
+`npm run build:static` produces `dist-static/`: the same app with relative asset paths and
+hash routing, for hosts that serve from a sub-path and cannot rewrite unknown URLs to
+`index.html`. Deep links and refreshes keep working there, but the service worker is left
+out, so use the normal `build` when you want offline support.
+
 ### Installing on an iPhone
 
 Open the deployed URL in Safari, then Share → Add to Home Screen. It launches full screen

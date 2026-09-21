@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "seed": "node tests/e2e/seed.mjs tests/e2e/seed.json",
-    "test:e2e": "npm run seed && node tests/e2e/01-log-a-workout.mjs && node tests/e2e/02-history-records-backup.mjs && node tests/e2e/03-builder-and-resume.mjs && node tests/e2e/04-timer-and-pwa.mjs && node tests/e2e/05-visual-sweep.mjs"
+    "test:e2e": "npm run seed && node tests/e2e/01-log-a-workout.mjs && node tests/e2e/02-history-records-backup.mjs && node tests/e2e/03-builder-and-resume.mjs && node tests/e2e/04-timer-and-pwa.mjs && node tests/e2e/05-visual-sweep.mjs",
+    "build:static": "VITE_ROUTER=hash vite build --base ./ --outDir dist-static"
   },
   "dependencies": {
     "react": "^19.1.1",
